@@ -37,6 +37,8 @@ typedef struct _objects_t {
     lv_obj_t *obj7;
     lv_obj_t *obj8;
     lv_obj_t *obj9;
+    lv_obj_t *mac_address;
+    lv_obj_t *version;
     lv_obj_t *c_main_menu;
     lv_obj_t *b_main_task;
     lv_obj_t *b_main_profile;

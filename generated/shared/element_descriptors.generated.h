@@ -49,6 +49,8 @@ static const Screen32ElementDescriptor g_screen32_element_descriptors[SCREEN32_E
     {1048767685u, "SCREEN32_ELEMENT_ID_OBJ7", "obj7", 1u, "LOAD", SCREEN32_ELEMENT_TYPE_TEXT, true, false, true, true, false, false},
     {973007217u, "SCREEN32_ELEMENT_ID_OBJ8", "obj8", 1u, "LOAD", SCREEN32_ELEMENT_TYPE_TEXT, true, false, true, true, false, false},
     {826558505u, "SCREEN32_ELEMENT_ID_OBJ9", "obj9", 1u, "LOAD", SCREEN32_ELEMENT_TYPE_TEXT, true, false, true, true, false, false},
+    {760694328u, "SCREEN32_ELEMENT_ID_MAC_ADDRESS", "mac_address", 1u, "LOAD", SCREEN32_ELEMENT_TYPE_TEXT, true, false, true, true, false, false},
+    {848373661u, "SCREEN32_ELEMENT_ID_VERSION", "version", 1u, "LOAD", SCREEN32_ELEMENT_TYPE_TEXT, true, false, true, true, false, false},
     {1033385314u, "SCREEN32_ELEMENT_ID_C_MAIN_MENU", "c_main_menu", 2u, "MAIN_MENU", SCREEN32_ELEMENT_TYPE_TEXT, true, false, true, true, false, false},
     {1002020473u, "SCREEN32_ELEMENT_ID_B_MAIN_TASK", "b_main_task", 2u, "MAIN_MENU", SCREEN32_ELEMENT_TYPE_BUTTON, true, false, true, true, true, false},
     {803691612u, "SCREEN32_ELEMENT_ID_B_MAIN_PROFILE", "b_main_profile", 2u, "MAIN_MENU", SCREEN32_ELEMENT_TYPE_BUTTON, true, false, true, true, true, false},

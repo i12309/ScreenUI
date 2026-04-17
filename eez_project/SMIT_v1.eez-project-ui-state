@@ -193,7 +193,7 @@
               "type": "tabset",
               "id": "EDITORS",
               "weight": 56.48419203747073,
-              "selected": 2,
+              "selected": 1,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
@@ -218,18 +218,6 @@
                     "permanent": false
                   },
                   "icon": "svg:page"
-                },
-                {
-                  "type": "tab",
-                  "id": "#10cd806a-5aa8-461e-8d6b-dc684f6fd8d6",
-                  "name": "Settings",
-                  "component": "editor",
-                  "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/settings",
-                    "subObjectPath": "[SMIT_v1.eez-project]:/settings",
-                    "permanent": false
-                  },
-                  "icon": "material:settings"
                 }
               ],
               "active": true
@@ -1096,7 +1084,9 @@
               "0": {}
             }
           },
-          "2": {}
+          "2": {
+            "0": {}
+          }
         }
       },
       "transform": {

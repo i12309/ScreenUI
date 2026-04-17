@@ -68,6 +68,8 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_element(objectMap, 1048767685u, 1u, objects.obj7, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 973007217u, 1u, objects.obj8, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 826558505u, 1u, objects.obj9, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 760694328u, 1u, objects.mac_address, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 848373661u, 1u, objects.version, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 1033385314u, 2u, objects.c_main_menu, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 1002020473u, 2u, objects.b_main_task, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 803691612u, 2u, objects.b_main_profile, outElements, outCapacity, boundCount) && allOk;
