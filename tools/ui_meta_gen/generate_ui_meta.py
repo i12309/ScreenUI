@@ -807,6 +807,31 @@ def generate() -> None:
         )
     write_file(OUT_BACKEND_PAGES_DIR / "pages.h", render_pages_aggregator(pages))
 
+    # PIO-манифест для папки. Без него LDF не подхватит библиотеку как зависимость.
+    backend_pages_lib_json = OUT_BACKEND_PAGES_DIR / "library.json"
+    if not backend_pages_lib_json.exists():
+        backend_pages_lib_json.write_text(
+            (
+                "{\n"
+                "  \"name\": \"screenui-backend-pages\",\n"
+                "  \"version\": \"0.1.0\",\n"
+                "  \"description\": \"Generated per-page base classes for backend (inherits screenlib::IHostPage)\",\n"
+                "  \"frameworks\": [\"arduino\"],\n"
+                "  \"platforms\": [\"espressif32\"],\n"
+                "  \"build\": {\n"
+                "    \"includeDir\": \".\",\n"
+                "    \"srcFilter\": \"-<*>\"\n"
+                "  },\n"
+                "  \"dependencies\": [\n"
+                "    { \"name\": \"screenlib-host\" },\n"
+                "    { \"name\": \"screenui-shared-meta\" }\n"
+                "  ]\n"
+                "}\n"
+            ),
+            encoding="utf-8",
+            newline="\n",
+        )
+
     print(f"Generated shared meta in: {OUT_SHARED_DIR}")
     print(f"Generated frontend meta in: {OUT_FRONTEND_META_DIR}")
     print(f"Generated backend page bases in: {OUT_BACKEND_PAGES_DIR}")
