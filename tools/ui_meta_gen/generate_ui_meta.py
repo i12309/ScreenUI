@@ -27,6 +27,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 UI_DIR = REPO_ROOT / "eez_project" / "src" / "ui"
 OUT_SHARED_DIR = REPO_ROOT / "generated" / "shared"
 OUT_FRONTEND_META_DIR = REPO_ROOT / "generated" / "frontend_meta"
+OUT_BACKEND_PAGES_DIR = REPO_ROOT / "generated" / "backend_pages"
 
 SCREENS_H = UI_DIR / "screens.h"
 SCREENS_C = UI_DIR / "screens.c"
@@ -416,6 +417,145 @@ def render_element_descriptors_header(
     return "\n".join(lines)
 
 
+def to_pascal_case(snake: str) -> str:
+    parts = re.split(r"[^A-Za-z0-9]+", snake)
+    return "".join(p[:1].upper() + p[1:].lower() for p in parts if p)
+
+
+def page_class_name(page: PageInfo) -> str:
+    # main_menu -> MainMenu
+    return to_pascal_case(page.object_name)
+
+
+def element_handler_suffix(object_name: str) -> str:
+    # b_main_task -> BMainTask
+    return to_pascal_case(object_name)
+
+
+def render_page_base_header(
+    page: PageInfo,
+    page_elements: List[ElementInfo],
+    element_ids: Dict[str, int],
+) -> str:
+    cls = page_class_name(page) + "Base"
+    short_name = page.enum_name[len("SCREEN_ID_") :]
+    page_id_macro = f"SCREEN32_PAGE_ID_{short_name}"
+
+    buttons: List[ElementInfo] = []
+    int_inputs: List[ElementInfo] = []
+    text_inputs: List[ElementInfo] = []
+
+    for info in page_elements:
+        elem_type, flags = infer_type_and_flags(info)
+        if flags["emits_button_event"]:
+            buttons.append(info)
+        elif flags["emits_input_event"]:
+            if elem_type == "SCREEN32_ELEMENT_TYPE_INPUT":
+                text_inputs.append(info)
+            else:
+                int_inputs.append(info)
+
+    lines = [
+        "#pragma once",
+        "",
+        "#include <stdint.h>",
+        "",
+        "#include \"pages/IHostPage.h\"",
+        "",
+        "#include \"../shared/element_ids.generated.h\"",
+        "#include \"../shared/page_ids.generated.h\"",
+        "",
+        "namespace screenui {",
+        "",
+        f"class {cls} : public screenlib::IHostPage {{",
+        "public:",
+        f"    static constexpr uint32_t kPageId = {page_id_macro};",
+        f"    uint32_t pageId() const final {{ return kPageId; }}",
+        "",
+        "protected:",
+    ]
+
+    if buttons:
+        lines.append("    // === Кнопки ===")
+        for info in buttons:
+            handler = "onClick" + element_handler_suffix(info.object_name)
+            lines.append(f"    virtual void {handler}() {{}}")
+        lines.append("")
+
+    if int_inputs:
+        lines.append("    // === Числовые поля (slider/bar/arc/spinbox/roller/dropdown/switch) ===")
+        for info in int_inputs:
+            handler = "onChange" + element_handler_suffix(info.object_name)
+            lines.append(f"    virtual void {handler}(int32_t value) {{ (void)value; }}")
+        lines.append("")
+
+    if text_inputs:
+        lines.append("    // === Текстовые поля ===")
+        for info in text_inputs:
+            handler = "onChange" + element_handler_suffix(info.object_name)
+            lines.append(f"    virtual void {handler}(const char* text) {{ (void)text; }}")
+        lines.append("")
+
+    # Диспатч из IHostPage в типизированные обработчики.
+    lines.append("private:")
+
+    if buttons:
+        lines.append("    void onButton(uint32_t elementId) final {")
+        lines.append("        switch (elementId) {")
+        for info in buttons:
+            handler = "onClick" + element_handler_suffix(info.object_name)
+            elem_macro = make_element_enum_name(info.object_name)
+            lines.append(f"            case {elem_macro}: {handler}(); break;")
+        lines.append("            default: break;")
+        lines.append("        }")
+        lines.append("    }")
+        lines.append("")
+
+    if int_inputs:
+        lines.append("    void onInputInt(uint32_t elementId, int32_t value) final {")
+        lines.append("        switch (elementId) {")
+        for info in int_inputs:
+            handler = "onChange" + element_handler_suffix(info.object_name)
+            elem_macro = make_element_enum_name(info.object_name)
+            lines.append(f"            case {elem_macro}: {handler}(value); break;")
+        lines.append("            default: break;")
+        lines.append("        }")
+        lines.append("    }")
+        lines.append("")
+
+    if text_inputs:
+        lines.append("    void onInputText(uint32_t elementId, const char* text) final {")
+        lines.append("        switch (elementId) {")
+        for info in text_inputs:
+            handler = "onChange" + element_handler_suffix(info.object_name)
+            elem_macro = make_element_enum_name(info.object_name)
+            lines.append(f"            case {elem_macro}: {handler}(text); break;")
+        lines.append("            default: break;")
+        lines.append("        }")
+        lines.append("    }")
+        lines.append("")
+
+    lines.append("};")
+    lines.append("")
+    lines.append("}  // namespace screenui")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def render_pages_aggregator(pages: List[PageInfo]) -> str:
+    lines = [
+        "#pragma once",
+        "",
+        "// Удобный агрегатор всех сгенерированных base-классов страниц.",
+        "// Подключай этот файл, если в одном TU нужны несколько страниц.",
+        "",
+    ]
+    for page in pages:
+        lines.append(f"#include \"{page.object_name}_base.h\"")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def render_ui_object_map_header() -> str:
     return "\n".join(
         [
@@ -655,8 +795,21 @@ def generate() -> None:
     )
     write_file(OUT_FRONTEND_META_DIR / "eez_page_meta.generated.cpp", render_eez_page_meta_cpp(pages))
 
+    elements_by_page: Dict[str, List[ElementInfo]] = {p.enum_name: [] for p in pages}
+    for name in element_order:
+        info = assignments[name]
+        elements_by_page.setdefault(info.page_enum, []).append(info)
+
+    for page in pages:
+        write_file(
+            OUT_BACKEND_PAGES_DIR / f"{page.object_name}_base.h",
+            render_page_base_header(page, elements_by_page.get(page.enum_name, []), element_ids),
+        )
+    write_file(OUT_BACKEND_PAGES_DIR / "pages.h", render_pages_aggregator(pages))
+
     print(f"Generated shared meta in: {OUT_SHARED_DIR}")
     print(f"Generated frontend meta in: {OUT_FRONTEND_META_DIR}")
+    print(f"Generated backend page bases in: {OUT_BACKEND_PAGES_DIR}")
     print(f"Pages: {len(pages)}, Elements: {len(element_order)}")
 
 
