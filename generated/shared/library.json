@@ -1,0 +1,11 @@
+{
+  "name": "screenui-shared-meta",
+  "version": "0.1.0",
+  "description": "Shared generated page/element IDs and descriptors",
+  "frameworks": ["arduino"],
+  "platforms": ["espressif32"],
+  "build": {
+    "includeDir": ".",
+    "srcFilter": "-<*>"
+  }
+}

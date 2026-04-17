@@ -1,0 +1,11 @@
+{
+  "name": "screenui-adapter",
+  "version": "0.1.0",
+  "description": "Concrete LVGL/EEZ adapter implementation for screenLIB IUiAdapter",
+  "frameworks": ["arduino"],
+  "platforms": ["espressif32"],
+  "build": {
+    "includeDir": ".",
+    "srcDir": "."
+  }
+}
