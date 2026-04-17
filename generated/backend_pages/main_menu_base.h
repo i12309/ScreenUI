@@ -15,7 +15,7 @@ namespace screenui {
 
 class MainMenuBase : public screenlib::IHostPage {
 public:
-    static constexpr uint32_t kPageId = SCREEN32_PAGE_ID_MAIN_MENU;
+    static constexpr uint32_t kPageId = scr_MAIN_MENU;
     uint32_t pageId() const final { return kPageId; }
 
 protected:
@@ -30,12 +30,12 @@ protected:
 private:
     void onButton(uint32_t elementId) final {
         switch (elementId) {
-            case SCREEN32_ELEMENT_ID_B_MAIN_TASK: onClickBMainTask(); break;
-            case SCREEN32_ELEMENT_ID_B_MAIN_PROFILE: onClickBMainProfile(); break;
-            case SCREEN32_ELEMENT_ID_B_MAIN_NET: onClickBMainNet(); break;
-            case SCREEN32_ELEMENT_ID_B_MAIN_SERVICE: onClickBMainService(); break;
-            case SCREEN32_ELEMENT_ID_B_MAIN_STATS: onClickBMainStats(); break;
-            case SCREEN32_ELEMENT_ID_B_MAIN_SUPPORT: onClickBMainSupport(); break;
+            case btn_MAIN_TASK: onClickBMainTask(); break;
+            case btn_MAIN_PROFILE: onClickBMainProfile(); break;
+            case btn_MAIN_NET: onClickBMainNet(); break;
+            case btn_MAIN_SERVICE: onClickBMainService(); break;
+            case btn_MAIN_STATS: onClickBMainStats(); break;
+            case btn_MAIN_SUPPORT: onClickBMainSupport(); break;
             default: break;
         }
     }

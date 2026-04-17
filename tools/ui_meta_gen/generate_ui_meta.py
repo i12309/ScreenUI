@@ -18,10 +18,11 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 UI_DIR = REPO_ROOT / "eez_project" / "src" / "ui"
@@ -31,10 +32,13 @@ OUT_BACKEND_PAGES_DIR = REPO_ROOT / "generated" / "backend_pages"
 
 SCREENS_H = UI_DIR / "screens.h"
 SCREENS_C = UI_DIR / "screens.c"
+EEZ_PROJECT_DIR = UI_DIR.parents[1]
 
 
 @dataclass(frozen=True)
 class PageInfo:
+    """Описание страницы из `screens.h`."""
+
     enum_name: str
     page_id: int
     object_name: str
@@ -42,22 +46,236 @@ class PageInfo:
 
 @dataclass(frozen=True)
 class ElementInfo:
+    """Описание элемента с привязкой к странице и LVGL creator-функции."""
+
     object_name: str
     page_enum: str
     page_id: int
     creator: str
+    studio_type: Optional[str] = None
 
 
-BUTTON_CREATORS = {"lv_button", "lv_btn"}
-VALUE_CREATORS = {"lv_slider", "lv_bar", "lv_arc", "lv_spinbox", "lv_roller", "lv_dropdown", "lv_switch"}
-INPUT_CREATORS = {"lv_textarea"}
-TEXT_CREATORS = {"lv_label"}
+# Полный набор типовых элементов (ориентир: палитра LVGL/Studio из задачи).
+ELEMENT_TYPES: List[tuple[str, int]] = [
+    ("TYPE_UNKNOWN", 0),
+    ("TYPE_ARC", 1),
+    ("TYPE_BUTTON", 2),
+    ("TYPE_BUTTON_MATRIX", 3),
+    ("TYPE_CONTAINER", 4),
+    ("TYPE_IMAGE", 5),
+    ("TYPE_TEXT", 6),
+    ("TYPE_LIST", 7),
+    ("TYPE_MENU", 8),
+    ("TYPE_MESSAGE_BOX", 9),
+    ("TYPE_QR_CODE", 10),
+    ("TYPE_PANEL", 11),
+    ("TYPE_SPAN", 12),
+    ("TYPE_TABLE", 13),
+    ("TYPE_TAB_VIEW", 14),
+    ("TYPE_TAB", 15),
+    ("TYPE_TEXTAREA", 16),
+    ("TYPE_TILE_VIEW", 17),
+    ("TYPE_WINDOW", 18),
+    ("TYPE_CALENDAR", 19),
+    ("TYPE_CHECKBOX", 20),
+    ("TYPE_DROPDOWN", 21),
+    ("TYPE_IMAGE_BUTTON", 22),
+    ("TYPE_KEYBOARD", 23),
+    ("TYPE_ROLLER", 24),
+    ("TYPE_SPINBOX", 25),
+    ("TYPE_SLIDER", 26),
+    ("TYPE_SWITCH", 27),
+    ("TYPE_ANIMATION_IMAGE", 28),
+    ("TYPE_BAR", 29),
+    ("TYPE_CHART", 30),
+    ("TYPE_CANVAS", 31),
+    ("TYPE_LED", 32),
+    ("TYPE_LINE", 33),
+    ("TYPE_LOTTIE", 34),
+    ("TYPE_SCALE", 35),
+    ("TYPE_SPINNER", 36),
+]
+
+# Короткие и читаемые префиксы для element id (btn_..., txt_..., pnl_...).
+ELEMENT_TYPE_PREFIXES: Dict[str, str] = {
+    "TYPE_UNKNOWN": "obj",
+    "TYPE_ARC": "arc",
+    "TYPE_BUTTON": "btn",
+    "TYPE_BUTTON_MATRIX": "bmx",
+    "TYPE_CONTAINER": "cnt",
+    "TYPE_IMAGE": "img",
+    "TYPE_TEXT": "txt",
+    "TYPE_LIST": "lst",
+    "TYPE_MENU": "mnu",
+    "TYPE_MESSAGE_BOX": "msg",
+    "TYPE_QR_CODE": "qrc",
+    "TYPE_PANEL": "pnl",
+    "TYPE_SPAN": "spn",
+    "TYPE_TABLE": "tbl",
+    "TYPE_TAB_VIEW": "tbv",
+    "TYPE_TAB": "tab",
+    "TYPE_TEXTAREA": "txa",
+    "TYPE_TILE_VIEW": "tlv",
+    "TYPE_WINDOW": "win",
+    "TYPE_CALENDAR": "cal",
+    "TYPE_CHECKBOX": "chk",
+    "TYPE_DROPDOWN": "drp",
+    "TYPE_IMAGE_BUTTON": "ibtn",
+    "TYPE_KEYBOARD": "kbd",
+    "TYPE_ROLLER": "rlr",
+    "TYPE_SPINBOX": "spb",
+    "TYPE_SLIDER": "sld",
+    "TYPE_SWITCH": "swt",
+    "TYPE_ANIMATION_IMAGE": "ani",
+    "TYPE_BAR": "bar",
+    "TYPE_CHART": "cht",
+    "TYPE_CANVAS": "cnv",
+    "TYPE_LED": "led",
+    "TYPE_LINE": "lin",
+    "TYPE_LOTTIE": "lot",
+    "TYPE_SCALE": "scl",
+    "TYPE_SPINNER": "spi",
+}
+
+# Маппинг creator-функций LVGL в типы генератора.
+CREATOR_TO_TYPE: Dict[str, str] = {
+    "lv_arc": "TYPE_ARC",
+    "lv_button": "TYPE_BUTTON",
+    "lv_btn": "TYPE_BUTTON",
+    "lv_buttonmatrix": "TYPE_BUTTON_MATRIX",
+    "lv_btnmatrix": "TYPE_BUTTON_MATRIX",
+    "lv_image": "TYPE_IMAGE",
+    "lv_img": "TYPE_IMAGE",
+    "lv_label": "TYPE_TEXT",
+    "lv_list": "TYPE_LIST",
+    "lv_menu": "TYPE_MENU",
+    "lv_msgbox": "TYPE_MESSAGE_BOX",
+    "lv_qrcode": "TYPE_QR_CODE",
+    "lv_span": "TYPE_SPAN",
+    "lv_table": "TYPE_TABLE",
+    "lv_tabview": "TYPE_TAB_VIEW",
+    "lv_textarea": "TYPE_TEXTAREA",
+    "lv_tileview": "TYPE_TILE_VIEW",
+    "lv_win": "TYPE_WINDOW",
+    "lv_calendar": "TYPE_CALENDAR",
+    "lv_checkbox": "TYPE_CHECKBOX",
+    "lv_dropdown": "TYPE_DROPDOWN",
+    "lv_imagebutton": "TYPE_IMAGE_BUTTON",
+    "lv_imgbutton": "TYPE_IMAGE_BUTTON",
+    "lv_imgbtn": "TYPE_IMAGE_BUTTON",
+    "lv_keyboard": "TYPE_KEYBOARD",
+    "lv_roller": "TYPE_ROLLER",
+    "lv_spinbox": "TYPE_SPINBOX",
+    "lv_slider": "TYPE_SLIDER",
+    "lv_switch": "TYPE_SWITCH",
+    "lv_animimg": "TYPE_ANIMATION_IMAGE",
+    "lv_bar": "TYPE_BAR",
+    "lv_chart": "TYPE_CHART",
+    "lv_canvas": "TYPE_CANVAS",
+    "lv_led": "TYPE_LED",
+    "lv_line": "TYPE_LINE",
+    "lv_lottie": "TYPE_LOTTIE",
+    "lv_scale": "TYPE_SCALE",
+    "lv_spinner": "TYPE_SPINNER",
+}
+
+TEXT_CAPABLE_TYPES = {
+    "TYPE_BUTTON",
+    "TYPE_BUTTON_MATRIX",
+    "TYPE_CHECKBOX",
+    "TYPE_CONTAINER",
+    "TYPE_DROPDOWN",
+    "TYPE_LIST",
+    "TYPE_MENU",
+    "TYPE_MESSAGE_BOX",
+    "TYPE_PANEL",
+    "TYPE_QR_CODE",
+    "TYPE_SPAN",
+    "TYPE_TAB",
+    "TYPE_TAB_VIEW",
+    "TYPE_TEXT",
+    "TYPE_TEXTAREA",
+    "TYPE_WINDOW",
+}
+VALUE_CAPABLE_TYPES = {
+    "TYPE_ARC",
+    "TYPE_BAR",
+    "TYPE_CALENDAR",
+    "TYPE_CHECKBOX",
+    "TYPE_DROPDOWN",
+    "TYPE_ROLLER",
+    "TYPE_SLIDER",
+    "TYPE_SPINBOX",
+    "TYPE_SWITCH",
+}
+BUTTON_EVENT_TYPES = {"TYPE_BUTTON", "TYPE_BUTTON_MATRIX", "TYPE_IMAGE_BUTTON", "TYPE_TAB"}
+INPUT_EVENT_TYPES = VALUE_CAPABLE_TYPES | {"TYPE_KEYBOARD", "TYPE_TEXTAREA"}
+TEXT_INPUT_TYPES = {"TYPE_KEYBOARD", "TYPE_TEXTAREA"}
+
+# Точное сопоставление типов виджетов Studio -> типы генератора.
+STUDIO_WIDGET_TO_ELEMENT_TYPE: Dict[str, str] = {
+    "LVGLContainerWidget": "TYPE_CONTAINER",
+    "LVGLPanelWidget": "TYPE_PANEL",
+}
 
 
 def read_text(path: Path) -> str:
     if not path.exists():
         raise FileNotFoundError(f"Missing required input file: {path}")
     return path.read_text(encoding="utf-8")
+
+
+def find_eez_project_file() -> Optional[Path]:
+    """Находит основной `.eez-project` файл в каталоге `eez_project`."""
+
+    candidates = sorted(EEZ_PROJECT_DIR.glob("*.eez-project"))
+    return candidates[0] if candidates else None
+
+
+def normalize_identifier(identifier: str) -> str:
+    """Приводит identifier из Studio к виду имён объектов из `screens.*`."""
+
+    snake = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", identifier)
+    snake = re.sub(r"[^A-Za-z0-9]+", "_", snake).strip("_")
+    return snake.lower()
+
+
+def _walk_widgets(node: object, out: Dict[str, str]) -> None:
+    """Рекурсивно собирает identifier -> element type из JSON дерева проекта."""
+
+    if isinstance(node, dict):
+        raw_identifier = node.get("identifier")
+        raw_widget_type = node.get("type")
+        if isinstance(raw_identifier, str) and isinstance(raw_widget_type, str):
+            mapped = STUDIO_WIDGET_TO_ELEMENT_TYPE.get(raw_widget_type)
+            if mapped is not None:
+                out[normalize_identifier(raw_identifier)] = mapped
+
+        for value in node.values():
+            _walk_widgets(value, out)
+        return
+
+    if isinstance(node, list):
+        for item in node:
+            _walk_widgets(item, out)
+
+
+def parse_studio_widget_hints() -> Dict[str, str]:
+    """Читает `.eez-project` и возвращает подсказки по типам элементов."""
+
+    project_file = find_eez_project_file()
+    if project_file is None:
+        return {}
+
+    try:
+        data = json.loads(read_text(project_file))
+    except Exception:
+        # Генератор не должен падать из-за вспомогательных подсказок.
+        return {}
+
+    hints: Dict[str, str] = {}
+    _walk_widgets(data, hints)
+    return hints
 
 
 def to_object_name(page_enum_name: str) -> str:
@@ -117,8 +335,13 @@ def parse_pages_and_objects(screens_h: str) -> tuple[List[PageInfo], List[str]]:
     return pages, objects
 
 
-def parse_object_assignments(screens_c: str, pages: List[PageInfo]) -> Dict[str, ElementInfo]:
+def parse_object_assignments(
+    screens_c: str,
+    pages: List[PageInfo],
+    studio_type_hints: Optional[Dict[str, str]] = None,
+) -> Dict[str, ElementInfo]:
     func_to_page: Dict[str, PageInfo] = {to_create_function(p.enum_name): p for p in pages}
+    hints = studio_type_hints or {}
 
     current_page: PageInfo | None = None
     current_creator = "lv_obj"
@@ -148,6 +371,7 @@ def parse_object_assignments(screens_c: str, pages: List[PageInfo]) -> Dict[str,
                 page_enum=current_page.enum_name,
                 page_id=current_page.page_id,
                 creator=current_creator,
+                studio_type=hints.get(obj_name),
             )
 
     return out
@@ -157,8 +381,67 @@ def normalize_element_name(object_name: str) -> str:
     return re.sub(r"[^A-Za-z0-9]+", "_", object_name).strip("_").upper()
 
 
-def make_element_enum_name(object_name: str) -> str:
-    return f"SCREEN32_ELEMENT_ID_{normalize_element_name(object_name)}"
+def make_page_enum_name(page_enum_name: str) -> str:
+    """Формирует читаемое имя страницы в стиле `scr_MAIN_MENU`."""
+
+    if not page_enum_name.startswith("SCREEN_ID_"):
+        raise ValueError(f"Invalid page enum name: {page_enum_name}")
+    return f"scr_{page_enum_name[len('SCREEN_ID_') :]}"
+
+
+def infer_lv_obj_kind(object_name: str) -> str:
+    """Уточняет тип для `lv_obj` по имени объекта (panel/container)."""
+
+    lowered = object_name.lower()
+    if lowered.startswith(("c_", "cnt_", "container_")):
+        return "TYPE_CONTAINER"
+    if lowered.startswith(("p_", "pnl_", "panel_")):
+        return "TYPE_PANEL"
+    return "TYPE_CONTAINER"
+
+
+def infer_element_type(element: ElementInfo) -> str:
+    """Определяет тип элемента по creator-функции LVGL."""
+
+    if element.studio_type is not None:
+        return element.studio_type
+
+    creator = element.creator
+    if creator in CREATOR_TO_TYPE:
+        return CREATOR_TO_TYPE[creator]
+    if creator == "lv_obj":
+        return infer_lv_obj_kind(element.object_name)
+    return "TYPE_CONTAINER"
+
+
+def strip_known_prefix(object_name: str, element_type: str) -> str:
+    """Удаляет устаревшие короткие префиксы из имени Studio, если они совпали с типом."""
+
+    by_type: Dict[str, tuple[str, ...]] = {
+        "TYPE_BUTTON": ("b_", "btn_"),
+        "TYPE_PANEL": ("p_", "pnl_", "panel_"),
+        "TYPE_CONTAINER": ("c_", "cnt_", "container_"),
+        "TYPE_TEXT": ("t_", "txt_", "lbl_", "label_"),
+        "TYPE_IMAGE": ("i_", "img_"),
+        "TYPE_IMAGE_BUTTON": ("ib_", "ibtn_", "imgbtn_"),
+        "TYPE_TEXTAREA": ("ta_", "txa_", "textarea_"),
+    }
+    lowered = object_name.lower()
+    for pref in by_type.get(element_type, ()):
+        if lowered.startswith(pref):
+            return object_name[len(pref) :]
+    return object_name
+
+
+def make_element_enum_name(object_name: str, element_type: str) -> str:
+    """Формирует читаемое имя элемента в стиле `btn_MAIN_TASK`, `txt_VERSION`."""
+
+    prefix = ELEMENT_TYPE_PREFIXES.get(element_type, ELEMENT_TYPE_PREFIXES["TYPE_UNKNOWN"])
+    base_name = strip_known_prefix(object_name, element_type)
+    normalized = normalize_element_name(base_name)
+    if not normalized:
+        normalized = normalize_element_name(object_name)
+    return f"{prefix}_{normalized}"
 
 
 def stable_element_id(object_name: str, used_ids: set[int]) -> int:
@@ -177,39 +460,21 @@ def stable_element_id(object_name: str, used_ids: set[int]) -> int:
 
 
 def infer_type_and_flags(element: ElementInfo) -> tuple[str, Dict[str, bool]]:
-    creator = element.creator
+    """Возвращает тип элемента и capability-флаги для runtime/adapter слоя."""
 
+    element_type = infer_element_type(element)
     flags = {
-        "supports_text": False,
-        "supports_value": False,
+        "supports_text": element_type in TEXT_CAPABLE_TYPES,
+        "supports_value": element_type in VALUE_CAPABLE_TYPES,
         "supports_visible": True,
         "supports_color": True,
-        "emits_button_event": False,
-        "emits_input_event": False,
+        "emits_button_event": element_type in BUTTON_EVENT_TYPES,
+        "emits_input_event": element_type in INPUT_EVENT_TYPES,
     }
-
-    if creator in BUTTON_CREATORS:
+    if element_type in {"TYPE_PANEL", "TYPE_CONTAINER"}:
+        # Для контейнеров сохраняем прежнее поведение: текст через вложенный label.
         flags["supports_text"] = True
-        flags["emits_button_event"] = True
-        return "SCREEN32_ELEMENT_TYPE_BUTTON", flags
-
-    if creator in INPUT_CREATORS:
-        flags["supports_text"] = True
-        flags["emits_input_event"] = True
-        return "SCREEN32_ELEMENT_TYPE_INPUT", flags
-
-    if creator in VALUE_CREATORS:
-        flags["supports_value"] = True
-        flags["emits_input_event"] = True
-        return "SCREEN32_ELEMENT_TYPE_VALUE", flags
-
-    if creator in TEXT_CREATORS:
-        flags["supports_text"] = True
-        return "SCREEN32_ELEMENT_TYPE_TEXT", flags
-
-    # Для generic-контейнеров по умолчанию считаем text-capable через вложенный поиск label.
-    flags["supports_text"] = True
-    return "SCREEN32_ELEMENT_TYPE_TEXT", flags
+    return element_type, flags
 
 
 def render_page_ids_header(pages: List[PageInfo]) -> str:
@@ -225,8 +490,7 @@ def render_page_ids_header(pages: List[PageInfo]) -> str:
         "typedef enum Screen32PageId {",
     ]
     for page in pages:
-        short_name = page.enum_name[len("SCREEN_ID_") :]
-        lines.append(f"    SCREEN32_PAGE_ID_{short_name} = {page.page_id},")
+        lines.append(f"    {make_page_enum_name(page.enum_name)} = {page.page_id},")
     lines.extend(
         [
             "} Screen32PageId;",
@@ -242,7 +506,11 @@ def render_page_ids_header(pages: List[PageInfo]) -> str:
     return "\n".join(lines)
 
 
-def render_element_ids_header(element_order: List[str], element_ids: Dict[str, int]) -> str:
+def render_element_ids_header(
+    element_order: List[str],
+    element_map: Dict[str, ElementInfo],
+    element_ids: Dict[str, int],
+) -> str:
     lines = [
         "#pragma once",
         "",
@@ -255,7 +523,7 @@ def render_element_ids_header(element_order: List[str], element_ids: Dict[str, i
         "typedef enum Screen32ElementId {",
     ]
     for name in element_order:
-        enum_name = make_element_enum_name(name)
+        enum_name = make_element_enum_name(name, infer_element_type(element_map[name]))
         lines.append(f"    {enum_name} = {element_ids[name]}u,")
     lines.extend(
         [
@@ -344,11 +612,11 @@ def render_element_descriptors_header(
         "#endif",
         "",
         "typedef enum Screen32ElementType {",
-        "    SCREEN32_ELEMENT_TYPE_BUTTON = 1,",
-        "    SCREEN32_ELEMENT_TYPE_TEXT = 2,",
-        "    SCREEN32_ELEMENT_TYPE_VALUE = 3,",
-        "    SCREEN32_ELEMENT_TYPE_INPUT = 4,",
-        "    SCREEN32_ELEMENT_TYPE_VISIBLE = 5",
+    ]
+    for type_name, type_value in ELEMENT_TYPES:
+        lines.append(f"    {type_name} = {type_value},")
+    lines.extend(
+        [
         "} Screen32ElementType;",
         "",
         "typedef struct Screen32ElementDescriptor {",
@@ -367,7 +635,7 @@ def render_element_descriptors_header(
         "} Screen32ElementDescriptor;",
         "",
         "static const Screen32ElementDescriptor g_screen32_element_descriptors[SCREEN32_ELEMENT_DESCRIPTOR_COUNT] = {",
-    ]
+    ])
 
     for name in element_order:
         info = element_map[name]
@@ -377,7 +645,7 @@ def render_element_descriptors_header(
             "    "
             + "{"
             + f"{element_ids[name]}u, "
-            + f"\"{make_element_enum_name(name)}\", "
+            + f"\"{make_element_enum_name(name, elem_type)}\", "
             + f"\"{name}\", "
             + f"{info.page_id}u, "
             + f"\"{page_short}\", "
@@ -438,8 +706,7 @@ def render_page_base_header(
     element_ids: Dict[str, int],
 ) -> str:
     cls = page_class_name(page) + "Base"
-    short_name = page.enum_name[len("SCREEN_ID_") :]
-    page_id_macro = f"SCREEN32_PAGE_ID_{short_name}"
+    page_id_macro = make_page_enum_name(page.enum_name)
 
     buttons: List[ElementInfo] = []
     int_inputs: List[ElementInfo] = []
@@ -450,7 +717,7 @@ def render_page_base_header(
         if flags["emits_button_event"]:
             buttons.append(info)
         elif flags["emits_input_event"]:
-            if elem_type == "SCREEN32_ELEMENT_TYPE_INPUT":
+            if elem_type in TEXT_INPUT_TYPES:
                 text_inputs.append(info)
             else:
                 int_inputs.append(info)
@@ -504,7 +771,7 @@ def render_page_base_header(
         lines.append("        switch (elementId) {")
         for info in buttons:
             handler = "onClick" + element_handler_suffix(info.object_name)
-            elem_macro = make_element_enum_name(info.object_name)
+            elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
             lines.append(f"            case {elem_macro}: {handler}(); break;")
         lines.append("            default: break;")
         lines.append("        }")
@@ -516,7 +783,7 @@ def render_page_base_header(
         lines.append("        switch (elementId) {")
         for info in int_inputs:
             handler = "onChange" + element_handler_suffix(info.object_name)
-            elem_macro = make_element_enum_name(info.object_name)
+            elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
             lines.append(f"            case {elem_macro}: {handler}(value); break;")
         lines.append("            default: break;")
         lines.append("        }")
@@ -528,7 +795,7 @@ def render_page_base_header(
         lines.append("        switch (elementId) {")
         for info in text_inputs:
             handler = "onChange" + element_handler_suffix(info.object_name)
-            elem_macro = make_element_enum_name(info.object_name)
+            elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
             lines.append(f"            case {elem_macro}: {handler}(text); break;")
         lines.append("            default: break;")
         lines.append("        }")
@@ -762,9 +1029,10 @@ def write_file(path: Path, content: str) -> None:
 def generate() -> None:
     screens_h = read_text(SCREENS_H)
     screens_c = read_text(SCREENS_C)
+    studio_type_hints = parse_studio_widget_hints()
 
     pages, objects = parse_pages_and_objects(screens_h)
-    assignments = parse_object_assignments(screens_c, pages)
+    assignments = parse_object_assignments(screens_c, pages, studio_type_hints)
 
     page_object_names = {page.object_name for page in pages}
     element_order = [name for name in objects if name not in page_object_names]
@@ -781,7 +1049,7 @@ def generate() -> None:
     write_file(OUT_SHARED_DIR / "page_ids.generated.h", render_page_ids_header(pages))
     write_file(
         OUT_SHARED_DIR / "element_ids.generated.h",
-        render_element_ids_header(element_order, element_ids),
+        render_element_ids_header(element_order, assignments, element_ids),
     )
     write_file(OUT_SHARED_DIR / "page_descriptors.generated.h", render_page_descriptors_header(pages))
     write_file(

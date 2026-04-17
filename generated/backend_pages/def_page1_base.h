@@ -15,7 +15,7 @@ namespace screenui {
 
 class DefPage1Base : public screenlib::IHostPage {
 public:
-    static constexpr uint32_t kPageId = SCREEN32_PAGE_ID_DEF_PAGE1;
+    static constexpr uint32_t kPageId = scr_DEF_PAGE1;
     uint32_t pageId() const final { return kPageId; }
 
 protected:
@@ -35,17 +35,17 @@ protected:
 private:
     void onButton(uint32_t elementId) final {
         switch (elementId) {
-            case SCREEN32_ELEMENT_ID_BACK: onClickBack(); break;
-            case SCREEN32_ELEMENT_ID_B_SIG1_2: onClickBSig12(); break;
-            case SCREEN32_ELEMENT_ID_B_SIG1: onClickBSig1(); break;
-            case SCREEN32_ELEMENT_ID_B_SIG1_1: onClickBSig11(); break;
-            case SCREEN32_ELEMENT_ID_NEXT_2: onClickNext2(); break;
-            case SCREEN32_ELEMENT_ID_B1: onClickB1(); break;
-            case SCREEN32_ELEMENT_ID_B2: onClickB2(); break;
-            case SCREEN32_ELEMENT_ID_B3: onClickB3(); break;
-            case SCREEN32_ELEMENT_ID_B4: onClickB4(); break;
-            case SCREEN32_ELEMENT_ID_B5: onClickB5(); break;
-            case SCREEN32_ELEMENT_ID_B6: onClickB6(); break;
+            case btn_BACK: onClickBack(); break;
+            case btn_SIG1_2: onClickBSig12(); break;
+            case btn_SIG1: onClickBSig1(); break;
+            case btn_SIG1_1: onClickBSig11(); break;
+            case btn_NEXT_2: onClickNext2(); break;
+            case btn_B1: onClickB1(); break;
+            case btn_B2: onClickB2(); break;
+            case btn_B3: onClickB3(); break;
+            case btn_B4: onClickB4(); break;
+            case btn_B5: onClickB5(); break;
+            case btn_B6: onClickB6(); break;
             default: break;
         }
     }

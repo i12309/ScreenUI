@@ -15,7 +15,7 @@ namespace screenui {
 
 class DefPage4Base : public screenlib::IHostPage {
 public:
-    static constexpr uint32_t kPageId = SCREEN32_PAGE_ID_DEF_PAGE4;
+    static constexpr uint32_t kPageId = scr_DEF_PAGE4;
     uint32_t pageId() const final { return kPageId; }
 
 protected:
@@ -41,23 +41,23 @@ protected:
 private:
     void onButton(uint32_t elementId) final {
         switch (elementId) {
-            case SCREEN32_ELEMENT_ID_BACK_4: onClickBack4(); break;
-            case SCREEN32_ELEMENT_ID_NEXT_10: onClickNext10(); break;
-            case SCREEN32_ELEMENT_ID_NEXT_11: onClickNext11(); break;
-            case SCREEN32_ELEMENT_ID_NEXT_12: onClickNext12(); break;
-            case SCREEN32_ELEMENT_ID_OBJ42: onClickObj42(); break;
-            case SCREEN32_ELEMENT_ID_OBJ43: onClickObj43(); break;
-            case SCREEN32_ELEMENT_ID_OBJ44: onClickObj44(); break;
-            case SCREEN32_ELEMENT_ID_OBJ45: onClickObj45(); break;
-            case SCREEN32_ELEMENT_ID_OBJ46: onClickObj46(); break;
-            case SCREEN32_ELEMENT_ID_OBJ47: onClickObj47(); break;
-            case SCREEN32_ELEMENT_ID_OBJ48: onClickObj48(); break;
-            case SCREEN32_ELEMENT_ID_OBJ49: onClickObj49(); break;
-            case SCREEN32_ELEMENT_ID_OBJ50: onClickObj50(); break;
-            case SCREEN32_ELEMENT_ID_OBJ51: onClickObj51(); break;
-            case SCREEN32_ELEMENT_ID_OBJ52: onClickObj52(); break;
-            case SCREEN32_ELEMENT_ID_OBJ53: onClickObj53(); break;
-            case SCREEN32_ELEMENT_ID_OBJ54: onClickObj54(); break;
+            case btn_BACK_4: onClickBack4(); break;
+            case btn_NEXT_10: onClickNext10(); break;
+            case btn_NEXT_11: onClickNext11(); break;
+            case btn_NEXT_12: onClickNext12(); break;
+            case btn_OBJ42: onClickObj42(); break;
+            case btn_OBJ43: onClickObj43(); break;
+            case btn_OBJ44: onClickObj44(); break;
+            case btn_OBJ45: onClickObj45(); break;
+            case btn_OBJ46: onClickObj46(); break;
+            case btn_OBJ47: onClickObj47(); break;
+            case btn_OBJ48: onClickObj48(); break;
+            case btn_OBJ49: onClickObj49(); break;
+            case btn_OBJ50: onClickObj50(); break;
+            case btn_OBJ51: onClickObj51(); break;
+            case btn_OBJ52: onClickObj52(); break;
+            case btn_OBJ53: onClickObj53(); break;
+            case btn_OBJ54: onClickObj54(); break;
             default: break;
         }
     }

@@ -15,7 +15,7 @@ namespace screenui {
 
 class LoadBase : public screenlib::IHostPage {
 public:
-    static constexpr uint32_t kPageId = SCREEN32_PAGE_ID_LOAD;
+    static constexpr uint32_t kPageId = scr_LOAD;
     uint32_t pageId() const final { return kPageId; }
 
 protected:
