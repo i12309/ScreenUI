@@ -1,26 +1,26 @@
 ﻿# ScreenUI
 
-`ScreenUI` is the UI/design package repository.
+`ScreenUI` — репозиторий UI/design package.
 
-It contains:
-- `eez_project/` source-of-truth assets/project files for EEZ Studio.
-- `vendor/lvgl/` LVGL dependency.
-- `eez_project/src/ui/` EEZ/LVGL frontend runtime sources (input for generators/consumers).
-- `generated/shared/` generated metadata used by both frontend and backend.
-- `generated/frontend_meta/` generated frontend-only object map/page-meta layer.
-- `adapter/lvgl_eez/` concrete `IUiAdapter` implementation (`EezLvglAdapter`, `UiObjectMap`).
-- `tools/` generation tooling.
+Он содержит:
+- `eez_project/` как source of truth для EEZ Studio;
+- `vendor/lvgl/` как зависимость LVGL;
+- `eez_project/src/ui/` как EEZ/LVGL frontend runtime sources;
+- `generated/shared/` как generated-метаданные для frontend и backend;
+- `generated/frontend_meta/` как frontend-only object map/page-meta слой;
+- `adapter/lvgl_eez/` как concrete `IUiAdapter` implementation (`EezLvglAdapter`, `UiObjectMap`);
+- `tools/` как tooling для генерации.
 
-Consumers:
-- Frontend project (`Screen32`) uses:
+Потребители:
+- `Screen32` использует:
   - `eez_project/src`
   - `generated/shared`
   - `generated/frontend_meta`
   - `adapter/lvgl_eez`
   - `vendor/lvgl`
-- Backend projects use only:
+- backend-проекты используют только:
   - `generated/shared`
 
-Boundary:
-- No host/business runtime here.
-- No protocol runtime ownership here (`screenLIB` owns that).
+Граница ответственности:
+- здесь не должно быть host/business runtime;
+- здесь не должно быть ownership протокольного runtime, он живет в `screenLIB`.
