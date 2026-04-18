@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include "Screen/Screen.h"
 #include "pages/IHostPage.h"
 
 #include "../shared/element_ids.generated.h"
@@ -13,9 +14,14 @@
 
 namespace screenui {
 
+template <typename TPage>
 class TaskProcessBase : public screenlib::IHostPage {
 public:
     static constexpr uint32_t kPageId = scr_TASK_PROCESS;
+    // Открывает страницу через системный фасад экрана.
+    static bool show() {
+        return machine32::screen::Screen::getInstance().showPage<TPage>();
+    }
     uint32_t pageId() const final { return kPageId; }
 
 protected:
