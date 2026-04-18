@@ -8,7 +8,9 @@
 // Подключай этот файл, если в одном TU нужны несколько страниц.
 
 #include "load_base.h"
-#include "main_menu_base.h"
+#include "main_base.h"
+#include "task_run_base.h"
+#include "task_process_base.h"
 #include "def_page1_base.h"
 #include "def_page2_base.h"
 #include "def_page3_base.h"

@@ -24,19 +24,19 @@ protected:
     virtual void onClickNext10() {}
     virtual void onClickNext11() {}
     virtual void onClickNext12() {}
-    virtual void onClickObj42() {}
-    virtual void onClickObj43() {}
-    virtual void onClickObj44() {}
-    virtual void onClickObj45() {}
-    virtual void onClickObj46() {}
-    virtual void onClickObj47() {}
-    virtual void onClickObj48() {}
-    virtual void onClickObj49() {}
-    virtual void onClickObj50() {}
-    virtual void onClickObj51() {}
-    virtual void onClickObj52() {}
     virtual void onClickObj53() {}
     virtual void onClickObj54() {}
+    virtual void onClickObj55() {}
+    virtual void onClickObj56() {}
+    virtual void onClickObj57() {}
+    virtual void onClickObj58() {}
+    virtual void onClickObj59() {}
+    virtual void onClickObj60() {}
+    virtual void onClickObj61() {}
+    virtual void onClickObj62() {}
+    virtual void onClickObj63() {}
+    virtual void onClickObj64() {}
+    virtual void onClickObj65() {}
 
 private:
     void onButton(uint32_t elementId) final {
@@ -45,19 +45,19 @@ private:
             case btn_NEXT_10: onClickNext10(); break;
             case btn_NEXT_11: onClickNext11(); break;
             case btn_NEXT_12: onClickNext12(); break;
-            case btn_OBJ42: onClickObj42(); break;
-            case btn_OBJ43: onClickObj43(); break;
-            case btn_OBJ44: onClickObj44(); break;
-            case btn_OBJ45: onClickObj45(); break;
-            case btn_OBJ46: onClickObj46(); break;
-            case btn_OBJ47: onClickObj47(); break;
-            case btn_OBJ48: onClickObj48(); break;
-            case btn_OBJ49: onClickObj49(); break;
-            case btn_OBJ50: onClickObj50(); break;
-            case btn_OBJ51: onClickObj51(); break;
-            case btn_OBJ52: onClickObj52(); break;
             case btn_OBJ53: onClickObj53(); break;
             case btn_OBJ54: onClickObj54(); break;
+            case btn_OBJ55: onClickObj55(); break;
+            case btn_OBJ56: onClickObj56(); break;
+            case btn_OBJ57: onClickObj57(); break;
+            case btn_OBJ58: onClickObj58(); break;
+            case btn_OBJ59: onClickObj59(); break;
+            case btn_OBJ60: onClickObj60(); break;
+            case btn_OBJ61: onClickObj61(); break;
+            case btn_OBJ62: onClickObj62(); break;
+            case btn_OBJ63: onClickObj63(); break;
+            case btn_OBJ64: onClickObj64(); break;
+            case btn_OBJ65: onClickObj65(); break;
             default: break;
         }
     }

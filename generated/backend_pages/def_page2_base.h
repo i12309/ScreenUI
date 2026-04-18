@@ -20,42 +20,42 @@ public:
 
 protected:
     // === Кнопки ===
-    virtual void onClickBack1() {}
-    virtual void onClickNext3() {}
-    virtual void onClickNext4() {}
-    virtual void onClickNext5() {}
-    virtual void onClickObj12() {}
-    virtual void onClickObj13() {}
-    virtual void onClickObj14() {}
-    virtual void onClickObj15() {}
-    virtual void onClickObj16() {}
-    virtual void onClickObj17() {}
-    virtual void onClickObj18() {}
-    virtual void onClickObj19() {}
-    virtual void onClickObj20() {}
-    virtual void onClickObj21() {}
-    virtual void onClickObj22() {}
+    virtual void onClickBack5() {}
+    virtual void onClickNext13() {}
+    virtual void onClickNext14() {}
+    virtual void onClickNext15() {}
     virtual void onClickObj23() {}
+    virtual void onClickObj24() {}
+    virtual void onClickObj25() {}
+    virtual void onClickObj26() {}
+    virtual void onClickObj27() {}
+    virtual void onClickObj28() {}
+    virtual void onClickObj29() {}
+    virtual void onClickObj30() {}
+    virtual void onClickObj31() {}
+    virtual void onClickObj32() {}
+    virtual void onClickObj33() {}
+    virtual void onClickObj34() {}
 
 private:
     void onButton(uint32_t elementId) final {
         switch (elementId) {
-            case btn_BACK_1: onClickBack1(); break;
-            case btn_NEXT_3: onClickNext3(); break;
-            case btn_NEXT_4: onClickNext4(); break;
-            case btn_NEXT_5: onClickNext5(); break;
-            case btn_OBJ12: onClickObj12(); break;
-            case btn_OBJ13: onClickObj13(); break;
-            case btn_OBJ14: onClickObj14(); break;
-            case btn_OBJ15: onClickObj15(); break;
-            case btn_OBJ16: onClickObj16(); break;
-            case btn_OBJ17: onClickObj17(); break;
-            case btn_OBJ18: onClickObj18(); break;
-            case btn_OBJ19: onClickObj19(); break;
-            case btn_OBJ20: onClickObj20(); break;
-            case btn_OBJ21: onClickObj21(); break;
-            case btn_OBJ22: onClickObj22(); break;
+            case btn_BACK_5: onClickBack5(); break;
+            case btn_NEXT_13: onClickNext13(); break;
+            case btn_NEXT_14: onClickNext14(); break;
+            case btn_NEXT_15: onClickNext15(); break;
             case btn_OBJ23: onClickObj23(); break;
+            case btn_OBJ24: onClickObj24(); break;
+            case btn_OBJ25: onClickObj25(); break;
+            case btn_OBJ26: onClickObj26(); break;
+            case btn_OBJ27: onClickObj27(); break;
+            case btn_OBJ28: onClickObj28(); break;
+            case btn_OBJ29: onClickObj29(); break;
+            case btn_OBJ30: onClickObj30(); break;
+            case btn_OBJ31: onClickObj31(); break;
+            case btn_OBJ32: onClickObj32(); break;
+            case btn_OBJ33: onClickObj33(); break;
+            case btn_OBJ34: onClickObj34(); break;
             default: break;
         }
     }
