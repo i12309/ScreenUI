@@ -16,11 +16,12 @@ enum ScreensEnum {
     SCREEN_ID_TASK_RUN = 3,
     SCREEN_ID_TASK_PROCESS = 4,
     SCREEN_ID_INFO = 5,
-    SCREEN_ID_DEF_PAGE1 = 6,
-    SCREEN_ID_DEF_PAGE2 = 7,
-    SCREEN_ID_DEF_PAGE3 = 8,
-    SCREEN_ID_DEF_PAGE4 = 9,
-    _SCREEN_ID_LAST = 9
+    SCREEN_ID_INPUT = 6,
+    SCREEN_ID_DEF_PAGE1 = 7,
+    SCREEN_ID_DEF_PAGE2 = 8,
+    SCREEN_ID_DEF_PAGE3 = 9,
+    SCREEN_ID_DEF_PAGE4 = 10,
+    _SCREEN_ID_LAST = 10
 };
 
 typedef struct _objects_t {
@@ -29,6 +30,7 @@ typedef struct _objects_t {
     lv_obj_t *task_run;
     lv_obj_t *task_process;
     lv_obj_t *info;
+    lv_obj_t *input;
     lv_obj_t *def_page1;
     lv_obj_t *def_page2;
     lv_obj_t *def_page3;
@@ -89,11 +91,22 @@ typedef struct _objects_t {
     lv_obj_t *info_field3;
     lv_obj_t *info_cancel;
     lv_obj_t *info_ok;
+    lv_obj_t *c_page_7;
+    lv_obj_t *c_bar_8;
+    lv_obj_t *input_title_1;
+    lv_obj_t *obj21;
+    lv_obj_t *c_button_7;
+    lv_obj_t *input_field1;
+    lv_obj_t *input_field2;
+    lv_obj_t *input_field4;
+    lv_obj_t *input_field3;
+    lv_obj_t *input_cancel;
+    lv_obj_t *input_ok;
     lv_obj_t *c_page;
     lv_obj_t *c_bar;
-    lv_obj_t *obj21;
-    lv_obj_t *title;
     lv_obj_t *obj22;
+    lv_obj_t *title;
+    lv_obj_t *obj23;
     lv_obj_t *sig_1;
     lv_obj_t *b_sig1_2;
     lv_obj_t *b_sig1;
@@ -110,12 +123,11 @@ typedef struct _objects_t {
     lv_obj_t *c_bar_6;
     lv_obj_t *back_5;
     lv_obj_t *title_5;
-    lv_obj_t *obj23;
+    lv_obj_t *obj24;
     lv_obj_t *next_13;
     lv_obj_t *next_14;
     lv_obj_t *next_15;
     lv_obj_t *c_button_5;
-    lv_obj_t *obj24;
     lv_obj_t *obj25;
     lv_obj_t *obj26;
     lv_obj_t *obj27;
@@ -127,16 +139,16 @@ typedef struct _objects_t {
     lv_obj_t *obj33;
     lv_obj_t *obj34;
     lv_obj_t *obj35;
+    lv_obj_t *obj36;
     lv_obj_t *c_page_2;
     lv_obj_t *c_bar_3;
     lv_obj_t *back_3;
     lv_obj_t *title_3;
-    lv_obj_t *obj36;
+    lv_obj_t *obj37;
     lv_obj_t *next_7;
     lv_obj_t *next_8;
     lv_obj_t *next_9;
     lv_obj_t *c_button_2;
-    lv_obj_t *obj37;
     lv_obj_t *obj38;
     lv_obj_t *obj39;
     lv_obj_t *obj40;
@@ -152,16 +164,16 @@ typedef struct _objects_t {
     lv_obj_t *obj50;
     lv_obj_t *obj51;
     lv_obj_t *obj52;
+    lv_obj_t *obj53;
     lv_obj_t *c_page_3;
     lv_obj_t *c_bar_4;
     lv_obj_t *back_4;
     lv_obj_t *title_4;
-    lv_obj_t *obj53;
+    lv_obj_t *obj54;
     lv_obj_t *next_10;
     lv_obj_t *next_11;
     lv_obj_t *next_12;
     lv_obj_t *c_button_3;
-    lv_obj_t *obj54;
     lv_obj_t *obj55;
     lv_obj_t *obj56;
     lv_obj_t *obj57;
@@ -174,6 +186,7 @@ typedef struct _objects_t {
     lv_obj_t *obj64;
     lv_obj_t *obj65;
     lv_obj_t *obj66;
+    lv_obj_t *obj67;
 } objects_t;
 
 extern objects_t objects;
@@ -192,6 +205,9 @@ void tick_screen_task_process();
 
 void create_screen_info();
 void tick_screen_info();
+
+void create_screen_input();
+void tick_screen_input();
 
 void create_screen_def_page1();
 void tick_screen_def_page1();

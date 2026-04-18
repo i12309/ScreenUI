@@ -16,10 +16,11 @@ uint32_t screen32_current_page_id() {
     if (active == objects.task_run) return 3u;
     if (active == objects.task_process) return 4u;
     if (active == objects.info) return 5u;
-    if (active == objects.def_page1) return 6u;
-    if (active == objects.def_page2) return 7u;
-    if (active == objects.def_page3) return 8u;
-    if (active == objects.def_page4) return 9u;
+    if (active == objects.input) return 6u;
+    if (active == objects.def_page1) return 7u;
+    if (active == objects.def_page2) return 8u;
+    if (active == objects.def_page3) return 9u;
+    if (active == objects.def_page4) return 10u;
     return 1u;
 }
 
@@ -33,6 +34,7 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == objects.task_run) { loadScreen(SCREEN_ID_TASK_RUN); return true; }
     if (target == objects.task_process) { loadScreen(SCREEN_ID_TASK_PROCESS); return true; }
     if (target == objects.info) { loadScreen(SCREEN_ID_INFO); return true; }
+    if (target == objects.input) { loadScreen(SCREEN_ID_INPUT); return true; }
     if (target == objects.def_page1) { loadScreen(SCREEN_ID_DEF_PAGE1); return true; }
     if (target == objects.def_page2) { loadScreen(SCREEN_ID_DEF_PAGE2); return true; }
     if (target == objects.def_page3) { loadScreen(SCREEN_ID_DEF_PAGE3); return true; }
