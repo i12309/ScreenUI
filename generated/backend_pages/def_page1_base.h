@@ -20,7 +20,7 @@ public:
 
 protected:
     // === Кнопки ===
-    virtual void onClickObj20() {}
+    virtual void onClickObj21() {}
     virtual void onClickBSig12() {}
     virtual void onClickBSig1() {}
     virtual void onClickBSig11() {}
@@ -35,7 +35,7 @@ protected:
 private:
     void onButton(uint32_t elementId) final {
         switch (elementId) {
-            case btn_OBJ20: onClickObj20(); break;
+            case btn_OBJ21: onClickObj21(); break;
             case btn_SIG1_2: onClickBSig12(); break;
             case btn_SIG1: onClickBSig1(); break;
             case btn_SIG1_1: onClickBSig11(); break;

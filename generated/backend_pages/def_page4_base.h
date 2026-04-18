@@ -24,7 +24,6 @@ protected:
     virtual void onClickNext10() {}
     virtual void onClickNext11() {}
     virtual void onClickNext12() {}
-    virtual void onClickObj53() {}
     virtual void onClickObj54() {}
     virtual void onClickObj55() {}
     virtual void onClickObj56() {}
@@ -37,6 +36,7 @@ protected:
     virtual void onClickObj63() {}
     virtual void onClickObj64() {}
     virtual void onClickObj65() {}
+    virtual void onClickObj66() {}
 
 private:
     void onButton(uint32_t elementId) final {
@@ -45,7 +45,6 @@ private:
             case btn_NEXT_10: onClickNext10(); break;
             case btn_NEXT_11: onClickNext11(); break;
             case btn_NEXT_12: onClickNext12(); break;
-            case btn_OBJ53: onClickObj53(); break;
             case btn_OBJ54: onClickObj54(); break;
             case btn_OBJ55: onClickObj55(); break;
             case btn_OBJ56: onClickObj56(); break;
@@ -58,6 +57,7 @@ private:
             case btn_OBJ63: onClickObj63(); break;
             case btn_OBJ64: onClickObj64(); break;
             case btn_OBJ65: onClickObj65(); break;
+            case btn_OBJ66: onClickObj66(); break;
             default: break;
         }
     }

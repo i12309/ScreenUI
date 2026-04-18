@@ -15,13 +15,14 @@ typedef enum Screen32PageId {
     scr_MAIN = 2,
     scr_TASK_RUN = 3,
     scr_TASK_PROCESS = 4,
-    scr_DEF_PAGE1 = 5,
-    scr_DEF_PAGE2 = 6,
-    scr_DEF_PAGE3 = 7,
-    scr_DEF_PAGE4 = 8,
+    scr_INFO = 5,
+    scr_DEF_PAGE1 = 6,
+    scr_DEF_PAGE2 = 7,
+    scr_DEF_PAGE3 = 8,
+    scr_DEF_PAGE4 = 9,
 } Screen32PageId;
 
-#define SCREEN32_PAGE_DESCRIPTOR_COUNT 8
+#define SCREEN32_PAGE_DESCRIPTOR_COUNT 9
 
 #ifdef __cplusplus
 }
