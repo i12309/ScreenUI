@@ -15,6 +15,8 @@ struct EezLvglHooks {
     bool (*setValue)(void* userData, void* uiObject, int32_t value) = nullptr;
     bool (*setVisible)(void* userData, void* uiObject, bool visible) = nullptr;
     bool (*setColor)(void* userData, void* uiObject, uint32_t bgColor, uint32_t fgColor) = nullptr;
+    // When hook is missing or returns false, allow built-in LVGL object helpers.
+    bool enableLvglObjectHelpers = true;
 
     // Опциональный poll/flush входных событий UI.
     // Может быть no-op, если UI callbacks публикуют события сразу.
