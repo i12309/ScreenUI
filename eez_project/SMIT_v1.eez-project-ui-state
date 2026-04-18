@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/0",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/3",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
     "selectedStyleObject": "[SMIT_v1.eez-project]:/lvglStyles/styles/1",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
@@ -211,10 +211,10 @@
                 {
                   "type": "tab",
                   "id": "#2e8608cb-79ee-43b7-a6e9-d62323070a98",
-                  "name": "Load",
+                  "name": "def_Page2",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/0",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/3",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -1079,15 +1079,16 @@
         "0": {
           "0": {},
           "1": {
-            "0": {},
+            "0": {
+              "$selected": true
+            },
             "3": {},
             "4": {
               "0": {}
             }
           },
           "2": {
-            "0": {},
-            "$selected": true
+            "0": {}
           }
         }
       },
