@@ -11,9 +11,9 @@ extern "C" {
 
 enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
-    SCREEN_ID_LOAD = 1,
-    SCREEN_ID_MAIN = 2,
-    SCREEN_ID_KEYBOARD = 3,
+    SCREEN_ID_KEYBOARD = 1,
+    SCREEN_ID_LOAD = 2,
+    SCREEN_ID_MAIN = 3,
     SCREEN_ID_TASK_RUN = 4,
     SCREEN_ID_TASK_PROCESS = 5,
     SCREEN_ID_INFO = 6,
@@ -30,9 +30,9 @@ enum ScreensEnum {
 };
 
 typedef struct _objects_t {
+    lv_obj_t *keyboard;
     lv_obj_t *load;
     lv_obj_t *main;
-    lv_obj_t *keyboard;
     lv_obj_t *task_run;
     lv_obj_t *task_process;
     lv_obj_t *info;
@@ -54,16 +54,6 @@ typedef struct _objects_t {
     lv_obj_t *obj6;
     lv_obj_t *obj7;
     lv_obj_t *obj8;
-    lv_obj_t *load_model;
-    lv_obj_t *load_ma_caddress;
-    lv_obj_t *load_version;
-    lv_obj_t *c_main_menu;
-    lv_obj_t *main_task;
-    lv_obj_t *main_profile;
-    lv_obj_t *main_net;
-    lv_obj_t *main_service;
-    lv_obj_t *main_stats;
-    lv_obj_t *main_support;
     lv_obj_t *obj9;
     lv_obj_t *obj10;
     lv_obj_t *obj11;
@@ -106,6 +96,16 @@ typedef struct _objects_t {
     lv_obj_t *obj48;
     lv_obj_t *obj49;
     lv_obj_t *obj50;
+    lv_obj_t *load_model;
+    lv_obj_t *load_ma_caddress;
+    lv_obj_t *load_version;
+    lv_obj_t *c_main_menu;
+    lv_obj_t *main_task;
+    lv_obj_t *main_profile;
+    lv_obj_t *main_net;
+    lv_obj_t *main_service;
+    lv_obj_t *main_stats;
+    lv_obj_t *main_support;
     lv_obj_t *c_page_4;
     lv_obj_t *c_bar_5;
     lv_obj_t *task_run_back;
@@ -290,14 +290,14 @@ typedef struct _objects_t {
 
 extern objects_t objects;
 
+void create_screen_keyboard();
+void tick_screen_keyboard();
+
 void create_screen_load();
 void tick_screen_load();
 
 void create_screen_main();
 void tick_screen_main();
-
-void create_screen_keyboard();
-void tick_screen_keyboard();
 
 void create_screen_task_run();
 void tick_screen_task_run();
