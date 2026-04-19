@@ -13,24 +13,26 @@ enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
     SCREEN_ID_LOAD = 1,
     SCREEN_ID_MAIN = 2,
-    SCREEN_ID_TASK_RUN = 3,
-    SCREEN_ID_TASK_PROCESS = 4,
-    SCREEN_ID_INFO = 5,
-    SCREEN_ID_INPUT = 6,
-    SCREEN_ID_INIT = 7,
-    SCREEN_ID_WAIT = 8,
-    SCREEN_ID_SERVICE = 9,
-    SCREEN_ID_SERVICE2 = 10,
-    SCREEN_ID_DEF_PAGE = 11,
-    SCREEN_ID_DEF_PAGE2 = 12,
-    SCREEN_ID_DEF_PAGE3 = 13,
-    SCREEN_ID_DEF_PAGE4 = 14,
-    _SCREEN_ID_LAST = 14
+    SCREEN_ID_KEYBOARD = 3,
+    SCREEN_ID_TASK_RUN = 4,
+    SCREEN_ID_TASK_PROCESS = 5,
+    SCREEN_ID_INFO = 6,
+    SCREEN_ID_INPUT = 7,
+    SCREEN_ID_INIT = 8,
+    SCREEN_ID_WAIT = 9,
+    SCREEN_ID_SERVICE = 10,
+    SCREEN_ID_SERVICE2 = 11,
+    SCREEN_ID_DEF_PAGE = 12,
+    SCREEN_ID_DEF_PAGE2 = 13,
+    SCREEN_ID_DEF_PAGE3 = 14,
+    SCREEN_ID_DEF_PAGE4 = 15,
+    _SCREEN_ID_LAST = 15
 };
 
 typedef struct _objects_t {
     lv_obj_t *load;
     lv_obj_t *main;
+    lv_obj_t *keyboard;
     lv_obj_t *task_run;
     lv_obj_t *task_process;
     lv_obj_t *info;
@@ -62,11 +64,53 @@ typedef struct _objects_t {
     lv_obj_t *main_service;
     lv_obj_t *main_stats;
     lv_obj_t *main_support;
+    lv_obj_t *obj9;
+    lv_obj_t *obj10;
+    lv_obj_t *obj11;
+    lv_obj_t *obj12;
+    lv_obj_t *obj13;
+    lv_obj_t *obj14;
+    lv_obj_t *obj15;
+    lv_obj_t *obj16;
+    lv_obj_t *obj17;
+    lv_obj_t *obj18;
+    lv_obj_t *obj19;
+    lv_obj_t *obj20;
+    lv_obj_t *obj21;
+    lv_obj_t *obj22;
+    lv_obj_t *obj23;
+    lv_obj_t *obj24;
+    lv_obj_t *obj25;
+    lv_obj_t *obj26;
+    lv_obj_t *obj27;
+    lv_obj_t *obj28;
+    lv_obj_t *obj29;
+    lv_obj_t *obj30;
+    lv_obj_t *obj31;
+    lv_obj_t *obj32;
+    lv_obj_t *obj33;
+    lv_obj_t *obj34;
+    lv_obj_t *obj35;
+    lv_obj_t *obj36;
+    lv_obj_t *obj37;
+    lv_obj_t *obj38;
+    lv_obj_t *obj39;
+    lv_obj_t *obj40;
+    lv_obj_t *obj41;
+    lv_obj_t *obj42;
+    lv_obj_t *obj43;
+    lv_obj_t *obj44;
+    lv_obj_t *obj45;
+    lv_obj_t *obj46;
+    lv_obj_t *obj47;
+    lv_obj_t *obj48;
+    lv_obj_t *obj49;
+    lv_obj_t *obj50;
     lv_obj_t *c_page_4;
     lv_obj_t *c_bar_5;
     lv_obj_t *task_run_back;
     lv_obj_t *task_run_title;
-    lv_obj_t *obj9;
+    lv_obj_t *obj51;
     lv_obj_t *c_button_4;
     lv_obj_t *task_run_list_task;
     lv_obj_t *task_run_list_profile;
@@ -78,21 +122,21 @@ typedef struct _objects_t {
     lv_obj_t *c_page_1;
     lv_obj_t *c_bar_1;
     lv_obj_t *title_1;
-    lv_obj_t *obj10;
+    lv_obj_t *obj52;
     lv_obj_t *c_button_1;
-    lv_obj_t *obj11;
-    lv_obj_t *obj12;
-    lv_obj_t *obj13;
-    lv_obj_t *obj14;
-    lv_obj_t *obj15;
-    lv_obj_t *obj16;
-    lv_obj_t *obj17;
-    lv_obj_t *obj18;
-    lv_obj_t *obj19;
+    lv_obj_t *obj53;
+    lv_obj_t *obj54;
+    lv_obj_t *obj55;
+    lv_obj_t *obj56;
+    lv_obj_t *obj57;
+    lv_obj_t *obj58;
+    lv_obj_t *obj59;
+    lv_obj_t *obj60;
+    lv_obj_t *obj61;
     lv_obj_t *c_page_6;
     lv_obj_t *c_bar_7;
     lv_obj_t *info_title;
-    lv_obj_t *obj20;
+    lv_obj_t *obj62;
     lv_obj_t *c_button_6;
     lv_obj_t *info_field1;
     lv_obj_t *info_field2;
@@ -102,7 +146,7 @@ typedef struct _objects_t {
     lv_obj_t *c_page_7;
     lv_obj_t *c_bar_8;
     lv_obj_t *input_title_1;
-    lv_obj_t *obj21;
+    lv_obj_t *obj63;
     lv_obj_t *c_button_7;
     lv_obj_t *input_field1;
     lv_obj_t *input_field2;
@@ -113,17 +157,17 @@ typedef struct _objects_t {
     lv_obj_t *c_page_8;
     lv_obj_t *c_bar_9;
     lv_obj_t *init_title;
-    lv_obj_t *obj22;
+    lv_obj_t *obj64;
     lv_obj_t *init_http;
     lv_obj_t *init_ok;
     lv_obj_t *c_button_8;
-    lv_obj_t *obj23;
-    lv_obj_t *obj24;
+    lv_obj_t *obj65;
+    lv_obj_t *obj66;
     lv_obj_t *init_machine;
-    lv_obj_t *obj25;
-    lv_obj_t *obj26;
+    lv_obj_t *obj67;
+    lv_obj_t *obj68;
     lv_obj_t *init_group;
-    lv_obj_t *obj27;
+    lv_obj_t *obj69;
     lv_obj_t *init_name;
     lv_obj_t *init_access_point;
     lv_obj_t *init_r_access_point;
@@ -136,7 +180,7 @@ typedef struct _objects_t {
     lv_obj_t *c_bar;
     lv_obj_t *service_back;
     lv_obj_t *service_title;
-    lv_obj_t *obj28;
+    lv_obj_t *obj70;
     lv_obj_t *next_2;
     lv_obj_t *c_button;
     lv_obj_t *service_table;
@@ -149,19 +193,19 @@ typedef struct _objects_t {
     lv_obj_t *c_bar_11;
     lv_obj_t *service2_back;
     lv_obj_t *service2_title;
-    lv_obj_t *obj29;
+    lv_obj_t *obj71;
     lv_obj_t *c_button_10;
     lv_obj_t *service_table_1;
     lv_obj_t *service_paper_1;
     lv_obj_t *service_guillotine_1;
-    lv_obj_t *obj30;
-    lv_obj_t *obj31;
-    lv_obj_t *obj32;
+    lv_obj_t *obj72;
+    lv_obj_t *obj73;
+    lv_obj_t *obj74;
     lv_obj_t *c_page_9;
     lv_obj_t *c_bar_10;
-    lv_obj_t *obj33;
+    lv_obj_t *obj75;
     lv_obj_t *title_6;
-    lv_obj_t *obj34;
+    lv_obj_t *obj76;
     lv_obj_t *sig_3;
     lv_obj_t *b_sig1_6;
     lv_obj_t *b_sig1_7;
@@ -178,70 +222,70 @@ typedef struct _objects_t {
     lv_obj_t *c_bar_6;
     lv_obj_t *back_5;
     lv_obj_t *title_5;
-    lv_obj_t *obj35;
+    lv_obj_t *obj77;
     lv_obj_t *next_13;
     lv_obj_t *next_14;
     lv_obj_t *next_15;
     lv_obj_t *c_button_5;
-    lv_obj_t *obj36;
-    lv_obj_t *obj37;
-    lv_obj_t *obj38;
-    lv_obj_t *obj39;
-    lv_obj_t *obj40;
-    lv_obj_t *obj41;
-    lv_obj_t *obj42;
-    lv_obj_t *obj43;
-    lv_obj_t *obj44;
-    lv_obj_t *obj45;
-    lv_obj_t *obj46;
-    lv_obj_t *obj47;
+    lv_obj_t *obj78;
+    lv_obj_t *obj79;
+    lv_obj_t *obj80;
+    lv_obj_t *obj81;
+    lv_obj_t *obj82;
+    lv_obj_t *obj83;
+    lv_obj_t *obj84;
+    lv_obj_t *obj85;
+    lv_obj_t *obj86;
+    lv_obj_t *obj87;
+    lv_obj_t *obj88;
+    lv_obj_t *obj89;
     lv_obj_t *c_page_2;
     lv_obj_t *c_bar_3;
     lv_obj_t *back_3;
     lv_obj_t *title_3;
-    lv_obj_t *obj48;
+    lv_obj_t *obj90;
     lv_obj_t *next_7;
     lv_obj_t *next_8;
     lv_obj_t *next_9;
     lv_obj_t *c_button_2;
-    lv_obj_t *obj49;
-    lv_obj_t *obj50;
-    lv_obj_t *obj51;
-    lv_obj_t *obj52;
-    lv_obj_t *obj53;
-    lv_obj_t *obj54;
-    lv_obj_t *obj55;
-    lv_obj_t *obj56;
-    lv_obj_t *obj57;
-    lv_obj_t *obj58;
-    lv_obj_t *obj59;
-    lv_obj_t *obj60;
-    lv_obj_t *obj61;
-    lv_obj_t *obj62;
-    lv_obj_t *obj63;
-    lv_obj_t *obj64;
+    lv_obj_t *obj91;
+    lv_obj_t *obj92;
+    lv_obj_t *obj93;
+    lv_obj_t *obj94;
+    lv_obj_t *obj95;
+    lv_obj_t *obj96;
+    lv_obj_t *obj97;
+    lv_obj_t *obj98;
+    lv_obj_t *obj99;
+    lv_obj_t *obj100;
+    lv_obj_t *obj101;
+    lv_obj_t *obj102;
+    lv_obj_t *obj103;
+    lv_obj_t *obj104;
+    lv_obj_t *obj105;
+    lv_obj_t *obj106;
     lv_obj_t *c_page_3;
     lv_obj_t *c_bar_4;
     lv_obj_t *back_4;
     lv_obj_t *title_4;
-    lv_obj_t *obj65;
+    lv_obj_t *obj107;
     lv_obj_t *next_10;
     lv_obj_t *next_11;
     lv_obj_t *next_12;
     lv_obj_t *c_button_3;
-    lv_obj_t *obj66;
-    lv_obj_t *obj67;
-    lv_obj_t *obj68;
-    lv_obj_t *obj69;
-    lv_obj_t *obj70;
-    lv_obj_t *obj71;
-    lv_obj_t *obj72;
-    lv_obj_t *obj73;
-    lv_obj_t *obj74;
-    lv_obj_t *obj75;
-    lv_obj_t *obj76;
-    lv_obj_t *obj77;
-    lv_obj_t *obj78;
+    lv_obj_t *obj108;
+    lv_obj_t *obj109;
+    lv_obj_t *obj110;
+    lv_obj_t *obj111;
+    lv_obj_t *obj112;
+    lv_obj_t *obj113;
+    lv_obj_t *obj114;
+    lv_obj_t *obj115;
+    lv_obj_t *obj116;
+    lv_obj_t *obj117;
+    lv_obj_t *obj118;
+    lv_obj_t *obj119;
+    lv_obj_t *obj120;
 } objects_t;
 
 extern objects_t objects;
@@ -251,6 +295,9 @@ void tick_screen_load();
 
 void create_screen_main();
 void tick_screen_main();
+
+void create_screen_keyboard();
+void tick_screen_keyboard();
 
 void create_screen_task_run();
 void tick_screen_task_run();

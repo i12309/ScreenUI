@@ -22,6 +22,11 @@ lv_style_t *get_style_drop_MAIN_DEFAULT();
 void add_style_drop(lv_obj_t *obj);
 void remove_style_drop(lv_obj_t *obj);
 
+// Style: keyButton
+lv_style_t *get_style_key_button_MAIN_DEFAULT();
+void add_style_key_button(lv_obj_t *obj);
+void remove_style_key_button(lv_obj_t *obj);
+
 #ifdef __cplusplus
 }
 #endif

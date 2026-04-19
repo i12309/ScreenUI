@@ -13,18 +13,22 @@ extern "C" {
 typedef enum Screen32PageId {
     scr_LOAD = 1,
     scr_MAIN = 2,
-    scr_TASK_RUN = 3,
-    scr_TASK_PROCESS = 4,
-    scr_INFO = 5,
-    scr_INPUT = 6,
-    scr_INIT = 7,
-    scr_DEF_PAGE1 = 8,
-    scr_DEF_PAGE2 = 9,
-    scr_DEF_PAGE3 = 10,
-    scr_DEF_PAGE4 = 11,
+    scr_KEYBOARD = 3,
+    scr_TASK_RUN = 4,
+    scr_TASK_PROCESS = 5,
+    scr_INFO = 6,
+    scr_INPUT = 7,
+    scr_INIT = 8,
+    scr_WAIT = 9,
+    scr_SERVICE = 10,
+    scr_SERVICE2 = 11,
+    scr_DEF_PAGE = 12,
+    scr_DEF_PAGE2 = 13,
+    scr_DEF_PAGE3 = 14,
+    scr_DEF_PAGE4 = 15,
 } Screen32PageId;
 
-#define SCREEN32_PAGE_DESCRIPTOR_COUNT 11
+#define SCREEN32_PAGE_DESCRIPTOR_COUNT 15
 
 #ifdef __cplusplus
 }
