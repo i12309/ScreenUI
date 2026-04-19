@@ -17,6 +17,11 @@ lv_style_t *get_style_panel_MAIN_DEFAULT();
 void add_style_panel(lv_obj_t *obj);
 void remove_style_panel(lv_obj_t *obj);
 
+// Style: Drop
+lv_style_t *get_style_drop_MAIN_DEFAULT();
+void add_style_drop(lv_obj_t *obj);
+void remove_style_drop(lv_obj_t *obj);
+
 #ifdef __cplusplus
 }
 #endif

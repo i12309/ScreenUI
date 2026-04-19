@@ -13,6 +13,7 @@
 #include "task_process_base.h"
 #include "info_base.h"
 #include "input_base.h"
+#include "init_base.h"
 #include "def_page1_base.h"
 #include "def_page2_base.h"
 #include "def_page3_base.h"
