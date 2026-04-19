@@ -288,6 +288,12 @@ def to_create_function(page_enum_name: str) -> str:
     return f"create_screen_{to_object_name(page_enum_name)}"
 
 
+def is_auto_generated_object_name(object_name: str) -> bool:
+    """Возвращает True для служебных имён Studio/LVGL вида `obj0`, `obj1`, ..."""
+
+    return re.fullmatch(r"obj\d+", object_name) is not None
+
+
 def parse_pages_and_objects(screens_h: str) -> tuple[List[PageInfo], List[str]]:
     pages: List[PageInfo] = []
     objects: List[str] = []
@@ -1041,7 +1047,11 @@ def generate() -> None:
     assignments = parse_object_assignments(screens_c, pages, studio_type_hints)
 
     page_object_names = {page.object_name for page in pages}
-    element_order = [name for name in objects if name not in page_object_names]
+    element_order = [
+        name
+        for name in objects
+        if name not in page_object_names and not is_auto_generated_object_name(name)
+    ]
 
     missing = [name for name in element_order if name not in assignments]
     if missing:
