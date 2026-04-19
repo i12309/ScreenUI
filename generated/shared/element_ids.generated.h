@@ -62,6 +62,13 @@ typedef enum Screen32ElementId {
     btn_INIT_HTTP = 854676180u,
     btn_INIT_OK = 985764943u,
     cnt_BUTTON_8 = 868351749u,
+    drp_INIT_MACHINE = 1037398668u,
+    btn_INIT_GROUP = 858911524u,
+    btn_INIT_NAME = 757239833u,
+    btn_INIT_ACCESS_POINT = 1015158681u,
+    chk_INIT_R_ACCESS_POINT = 1070125018u,
+    btn_INIT_TEST = 1068134903u,
+    chk_INIT_R_TEST = 611967224u,
     cnt_PAGE = 809266216u,
     cnt_BAR = 984274153u,
     pnl_TITLE = 828797990u,
@@ -103,7 +110,7 @@ typedef enum Screen32ElementId {
     cnt_BUTTON_3 = 937141394u,
 } Screen32ElementId;
 
-#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 90
+#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 97
 
 #ifdef __cplusplus
 }

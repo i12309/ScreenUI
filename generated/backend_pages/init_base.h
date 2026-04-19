@@ -28,12 +28,34 @@ protected:
     // === Кнопки ===
     virtual void onClickInitHttp() {}
     virtual void onClickInitOk() {}
+    virtual void onClickInitGroup() {}
+    virtual void onClickInitName() {}
+    virtual void onClickInitAccessPoint() {}
+    virtual void onClickInitTest() {}
+
+    // === Числовые поля (slider/bar/arc/spinbox/roller/dropdown/switch) ===
+    virtual void onChangeInitMachine(int32_t value) { (void)value; }
+    virtual void onChangeInitRAccessPoint(int32_t value) { (void)value; }
+    virtual void onChangeInitRTest(int32_t value) { (void)value; }
 
 private:
     void onButton(uint32_t elementId) final {
         switch (elementId) {
             case btn_INIT_HTTP: onClickInitHttp(); break;
             case btn_INIT_OK: onClickInitOk(); break;
+            case btn_INIT_GROUP: onClickInitGroup(); break;
+            case btn_INIT_NAME: onClickInitName(); break;
+            case btn_INIT_ACCESS_POINT: onClickInitAccessPoint(); break;
+            case btn_INIT_TEST: onClickInitTest(); break;
+            default: break;
+        }
+    }
+
+    void onInputInt(uint32_t elementId, int32_t value) final {
+        switch (elementId) {
+            case drp_INIT_MACHINE: onChangeInitMachine(value); break;
+            case chk_INIT_R_ACCESS_POINT: onChangeInitRAccessPoint(value); break;
+            case chk_INIT_R_TEST: onChangeInitRTest(value); break;
             default: break;
         }
     }

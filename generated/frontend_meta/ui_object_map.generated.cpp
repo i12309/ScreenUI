@@ -114,6 +114,13 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_element(objectMap, 854676180u, 7u, objects.init_http, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 985764943u, 7u, objects.init_ok, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 868351749u, 7u, objects.c_button_8, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 1037398668u, 7u, objects.init_machine, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 858911524u, 7u, objects.init_group, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 757239833u, 7u, objects.init_name, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 1015158681u, 7u, objects.init_access_point, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 1070125018u, 7u, objects.init_r_access_point, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 1068134903u, 7u, objects.init_test, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 611967224u, 7u, objects.init_r_test, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 809266216u, 8u, objects.c_page, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 984274153u, 8u, objects.c_bar, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 828797990u, 8u, objects.title, outElements, outCapacity, boundCount) && allOk;
