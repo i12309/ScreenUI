@@ -11,9 +11,9 @@ extern "C" {
 #endif
 
 typedef enum Screen32PageId {
-    scr_LOAD = 1,
-    scr_MAIN = 2,
-    scr_KEYBOARD = 3,
+    scr_KEYBOARD = 1,
+    scr_LOAD = 2,
+    scr_MAIN = 3,
     scr_TASK_RUN = 4,
     scr_TASK_PROCESS = 5,
     scr_INFO = 6,

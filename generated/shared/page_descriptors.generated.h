@@ -20,9 +20,9 @@ typedef struct Screen32PageDescriptor {
 } Screen32PageDescriptor;
 
 static const Screen32PageDescriptor g_screen32_page_descriptors[SCREEN32_PAGE_DESCRIPTOR_COUNT] = {
-    {1u, "LOAD", "load"},
-    {2u, "MAIN", "main"},
-    {3u, "KEYBOARD", "keyboard"},
+    {1u, "KEYBOARD", "keyboard"},
+    {2u, "LOAD", "load"},
+    {3u, "MAIN", "main"},
     {4u, "TASK_RUN", "task_run"},
     {5u, "TASK_PROCESS", "task_process"},
     {6u, "INFO", "info"},

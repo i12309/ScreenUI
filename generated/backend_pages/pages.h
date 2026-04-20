@@ -7,9 +7,9 @@
 // Удобный агрегатор всех сгенерированных base-классов страниц.
 // Подключай этот файл, если в одном TU нужны несколько страниц.
 
+#include "keyboard_base.h"
 #include "load_base.h"
 #include "main_base.h"
-#include "keyboard_base.h"
 #include "task_run_base.h"
 #include "task_process_base.h"
 #include "info_base.h"

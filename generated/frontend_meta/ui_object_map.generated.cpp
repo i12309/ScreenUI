@@ -49,9 +49,9 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     bool allOk = true;
 
     // Карта страниц
-    allOk = bind_page(objectMap, 1u, objects.load) && allOk;
-    allOk = bind_page(objectMap, 2u, objects.main) && allOk;
-    allOk = bind_page(objectMap, 3u, objects.keyboard) && allOk;
+    allOk = bind_page(objectMap, 1u, objects.keyboard) && allOk;
+    allOk = bind_page(objectMap, 2u, objects.load) && allOk;
+    allOk = bind_page(objectMap, 3u, objects.main) && allOk;
     allOk = bind_page(objectMap, 4u, objects.task_run) && allOk;
     allOk = bind_page(objectMap, 5u, objects.task_process) && allOk;
     allOk = bind_page(objectMap, 6u, objects.info) && allOk;
@@ -67,16 +67,16 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
 
     // Карта элементов
 
-    allOk = bind_element(objectMap, 593491382u, 1u, objects.load_model, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 747485262u, 1u, objects.load_ma_caddress, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 914719783u, 1u, objects.load_version, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 1033385314u, 2u, objects.c_main_menu, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 893821717u, 2u, objects.main_task, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 1056103359u, 2u, objects.main_profile, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 572303784u, 2u, objects.main_net, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 614692528u, 2u, objects.main_service, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 572658358u, 2u, objects.main_stats, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 729598653u, 2u, objects.main_support, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 593491382u, 2u, objects.load_model, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 747485262u, 2u, objects.load_ma_caddress, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 914719783u, 2u, objects.load_version, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 1033385314u, 3u, objects.c_main_menu, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 893821717u, 3u, objects.main_task, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 1056103359u, 3u, objects.main_profile, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 572303784u, 3u, objects.main_net, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 614692528u, 3u, objects.main_service, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 572658358u, 3u, objects.main_stats, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 729598653u, 3u, objects.main_support, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 982710104u, 4u, objects.c_page_4, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 980116818u, 4u, objects.c_bar_5, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 781794537u, 4u, objects.task_run_back, outElements, outCapacity, boundCount) && allOk;
