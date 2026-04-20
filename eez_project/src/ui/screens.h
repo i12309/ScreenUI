@@ -11,15 +11,15 @@ extern "C" {
 
 enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
-    SCREEN_ID_KEYBOARD = 1,
-    SCREEN_ID_LOAD = 2,
-    SCREEN_ID_MAIN = 3,
-    SCREEN_ID_TASK_RUN = 4,
-    SCREEN_ID_TASK_PROCESS = 5,
-    SCREEN_ID_INFO = 6,
-    SCREEN_ID_INPUT = 7,
-    SCREEN_ID_INIT = 8,
-    SCREEN_ID_WAIT = 9,
+    SCREEN_ID_LOAD = 1,
+    SCREEN_ID_MAIN = 2,
+    SCREEN_ID_TASK_RUN = 3,
+    SCREEN_ID_TASK_PROCESS = 4,
+    SCREEN_ID_INFO = 5,
+    SCREEN_ID_INPUT = 6,
+    SCREEN_ID_INIT = 7,
+    SCREEN_ID_WAIT = 8,
+    SCREEN_ID_KEYBOARD = 9,
     SCREEN_ID_SERVICE = 10,
     SCREEN_ID_SERVICE2 = 11,
     SCREEN_ID_DEF_PAGE = 12,
@@ -30,7 +30,6 @@ enum ScreensEnum {
 };
 
 typedef struct _objects_t {
-    lv_obj_t *keyboard;
     lv_obj_t *load;
     lv_obj_t *main;
     lv_obj_t *task_run;
@@ -39,6 +38,7 @@ typedef struct _objects_t {
     lv_obj_t *input;
     lv_obj_t *init;
     lv_obj_t *wait;
+    lv_obj_t *keyboard;
     lv_obj_t *service;
     lv_obj_t *service2;
     lv_obj_t *def_page;
@@ -54,8 +54,34 @@ typedef struct _objects_t {
     lv_obj_t *obj6;
     lv_obj_t *obj7;
     lv_obj_t *obj8;
+    lv_obj_t *load_model;
+    lv_obj_t *load_ma_caddress;
+    lv_obj_t *load_version;
+    lv_obj_t *c_main_menu;
+    lv_obj_t *main_task;
+    lv_obj_t *main_profile;
+    lv_obj_t *main_net;
+    lv_obj_t *main_service;
+    lv_obj_t *main_stats;
+    lv_obj_t *main_support;
+    lv_obj_t *c_page_4;
+    lv_obj_t *c_bar_5;
+    lv_obj_t *task_run_back;
+    lv_obj_t *task_run_title;
     lv_obj_t *obj9;
+    lv_obj_t *c_button_4;
+    lv_obj_t *task_run_list_task;
+    lv_obj_t *task_run_list_profile;
+    lv_obj_t *task_run_label;
+    lv_obj_t *task_run_cycles;
+    lv_obj_t *task_run_plus;
+    lv_obj_t *task_run_minus;
+    lv_obj_t *task_run_start;
+    lv_obj_t *c_page_1;
+    lv_obj_t *c_bar_1;
+    lv_obj_t *title_1;
     lv_obj_t *obj10;
+    lv_obj_t *c_button_1;
     lv_obj_t *obj11;
     lv_obj_t *obj12;
     lv_obj_t *obj13;
@@ -65,14 +91,49 @@ typedef struct _objects_t {
     lv_obj_t *obj17;
     lv_obj_t *obj18;
     lv_obj_t *obj19;
+    lv_obj_t *c_page_6;
+    lv_obj_t *c_bar_7;
+    lv_obj_t *info_title;
     lv_obj_t *obj20;
+    lv_obj_t *c_button_6;
+    lv_obj_t *info_field1;
+    lv_obj_t *info_field2;
+    lv_obj_t *info_field3;
+    lv_obj_t *info_cancel;
+    lv_obj_t *info_ok;
+    lv_obj_t *c_page_7;
+    lv_obj_t *c_bar_8;
+    lv_obj_t *input_title_1;
     lv_obj_t *obj21;
+    lv_obj_t *c_button_7;
+    lv_obj_t *input_field1;
+    lv_obj_t *input_field2;
+    lv_obj_t *input_field4;
+    lv_obj_t *input_field3;
+    lv_obj_t *input_cancel;
+    lv_obj_t *input_ok;
+    lv_obj_t *c_page_8;
+    lv_obj_t *c_bar_9;
+    lv_obj_t *init_title;
     lv_obj_t *obj22;
+    lv_obj_t *init_http;
+    lv_obj_t *init_ok;
+    lv_obj_t *c_button_8;
     lv_obj_t *obj23;
     lv_obj_t *obj24;
+    lv_obj_t *init_machine;
     lv_obj_t *obj25;
     lv_obj_t *obj26;
+    lv_obj_t *init_group;
     lv_obj_t *obj27;
+    lv_obj_t *init_name;
+    lv_obj_t *init_access_point;
+    lv_obj_t *init_r_access_point;
+    lv_obj_t *init_test;
+    lv_obj_t *init_r_test;
+    lv_obj_t *wait_text1;
+    lv_obj_t *wait_text2;
+    lv_obj_t *wait_text3;
     lv_obj_t *obj28;
     lv_obj_t *obj29;
     lv_obj_t *obj30;
@@ -96,34 +157,8 @@ typedef struct _objects_t {
     lv_obj_t *obj48;
     lv_obj_t *obj49;
     lv_obj_t *obj50;
-    lv_obj_t *load_model;
-    lv_obj_t *load_ma_caddress;
-    lv_obj_t *load_version;
-    lv_obj_t *c_main_menu;
-    lv_obj_t *main_task;
-    lv_obj_t *main_profile;
-    lv_obj_t *main_net;
-    lv_obj_t *main_service;
-    lv_obj_t *main_stats;
-    lv_obj_t *main_support;
-    lv_obj_t *c_page_4;
-    lv_obj_t *c_bar_5;
-    lv_obj_t *task_run_back;
-    lv_obj_t *task_run_title;
     lv_obj_t *obj51;
-    lv_obj_t *c_button_4;
-    lv_obj_t *task_run_list_task;
-    lv_obj_t *task_run_list_profile;
-    lv_obj_t *task_run_label;
-    lv_obj_t *task_run_cycles;
-    lv_obj_t *task_run_plus;
-    lv_obj_t *task_run_minus;
-    lv_obj_t *task_run_start;
-    lv_obj_t *c_page_1;
-    lv_obj_t *c_bar_1;
-    lv_obj_t *title_1;
     lv_obj_t *obj52;
-    lv_obj_t *c_button_1;
     lv_obj_t *obj53;
     lv_obj_t *obj54;
     lv_obj_t *obj55;
@@ -133,49 +168,14 @@ typedef struct _objects_t {
     lv_obj_t *obj59;
     lv_obj_t *obj60;
     lv_obj_t *obj61;
-    lv_obj_t *c_page_6;
-    lv_obj_t *c_bar_7;
-    lv_obj_t *info_title;
     lv_obj_t *obj62;
-    lv_obj_t *c_button_6;
-    lv_obj_t *info_field1;
-    lv_obj_t *info_field2;
-    lv_obj_t *info_field3;
-    lv_obj_t *info_cancel;
-    lv_obj_t *info_ok;
-    lv_obj_t *c_page_7;
-    lv_obj_t *c_bar_8;
-    lv_obj_t *input_title_1;
     lv_obj_t *obj63;
-    lv_obj_t *c_button_7;
-    lv_obj_t *input_field1;
-    lv_obj_t *input_field2;
-    lv_obj_t *input_field4;
-    lv_obj_t *input_field3;
-    lv_obj_t *input_cancel;
-    lv_obj_t *input_ok;
-    lv_obj_t *c_page_8;
-    lv_obj_t *c_bar_9;
-    lv_obj_t *init_title;
     lv_obj_t *obj64;
-    lv_obj_t *init_http;
-    lv_obj_t *init_ok;
-    lv_obj_t *c_button_8;
     lv_obj_t *obj65;
     lv_obj_t *obj66;
-    lv_obj_t *init_machine;
     lv_obj_t *obj67;
     lv_obj_t *obj68;
-    lv_obj_t *init_group;
     lv_obj_t *obj69;
-    lv_obj_t *init_name;
-    lv_obj_t *init_access_point;
-    lv_obj_t *init_r_access_point;
-    lv_obj_t *init_test;
-    lv_obj_t *init_r_test;
-    lv_obj_t *wait_text1;
-    lv_obj_t *wait_text2;
-    lv_obj_t *wait_text3;
     lv_obj_t *c_page;
     lv_obj_t *c_bar;
     lv_obj_t *service_back;
@@ -290,9 +290,6 @@ typedef struct _objects_t {
 
 extern objects_t objects;
 
-void create_screen_keyboard();
-void tick_screen_keyboard();
-
 void create_screen_load();
 void tick_screen_load();
 
@@ -316,6 +313,9 @@ void tick_screen_init();
 
 void create_screen_wait();
 void tick_screen_wait();
+
+void create_screen_keyboard();
+void tick_screen_keyboard();
 
 void create_screen_service();
 void tick_screen_service();

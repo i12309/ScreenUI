@@ -13,13 +13,13 @@ uint32_t screen32_current_page_id() {
     lv_obj_t* active = lv_scr_act();
     if (active == objects.load) return 1u;
     if (active == objects.main) return 2u;
-    if (active == objects.keyboard) return 3u;
-    if (active == objects.task_run) return 4u;
-    if (active == objects.task_process) return 5u;
-    if (active == objects.info) return 6u;
-    if (active == objects.input) return 7u;
-    if (active == objects.init) return 8u;
-    if (active == objects.wait) return 9u;
+    if (active == objects.task_run) return 3u;
+    if (active == objects.task_process) return 4u;
+    if (active == objects.info) return 5u;
+    if (active == objects.input) return 6u;
+    if (active == objects.init) return 7u;
+    if (active == objects.wait) return 8u;
+    if (active == objects.keyboard) return 9u;
     if (active == objects.service) return 10u;
     if (active == objects.service2) return 11u;
     if (active == objects.def_page) return 12u;
@@ -36,13 +36,13 @@ bool screen32_load_page_by_target(void* pageTarget) {
     }
     if (target == objects.load) { loadScreen(SCREEN_ID_LOAD); return true; }
     if (target == objects.main) { loadScreen(SCREEN_ID_MAIN); return true; }
-    if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }
     if (target == objects.task_run) { loadScreen(SCREEN_ID_TASK_RUN); return true; }
     if (target == objects.task_process) { loadScreen(SCREEN_ID_TASK_PROCESS); return true; }
     if (target == objects.info) { loadScreen(SCREEN_ID_INFO); return true; }
     if (target == objects.input) { loadScreen(SCREEN_ID_INPUT); return true; }
     if (target == objects.init) { loadScreen(SCREEN_ID_INIT); return true; }
     if (target == objects.wait) { loadScreen(SCREEN_ID_WAIT); return true; }
+    if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }
     if (target == objects.service) { loadScreen(SCREEN_ID_SERVICE); return true; }
     if (target == objects.service2) { loadScreen(SCREEN_ID_SERVICE2); return true; }
     if (target == objects.def_page) { loadScreen(SCREEN_ID_DEF_PAGE); return true; }
