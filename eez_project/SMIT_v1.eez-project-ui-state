@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/11",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/0",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
     "selectedFontObject": "[SMIT_v1.eez-project]:/fonts/3",
@@ -192,32 +192,19 @@
               "type": "tabset",
               "id": "EDITORS",
               "weight": 56.48419203747073,
-              "selected": 1,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
                 {
                   "type": "tab",
-                  "id": "#d429db6b-795a-4577-b600-66621cca9709",
-                  "name": "def_Page",
+                  "id": "#5a449a65-7b03-4965-904e-6c97c13e78ad",
+                  "name": "Load",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/11",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/0",
                     "permanent": false
                   },
                   "icon": "svg:page"
-                },
-                {
-                  "type": "tab",
-                  "id": "#8df664ef-570e-40fe-881c-54fff6747788",
-                  "name": "Settings",
-                  "component": "editor",
-                  "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/settings",
-                    "subObjectPath": "[SMIT_v1.eez-project]:/settings",
-                    "permanent": false
-                  },
-                  "icon": "material:settings"
                 }
               ],
               "active": true
