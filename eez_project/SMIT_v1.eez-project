@@ -5199,54 +5199,6 @@
                               },
                               "group": "",
                               "groupIndex": 0
-                            },
-                            {
-                              "objID": "9c86dd98-233f-4179-dcc3-c89faba9147c",
-                              "type": "LVGLContainerWidget",
-                              "left": 0,
-                              "top": 0,
-                              "width": 100,
-                              "height": 50,
-                              "customInputs": [],
-                              "customOutputs": [],
-                              "style": {
-                                "objID": "a8fdff32-2c4b-45f0-c813-7fe61750d3f1",
-                                "useStyle": "default",
-                                "conditionalStyles": [],
-                                "childStyles": []
-                              },
-                              "hiddenInEditor": true,
-                              "timeline": [],
-                              "eventHandlers": [],
-                              "leftUnit": "px",
-                              "topUnit": "px",
-                              "widthUnit": "%",
-                              "heightUnit": "%",
-                              "children": [],
-                              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
-                              "hiddenFlagType": "literal",
-                              "clickableFlag": true,
-                              "clickableFlagType": "literal",
-                              "flagScrollbarMode": "",
-                              "flagScrollDirection": "",
-                              "scrollSnapX": "",
-                              "scrollSnapY": "",
-                              "checkedStateType": "literal",
-                              "disabledStateType": "literal",
-                              "states": "",
-                              "localStyles": {
-                                "objID": "db49516e-3ddc-4659-ce4d-89cc28b10bae",
-                                "definition": {
-                                  "MAIN": {
-                                    "DEFAULT": {
-                                      "layout": "FLEX",
-                                      "pad_column": 1
-                                    }
-                                  }
-                                }
-                              },
-                              "group": "",
-                              "groupIndex": 0
                             }
                           ],
                           "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",

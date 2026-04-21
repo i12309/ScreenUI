@@ -7,6 +7,7 @@
 // Удобный агрегатор всех сгенерированных base-классов страниц.
 // Подключай этот файл, если в одном TU нужны несколько страниц.
 
+#include "load_1_base.h"
 #include "load_base.h"
 #include "main_base.h"
 #include "task_run_base.h"

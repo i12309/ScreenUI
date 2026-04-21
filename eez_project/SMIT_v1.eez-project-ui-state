@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/1",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/4",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
     "selectedFontObject": "[SMIT_v1.eez-project]:/fonts/3",
@@ -168,7 +168,8 @@
                       "enableClose": false,
                       "icon": "svg:hierarchy"
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
@@ -211,16 +212,15 @@
                 {
                   "type": "tab",
                   "id": "#5a449a65-7b03-4965-904e-6c97c13e78ad",
-                  "name": "Load",
+                  "name": "TaskProcess",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/1",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/4",
                     "permanent": false
                   },
                   "icon": "svg:page"
                 }
-              ],
-              "active": true
+              ]
             },
             {
               "type": "row",
@@ -1238,9 +1238,7 @@
             },
             "1": {
               "0": {
-                "0": {
-                  "$selected": true
-                }
+                "0": {}
               },
               "1": {
                 "0": {}

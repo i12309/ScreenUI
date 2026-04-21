@@ -11,21 +11,22 @@ namespace demo {
 
 uint32_t screen32_current_page_id() {
     lv_obj_t* active = lv_scr_act();
-    if (active == objects.load) return 1u;
-    if (active == objects.main) return 2u;
-    if (active == objects.task_run) return 3u;
-    if (active == objects.task_process) return 4u;
-    if (active == objects.info) return 5u;
-    if (active == objects.input) return 6u;
-    if (active == objects.init) return 7u;
-    if (active == objects.wait) return 8u;
-    if (active == objects.keyboard) return 9u;
-    if (active == objects.service) return 10u;
-    if (active == objects.service2) return 11u;
-    if (active == objects.def_page) return 12u;
-    if (active == objects.def_page2) return 13u;
-    if (active == objects.def_page3) return 14u;
-    if (active == objects.def_page4) return 15u;
+    if (active == objects.load_1) return 1u;
+    if (active == objects.load) return 2u;
+    if (active == objects.main) return 3u;
+    if (active == objects.task_run) return 4u;
+    if (active == objects.task_process) return 5u;
+    if (active == objects.info) return 6u;
+    if (active == objects.input) return 7u;
+    if (active == objects.init) return 8u;
+    if (active == objects.wait) return 9u;
+    if (active == objects.keyboard) return 10u;
+    if (active == objects.service) return 11u;
+    if (active == objects.service2) return 12u;
+    if (active == objects.def_page) return 13u;
+    if (active == objects.def_page2) return 14u;
+    if (active == objects.def_page3) return 15u;
+    if (active == objects.def_page4) return 16u;
     return 1u;
 }
 
@@ -34,6 +35,7 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == nullptr) {
         return false;
     }
+    if (target == objects.load_1) { loadScreen(SCREEN_ID_LOAD_1); return true; }
     if (target == objects.load) { loadScreen(SCREEN_ID_LOAD); return true; }
     if (target == objects.main) { loadScreen(SCREEN_ID_MAIN); return true; }
     if (target == objects.task_run) { loadScreen(SCREEN_ID_TASK_RUN); return true; }
