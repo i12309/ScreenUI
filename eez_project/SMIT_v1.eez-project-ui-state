@@ -197,6 +197,18 @@
               "children": [
                 {
                   "type": "tab",
+                  "id": "#c8267c3b-7ecb-452b-972e-26fd151c6e33",
+                  "name": "Settings",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[SMIT_v1.eez-project]:/settings",
+                    "subObjectPath": "[SMIT_v1.eez-project]:/settings",
+                    "permanent": false
+                  },
+                  "icon": "material:settings"
+                },
+                {
+                  "type": "tab",
                   "id": "#5a449a65-7b03-4965-904e-6c97c13e78ad",
                   "name": "Load",
                   "component": "editor",
@@ -1064,7 +1076,9 @@
       "selectionFront": {},
       "selectionBack": {
         "0": {
-          "0": {}
+          "0": {},
+          "1": {},
+          "2": {}
         }
       },
       "transform": {
@@ -1606,8 +1620,8 @@
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
     "TEXT",
-    "BORDER",
-    "BACKGROUND"
+    "BACKGROUND",
+    "PADDING"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
