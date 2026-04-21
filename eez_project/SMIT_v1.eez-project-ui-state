@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/0",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/1",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
     "selectedFontObject": "[SMIT_v1.eez-project]:/fonts/3",
@@ -192,6 +192,7 @@
               "type": "tabset",
               "id": "EDITORS",
               "weight": 56.48419203747073,
+              "selected": 1,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
@@ -213,7 +214,7 @@
                   "name": "Load",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/0",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/1",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -1077,14 +1078,22 @@
       "selectionBack": {
         "0": {
           "0": {},
-          "1": {},
+          "1": {
+            "0": {},
+            "1": {},
+            "2": {},
+            "3": {},
+            "4": {
+              "0": {}
+            }
+          },
           "2": {}
         }
       },
       "transform": {
         "translate": {
-          "x": -301.20664062500003,
-          "y": -237.32336680094403
+          "x": -488.9462615966796,
+          "y": -383.199951171875
         },
         "scale": 1
       },
@@ -1113,8 +1122,8 @@
       },
       "transform": {
         "translate": {
-          "x": -301.20664062500003,
-          "y": -237.32336680094403
+          "x": -489.20664062500003,
+          "y": -382.9234034220378
         },
         "scale": 1
       },
@@ -1575,24 +1584,23 @@
       "selectionFront": {},
       "selectionBack": {
         "0": {
-          "0": {
-            "1": {
-              "0": {},
-              "1": {}
-            }
-          },
+          "0": {},
           "1": {
             "0": {},
-            "2": {
-              "$selected": true
+            "1": {},
+            "2": {},
+            "3": {},
+            "4": {
+              "0": {}
             }
-          }
+          },
+          "2": {}
         }
       },
       "transform": {
         "translate": {
-          "x": -380.14627380371087,
-          "y": -216
+          "x": -488.9462615966796,
+          "y": -383.199951171875
         },
         "scale": 1
       },
@@ -1620,8 +1628,7 @@
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
     "TEXT",
-    "BACKGROUND",
-    "PADDING"
+    "BORDER"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
