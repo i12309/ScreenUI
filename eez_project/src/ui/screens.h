@@ -11,7 +11,7 @@ extern "C" {
 
 enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
-    SCREEN_ID_LOAD_1 = 1,
+    SCREEN_ID_LOAD0 = 1,
     SCREEN_ID_LOAD = 2,
     SCREEN_ID_MAIN = 3,
     SCREEN_ID_TASK_RUN = 4,
@@ -31,7 +31,7 @@ enum ScreensEnum {
 };
 
 typedef struct _objects_t {
-    lv_obj_t *load_1;
+    lv_obj_t *load0;
     lv_obj_t *load;
     lv_obj_t *main;
     lv_obj_t *task_run;
@@ -59,8 +59,6 @@ typedef struct _objects_t {
     lv_obj_t *obj9;
     lv_obj_t *obj10;
     lv_obj_t *load_model_1;
-    lv_obj_t *load_ma_caddress_1;
-    lv_obj_t *load_version_1;
     lv_obj_t *obj11;
     lv_obj_t *obj12;
     lv_obj_t *obj13;
@@ -306,8 +304,8 @@ typedef struct _objects_t {
 
 extern objects_t objects;
 
-void create_screen_load_1();
-void tick_screen_load_1();
+void create_screen_load0();
+void tick_screen_load0();
 
 void create_screen_load();
 void tick_screen_load();

@@ -12,8 +12,6 @@ extern "C" {
 
 typedef enum Screen32ElementId {
     pnl_LOAD_MODEL_1 = 948557784u,
-    txt_LOAD_MA_CADDRESS_1 = 665132742u,
-    txt_LOAD_VERSION_1 = 1065999719u,
     pnl_LOAD_MODEL = 593491382u,
     txt_LOAD_MA_CADDRESS = 747485262u,
     txt_LOAD_VERSION = 914719783u,
@@ -136,7 +134,7 @@ typedef enum Screen32ElementId {
     cnt_BUTTON_3 = 937141394u,
 } Screen32ElementId;
 
-#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 123
+#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 121
 
 #ifdef __cplusplus
 }

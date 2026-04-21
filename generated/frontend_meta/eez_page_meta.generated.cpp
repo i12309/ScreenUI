@@ -11,7 +11,7 @@ namespace demo {
 
 uint32_t screen32_current_page_id() {
     lv_obj_t* active = lv_scr_act();
-    if (active == objects.load_1) return 1u;
+    if (active == objects.load0) return 1u;
     if (active == objects.load) return 2u;
     if (active == objects.main) return 3u;
     if (active == objects.task_run) return 4u;
@@ -35,7 +35,7 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == nullptr) {
         return false;
     }
-    if (target == objects.load_1) { loadScreen(SCREEN_ID_LOAD_1); return true; }
+    if (target == objects.load0) { loadScreen(SCREEN_ID_LOAD0); return true; }
     if (target == objects.load) { loadScreen(SCREEN_ID_LOAD); return true; }
     if (target == objects.main) { loadScreen(SCREEN_ID_MAIN); return true; }
     if (target == objects.task_run) { loadScreen(SCREEN_ID_TASK_RUN); return true; }

@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/4",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/1",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
     "selectedFontObject": "[SMIT_v1.eez-project]:/fonts/3",
@@ -168,8 +168,7 @@
                       "enableClose": false,
                       "icon": "svg:hierarchy"
                     }
-                  ],
-                  "active": true
+                  ]
                 },
                 {
                   "type": "tabset",
@@ -212,10 +211,10 @@
                 {
                   "type": "tab",
                   "id": "#5a449a65-7b03-4965-904e-6c97c13e78ad",
-                  "name": "TaskProcess",
+                  "name": "Load1",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/4",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/1",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -240,7 +239,8 @@
                       "enableClose": false,
                       "icon": "svg:properties"
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
@@ -1079,13 +1079,11 @@
         "0": {
           "0": {},
           "1": {
-            "0": {},
-            "1": {},
-            "2": {},
             "3": {},
             "4": {
               "0": {}
-            }
+            },
+            "$selected": true
           },
           "2": {}
         }
@@ -1117,7 +1115,11 @@
       "selectionFront": {},
       "selectionBack": {
         "0": {
-          "0": {}
+          "0": {},
+          "1": {},
+          "2": {
+            "0": {}
+          }
         }
       },
       "transform": {
@@ -1626,7 +1628,8 @@
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
     "TEXT",
-    "BORDER"
+    "BORDER",
+    "PADDING"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,

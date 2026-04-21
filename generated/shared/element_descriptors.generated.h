@@ -71,9 +71,7 @@ typedef struct Screen32ElementDescriptor {
 } Screen32ElementDescriptor;
 
 static const Screen32ElementDescriptor g_screen32_element_descriptors[SCREEN32_ELEMENT_DESCRIPTOR_COUNT] = {
-    {948557784u, "pnl_LOAD_MODEL_1", "load_model_1", 1u, "LOAD_1", TYPE_PANEL, true, false, true, true, false, false},
-    {665132742u, "txt_LOAD_MA_CADDRESS_1", "load_ma_caddress_1", 1u, "LOAD_1", TYPE_TEXT, true, false, true, true, false, false},
-    {1065999719u, "txt_LOAD_VERSION_1", "load_version_1", 1u, "LOAD_1", TYPE_TEXT, true, false, true, true, false, false},
+    {948557784u, "pnl_LOAD_MODEL_1", "load_model_1", 1u, "LOAD0", TYPE_PANEL, true, false, true, true, false, false},
     {593491382u, "pnl_LOAD_MODEL", "load_model", 2u, "LOAD", TYPE_PANEL, true, false, true, true, false, false},
     {747485262u, "txt_LOAD_MA_CADDRESS", "load_ma_caddress", 2u, "LOAD", TYPE_TEXT, true, false, true, true, false, false},
     {914719783u, "txt_LOAD_VERSION", "load_version", 2u, "LOAD", TYPE_TEXT, true, false, true, true, false, false},

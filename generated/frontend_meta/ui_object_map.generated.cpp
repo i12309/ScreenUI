@@ -49,7 +49,7 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     bool allOk = true;
 
     // Карта страниц
-    allOk = bind_page(objectMap, 1u, objects.load_1) && allOk;
+    allOk = bind_page(objectMap, 1u, objects.load0) && allOk;
     allOk = bind_page(objectMap, 2u, objects.load) && allOk;
     allOk = bind_page(objectMap, 3u, objects.main) && allOk;
     allOk = bind_page(objectMap, 4u, objects.task_run) && allOk;
@@ -69,8 +69,6 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     // Карта элементов
 
     allOk = bind_element(objectMap, 948557784u, 1u, objects.load_model_1, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 665132742u, 1u, objects.load_ma_caddress_1, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 1065999719u, 1u, objects.load_version_1, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 593491382u, 2u, objects.load_model, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 747485262u, 2u, objects.load_ma_caddress, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 914719783u, 2u, objects.load_version, outElements, outCapacity, boundCount) && allOk;
