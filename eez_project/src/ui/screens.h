@@ -107,8 +107,10 @@ typedef struct _objects_t {
     lv_obj_t *obj30;
     lv_obj_t *c_page_6;
     lv_obj_t *c_bar_7;
+    lv_obj_t *info_back;
     lv_obj_t *info_title;
     lv_obj_t *obj31;
+    lv_obj_t *info_next;
     lv_obj_t *c_button_6;
     lv_obj_t *info_field1;
     lv_obj_t *info_field2;

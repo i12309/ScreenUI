@@ -26,6 +26,10 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonInfoBack(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoBack(); (void)action; }
+    virtual void onClickInfoBack() {}
+    virtual void onButtonInfoNext(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoNext(); (void)action; }
+    virtual void onClickInfoNext() {}
     virtual void onButtonInfoField1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField1(); (void)action; }
     virtual void onClickInfoField1() {}
     virtual void onButtonInfoField2(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField2(); (void)action; }
@@ -40,6 +44,8 @@ protected:
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
+            case btn_INFO_BACK: onButtonInfoBack(action); break;
+            case btn_INFO_NEXT: onButtonInfoNext(action); break;
             case btn_INFO_FIELD1: onButtonInfoField1(action); break;
             case btn_INFO_FIELD2: onButtonInfoField2(action); break;
             case btn_INFO_FIELD3: onButtonInfoField3(action); break;

@@ -40,7 +40,9 @@ typedef enum Screen32ElementId {
     cnt_BUTTON_1 = 1003462613u,
     cnt_PAGE_6 = 593768207u,
     cnt_BAR_7 = 549692719u,
+    btn_INFO_BACK = 883611505u,
     pnl_INFO_TITLE = 696053373u,
+    btn_INFO_NEXT = 736888230u,
     cnt_BUTTON_6 = 717848663u,
     btn_INFO_FIELD1 = 985738782u,
     btn_INFO_FIELD2 = 880767611u,
@@ -134,7 +136,7 @@ typedef enum Screen32ElementId {
     cnt_BUTTON_3 = 937141394u,
 } Screen32ElementId;
 
-#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 121
+#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 123
 
 #ifdef __cplusplus
 }

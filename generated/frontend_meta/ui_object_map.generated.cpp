@@ -97,7 +97,9 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_element(objectMap, 1003462613u, 5u, objects.c_button_1, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 593768207u, 6u, objects.c_page_6, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 549692719u, 6u, objects.c_bar_7, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 883611505u, 6u, objects.info_back, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 696053373u, 6u, objects.info_title, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 736888230u, 6u, objects.info_next, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 717848663u, 6u, objects.c_button_6, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 985738782u, 6u, objects.info_field1, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 880767611u, 6u, objects.info_field2, outElements, outCapacity, boundCount) && allOk;
