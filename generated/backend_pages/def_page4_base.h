@@ -26,18 +26,22 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonBack4(ButtonAction action) { if (action == ButtonAction_CLICK) onClickBack4(); (void)action; }
     virtual void onClickBack4() {}
+    virtual void onButtonNext10(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext10(); (void)action; }
     virtual void onClickNext10() {}
+    virtual void onButtonNext11(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext11(); (void)action; }
     virtual void onClickNext11() {}
+    virtual void onButtonNext12(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext12(); (void)action; }
     virtual void onClickNext12() {}
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_BACK_4: onClickBack4(); break;
-            case btn_NEXT_10: onClickNext10(); break;
-            case btn_NEXT_11: onClickNext11(); break;
-            case btn_NEXT_12: onClickNext12(); break;
+            case btn_BACK_4: onButtonBack4(action); break;
+            case btn_NEXT_10: onButtonNext10(action); break;
+            case btn_NEXT_11: onButtonNext11(action); break;
+            case btn_NEXT_12: onButtonNext12(action); break;
             default: break;
         }
     }

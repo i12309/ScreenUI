@@ -757,7 +757,12 @@ def render_page_base_header(
     if buttons:
         lines.append("    // === Кнопки ===")
         for info in buttons:
+            button_handler = "onButton" + element_handler_suffix(info.object_name)
             handler = "onClick" + element_handler_suffix(info.object_name)
+            lines.append(
+                f"    virtual void {button_handler}(ButtonAction action) {{ "
+                f"if (action == ButtonAction_CLICK) {handler}(); (void)action; }}"
+            )
             lines.append(f"    virtual void {handler}() {{}}")
         lines.append("")
 
@@ -779,12 +784,14 @@ def render_page_base_header(
     lines.append("private:")
 
     if buttons:
-        lines.append("    void onButton(uint32_t elementId) final {")
+        lines.append("    void onButton(uint32_t elementId, ButtonAction action) final {")
         lines.append("        switch (elementId) {")
         for info in buttons:
-            handler = "onClick" + element_handler_suffix(info.object_name)
+            button_handler = "onButton" + element_handler_suffix(info.object_name)
             elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
-            lines.append(f"            case {elem_macro}: {handler}(); break;")
+            lines.append(
+                f"            case {elem_macro}: {button_handler}(action); break;"
+            )
         lines.append("            default: break;")
         lines.append("        }")
         lines.append("    }")

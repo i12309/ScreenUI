@@ -26,16 +26,19 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonWaitText1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickWaitText1(); (void)action; }
     virtual void onClickWaitText1() {}
+    virtual void onButtonWaitText2(ButtonAction action) { if (action == ButtonAction_CLICK) onClickWaitText2(); (void)action; }
     virtual void onClickWaitText2() {}
+    virtual void onButtonWaitText3(ButtonAction action) { if (action == ButtonAction_CLICK) onClickWaitText3(); (void)action; }
     virtual void onClickWaitText3() {}
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_WAIT_TEXT1: onClickWaitText1(); break;
-            case btn_WAIT_TEXT2: onClickWaitText2(); break;
-            case btn_WAIT_TEXT3: onClickWaitText3(); break;
+            case btn_WAIT_TEXT1: onButtonWaitText1(action); break;
+            case btn_WAIT_TEXT2: onButtonWaitText2(action); break;
+            case btn_WAIT_TEXT3: onButtonWaitText3(action); break;
             default: break;
         }
     }

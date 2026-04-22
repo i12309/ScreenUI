@@ -26,20 +26,25 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonInfoField1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField1(); (void)action; }
     virtual void onClickInfoField1() {}
+    virtual void onButtonInfoField2(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField2(); (void)action; }
     virtual void onClickInfoField2() {}
+    virtual void onButtonInfoField3(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField3(); (void)action; }
     virtual void onClickInfoField3() {}
+    virtual void onButtonInfoCancel(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoCancel(); (void)action; }
     virtual void onClickInfoCancel() {}
+    virtual void onButtonInfoOk(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoOk(); (void)action; }
     virtual void onClickInfoOk() {}
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_INFO_FIELD1: onClickInfoField1(); break;
-            case btn_INFO_FIELD2: onClickInfoField2(); break;
-            case btn_INFO_FIELD3: onClickInfoField3(); break;
-            case btn_INFO_CANCEL: onClickInfoCancel(); break;
-            case btn_INFO_OK: onClickInfoOk(); break;
+            case btn_INFO_FIELD1: onButtonInfoField1(action); break;
+            case btn_INFO_FIELD2: onButtonInfoField2(action); break;
+            case btn_INFO_FIELD3: onButtonInfoField3(action); break;
+            case btn_INFO_CANCEL: onButtonInfoCancel(action); break;
+            case btn_INFO_OK: onButtonInfoOk(action); break;
             default: break;
         }
     }

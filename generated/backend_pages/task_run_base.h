@@ -26,26 +26,34 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonTaskRunBack(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunBack(); (void)action; }
     virtual void onClickTaskRunBack() {}
+    virtual void onButtonTaskRunListTask(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunListTask(); (void)action; }
     virtual void onClickTaskRunListTask() {}
+    virtual void onButtonTaskRunListProfile(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunListProfile(); (void)action; }
     virtual void onClickTaskRunListProfile() {}
+    virtual void onButtonTaskRunLabel(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunLabel(); (void)action; }
     virtual void onClickTaskRunLabel() {}
+    virtual void onButtonTaskRunCycles(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunCycles(); (void)action; }
     virtual void onClickTaskRunCycles() {}
+    virtual void onButtonTaskRunPlus(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunPlus(); (void)action; }
     virtual void onClickTaskRunPlus() {}
+    virtual void onButtonTaskRunMinus(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunMinus(); (void)action; }
     virtual void onClickTaskRunMinus() {}
+    virtual void onButtonTaskRunStart(ButtonAction action) { if (action == ButtonAction_CLICK) onClickTaskRunStart(); (void)action; }
     virtual void onClickTaskRunStart() {}
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_TASK_RUN_BACK: onClickTaskRunBack(); break;
-            case btn_TASK_RUN_LIST_TASK: onClickTaskRunListTask(); break;
-            case btn_TASK_RUN_LIST_PROFILE: onClickTaskRunListProfile(); break;
-            case btn_TASK_RUN_LABEL: onClickTaskRunLabel(); break;
-            case btn_TASK_RUN_CYCLES: onClickTaskRunCycles(); break;
-            case btn_TASK_RUN_PLUS: onClickTaskRunPlus(); break;
-            case btn_TASK_RUN_MINUS: onClickTaskRunMinus(); break;
-            case btn_TASK_RUN_START: onClickTaskRunStart(); break;
+            case btn_TASK_RUN_BACK: onButtonTaskRunBack(action); break;
+            case btn_TASK_RUN_LIST_TASK: onButtonTaskRunListTask(action); break;
+            case btn_TASK_RUN_LIST_PROFILE: onButtonTaskRunListProfile(action); break;
+            case btn_TASK_RUN_LABEL: onButtonTaskRunLabel(action); break;
+            case btn_TASK_RUN_CYCLES: onButtonTaskRunCycles(action); break;
+            case btn_TASK_RUN_PLUS: onButtonTaskRunPlus(action); break;
+            case btn_TASK_RUN_MINUS: onButtonTaskRunMinus(action); break;
+            case btn_TASK_RUN_START: onButtonTaskRunStart(action); break;
             default: break;
         }
     }

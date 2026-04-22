@@ -44,7 +44,9 @@ public:
     void tickInput() override;
 
     // Методы для UI callback-ов (LVGL/EEZ -> protocol events).
-    bool emitButtonEvent(uint32_t elementId, uint32_t pageId);
+    bool emitButtonEvent(uint32_t elementId,
+                         uint32_t pageId,
+                         ButtonAction action = ButtonAction_CLICK);
     bool emitInputEventInt(uint32_t elementId, uint32_t pageId, int32_t value);
     bool emitInputEventString(uint32_t elementId, uint32_t pageId, const char* text);
 

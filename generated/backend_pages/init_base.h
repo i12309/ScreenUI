@@ -26,11 +26,17 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonInitHttp(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInitHttp(); (void)action; }
     virtual void onClickInitHttp() {}
+    virtual void onButtonInitOk(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInitOk(); (void)action; }
     virtual void onClickInitOk() {}
+    virtual void onButtonInitGroup(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInitGroup(); (void)action; }
     virtual void onClickInitGroup() {}
+    virtual void onButtonInitName(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInitName(); (void)action; }
     virtual void onClickInitName() {}
+    virtual void onButtonInitAccessPoint(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInitAccessPoint(); (void)action; }
     virtual void onClickInitAccessPoint() {}
+    virtual void onButtonInitTest(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInitTest(); (void)action; }
     virtual void onClickInitTest() {}
 
     // === Числовые поля (slider/bar/arc/spinbox/roller/dropdown/switch) ===
@@ -39,14 +45,14 @@ protected:
     virtual void onChangeInitRTest(int32_t value) { (void)value; }
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_INIT_HTTP: onClickInitHttp(); break;
-            case btn_INIT_OK: onClickInitOk(); break;
-            case btn_INIT_GROUP: onClickInitGroup(); break;
-            case btn_INIT_NAME: onClickInitName(); break;
-            case btn_INIT_ACCESS_POINT: onClickInitAccessPoint(); break;
-            case btn_INIT_TEST: onClickInitTest(); break;
+            case btn_INIT_HTTP: onButtonInitHttp(action); break;
+            case btn_INIT_OK: onButtonInitOk(action); break;
+            case btn_INIT_GROUP: onButtonInitGroup(action); break;
+            case btn_INIT_NAME: onButtonInitName(action); break;
+            case btn_INIT_ACCESS_POINT: onButtonInitAccessPoint(action); break;
+            case btn_INIT_TEST: onButtonInitTest(action); break;
             default: break;
         }
     }

@@ -26,30 +26,40 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonBSig16(ButtonAction action) { if (action == ButtonAction_CLICK) onClickBSig16(); (void)action; }
     virtual void onClickBSig16() {}
+    virtual void onButtonBSig17(ButtonAction action) { if (action == ButtonAction_CLICK) onClickBSig17(); (void)action; }
     virtual void onClickBSig17() {}
+    virtual void onButtonBSig18(ButtonAction action) { if (action == ButtonAction_CLICK) onClickBSig18(); (void)action; }
     virtual void onClickBSig18() {}
+    virtual void onButtonNext3(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext3(); (void)action; }
     virtual void onClickNext3() {}
+    virtual void onButtonB11(ButtonAction action) { if (action == ButtonAction_CLICK) onClickB11(); (void)action; }
     virtual void onClickB11() {}
+    virtual void onButtonB21(ButtonAction action) { if (action == ButtonAction_CLICK) onClickB21(); (void)action; }
     virtual void onClickB21() {}
+    virtual void onButtonB31(ButtonAction action) { if (action == ButtonAction_CLICK) onClickB31(); (void)action; }
     virtual void onClickB31() {}
+    virtual void onButtonB41(ButtonAction action) { if (action == ButtonAction_CLICK) onClickB41(); (void)action; }
     virtual void onClickB41() {}
+    virtual void onButtonB51(ButtonAction action) { if (action == ButtonAction_CLICK) onClickB51(); (void)action; }
     virtual void onClickB51() {}
+    virtual void onButtonB61(ButtonAction action) { if (action == ButtonAction_CLICK) onClickB61(); (void)action; }
     virtual void onClickB61() {}
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_SIG1_6: onClickBSig16(); break;
-            case btn_SIG1_7: onClickBSig17(); break;
-            case btn_SIG1_8: onClickBSig18(); break;
-            case btn_NEXT_3: onClickNext3(); break;
-            case btn_B1_1: onClickB11(); break;
-            case btn_B2_1: onClickB21(); break;
-            case btn_B3_1: onClickB31(); break;
-            case btn_B4_1: onClickB41(); break;
-            case btn_B5_1: onClickB51(); break;
-            case btn_B6_1: onClickB61(); break;
+            case btn_SIG1_6: onButtonBSig16(action); break;
+            case btn_SIG1_7: onButtonBSig17(action); break;
+            case btn_SIG1_8: onButtonBSig18(action); break;
+            case btn_NEXT_3: onButtonNext3(action); break;
+            case btn_B1_1: onButtonB11(action); break;
+            case btn_B2_1: onButtonB21(action); break;
+            case btn_B3_1: onButtonB31(action); break;
+            case btn_B4_1: onButtonB41(action); break;
+            case btn_B5_1: onButtonB51(action); break;
+            case btn_B6_1: onButtonB61(action); break;
             default: break;
         }
     }

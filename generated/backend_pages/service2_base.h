@@ -26,18 +26,22 @@ public:
 
 protected:
     // === Кнопки ===
+    virtual void onButtonService2Back(ButtonAction action) { if (action == ButtonAction_CLICK) onClickService2Back(); (void)action; }
     virtual void onClickService2Back() {}
+    virtual void onButtonServiceTable1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickServiceTable1(); (void)action; }
     virtual void onClickServiceTable1() {}
+    virtual void onButtonServicePaper1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickServicePaper1(); (void)action; }
     virtual void onClickServicePaper1() {}
+    virtual void onButtonServiceGuillotine1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickServiceGuillotine1(); (void)action; }
     virtual void onClickServiceGuillotine1() {}
 
 private:
-    void onButton(uint32_t elementId) final {
+    void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
-            case btn_SERVICE2_BACK: onClickService2Back(); break;
-            case btn_SERVICE_TABLE_1: onClickServiceTable1(); break;
-            case btn_SERVICE_PAPER_1: onClickServicePaper1(); break;
-            case btn_SERVICE_GUILLOTINE_1: onClickServiceGuillotine1(); break;
+            case btn_SERVICE2_BACK: onButtonService2Back(action); break;
+            case btn_SERVICE_TABLE_1: onButtonServiceTable1(action); break;
+            case btn_SERVICE_PAPER_1: onButtonServicePaper1(action); break;
+            case btn_SERVICE_GUILLOTINE_1: onButtonServiceGuillotine1(action); break;
             default: break;
         }
     }
