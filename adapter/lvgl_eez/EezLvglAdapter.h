@@ -15,6 +15,7 @@ struct EezLvglHooks {
     bool (*setValue)(void* userData, void* uiObject, int32_t value) = nullptr;
     bool (*setVisible)(void* userData, void* uiObject, bool visible) = nullptr;
     bool (*setColor)(void* userData, void* uiObject, uint32_t bgColor, uint32_t fgColor) = nullptr;
+    bool (*setElementAttribute)(void* userData, void* uiObject, const SetElementAttribute& attr) = nullptr;
     // When hook is missing or returns false, allow built-in LVGL object helpers.
     bool enableLvglObjectHelpers = true;
 
@@ -38,6 +39,8 @@ public:
     bool setValue(uint32_t elementId, int32_t value) override;
     bool setVisible(uint32_t elementId, bool visible) override;
     bool setColor(uint32_t elementId, uint32_t bgColor, uint32_t fgColor) override;
+    bool setElementAttribute(const SetElementAttribute& attr) override;
+    bool applyElementAttributeBatch(const SetElementAttributeBatch& batch) override;
     bool applyBatch(const SetBatch& batch) override;
 
     void setEventSink(EventSink sink, void* userData) override;

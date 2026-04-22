@@ -8,15 +8,35 @@
 #include <lvgl.h>
 #define SCREENUI_LVGL_HELPERS_AVAILABLE 1
 #endif
+#if __has_include("../../eez_project/src/ui/fonts.h")
+#include "../../eez_project/src/ui/fonts.h"
+#define SCREENUI_EEZ_FONT_MAP_AVAILABLE 1
+#endif
 #endif
 
 #ifndef SCREENUI_LVGL_HELPERS_AVAILABLE
 #define SCREENUI_LVGL_HELPERS_AVAILABLE 0
 #endif
 
+#ifndef SCREENUI_EEZ_FONT_MAP_AVAILABLE
+#define SCREENUI_EEZ_FONT_MAP_AVAILABLE 0
+#endif
+
 namespace screenlib::adapter {
 
 namespace {
+
+uint32_t normalize_rgb_color(uint32_t value) {
+    if (value <= 0xFFFFu) {
+        const uint8_t r = static_cast<uint8_t>(((value >> 11) & 0x1Fu) * 255u / 31u);
+        const uint8_t g = static_cast<uint8_t>(((value >> 5) & 0x3Fu) * 255u / 63u);
+        const uint8_t b = static_cast<uint8_t>((value & 0x1Fu) * 255u / 31u);
+        return (static_cast<uint32_t>(r) << 16) |
+               (static_cast<uint32_t>(g) << 8) |
+               static_cast<uint32_t>(b);
+    }
+    return value & 0x00FFFFFFu;
+}
 
 #if SCREENUI_LVGL_HELPERS_AVAILABLE
 bool as_valid_lv_obj(void* uiObject, lv_obj_t*& outObj) {
@@ -147,9 +167,96 @@ bool set_color_with_helpers(void* uiObject, uint32_t bgColor, uint32_t fgColor) 
         return false;
     }
 
-    lv_obj_set_style_bg_color(obj, lv_color_hex(bgColor & 0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_color(obj, lv_color_hex(fgColor & 0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(normalize_rgb_color(bgColor)), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(obj, lv_color_hex(normalize_rgb_color(fgColor)), LV_PART_MAIN | LV_STATE_DEFAULT);
     return true;
+}
+
+const lv_font_t* map_proto_font(ElementFont font) {
+#if SCREENUI_EEZ_FONT_MAP_AVAILABLE
+    switch (font) {
+        case ElementFont_ELEMENT_FONT_UI_M18:
+            return &ui_font_m_18;
+        case ElementFont_ELEMENT_FONT_UI_M20:
+            return &ui_font_m_20;
+        case ElementFont_ELEMENT_FONT_UI_M24:
+            return &ui_font_m_24;
+        case ElementFont_ELEMENT_FONT_UI_M70:
+            return &ui_font_m_70;
+        case ElementFont_ELEMENT_FONT_UNKNOWN:
+        default:
+            return nullptr;
+    }
+#else
+    (void)font;
+    return nullptr;
+#endif
+}
+
+bool set_element_attribute_with_helpers(void* uiObject, const SetElementAttribute& attr) {
+    lv_obj_t* obj = nullptr;
+    if (!as_valid_lv_obj(uiObject, obj)) {
+        return false;
+    }
+
+    switch (attr.attribute) {
+        case ElementAttribute_ELEMENT_ATTRIBUTE_POSITION_WIDTH:
+            if (attr.which_value != SetElementAttribute_int_value_tag) {
+                return false;
+            }
+            lv_obj_set_width(obj, attr.value.int_value);
+            return true;
+        case ElementAttribute_ELEMENT_ATTRIBUTE_POSITION_HEIGHT:
+            if (attr.which_value != SetElementAttribute_int_value_tag) {
+                return false;
+            }
+            lv_obj_set_height(obj, attr.value.int_value);
+            return true;
+        case ElementAttribute_ELEMENT_ATTRIBUTE_BACKGROUND_COLOR:
+            if (attr.which_value != SetElementAttribute_color_value_tag) {
+                return false;
+            }
+            lv_obj_set_style_bg_color(obj,
+                                      lv_color_hex(normalize_rgb_color(attr.value.color_value)),
+                                      LV_PART_MAIN | LV_STATE_DEFAULT);
+            return true;
+        case ElementAttribute_ELEMENT_ATTRIBUTE_BORDER_COLOR:
+            if (attr.which_value != SetElementAttribute_color_value_tag) {
+                return false;
+            }
+            lv_obj_set_style_border_color(obj,
+                                          lv_color_hex(normalize_rgb_color(attr.value.color_value)),
+                                          LV_PART_MAIN | LV_STATE_DEFAULT);
+            return true;
+        case ElementAttribute_ELEMENT_ATTRIBUTE_BORDER_WIDTH:
+            if (attr.which_value != SetElementAttribute_int_value_tag) {
+                return false;
+            }
+            lv_obj_set_style_border_width(obj, attr.value.int_value, LV_PART_MAIN | LV_STATE_DEFAULT);
+            return true;
+        case ElementAttribute_ELEMENT_ATTRIBUTE_TEXT_COLOR:
+            if (attr.which_value != SetElementAttribute_color_value_tag) {
+                return false;
+            }
+            lv_obj_set_style_text_color(obj,
+                                        lv_color_hex(normalize_rgb_color(attr.value.color_value)),
+                                        LV_PART_MAIN | LV_STATE_DEFAULT);
+            return true;
+        case ElementAttribute_ELEMENT_ATTRIBUTE_TEXT_FONT: {
+            if (attr.which_value != SetElementAttribute_font_value_tag) {
+                return false;
+            }
+            const lv_font_t* font = map_proto_font(attr.value.font_value);
+            if (font == nullptr) {
+                return false;
+            }
+            lv_obj_set_style_text_font(obj, font, LV_PART_MAIN | LV_STATE_DEFAULT);
+            return true;
+        }
+        case ElementAttribute_ELEMENT_ATTRIBUTE_UNKNOWN:
+        default:
+            return false;
+    }
 }
 #else
 bool set_text_with_helpers(void* uiObject, const char* text) {
@@ -174,6 +281,12 @@ bool set_color_with_helpers(void* uiObject, uint32_t bgColor, uint32_t fgColor) 
     (void)uiObject;
     (void)bgColor;
     (void)fgColor;
+    return false;
+}
+
+bool set_element_attribute_with_helpers(void* uiObject, const SetElementAttribute& attr) {
+    (void)uiObject;
+    (void)attr;
     return false;
 }
 #endif
@@ -282,6 +395,36 @@ bool EezLvglAdapter::setColor(uint32_t elementId, uint32_t bgColor, uint32_t fgC
         return set_color_with_helpers(uiObject, bgColor, fgColor);
     }
     return false;
+}
+
+bool EezLvglAdapter::setElementAttribute(const SetElementAttribute& attr) {
+    if (_objectMap == nullptr) {
+        return false;
+    }
+
+    void* uiObject = _objectMap->findElement(attr.element_id);
+    if (uiObject == nullptr) {
+        return false;
+    }
+
+    if (_hooks.setElementAttribute != nullptr &&
+        _hooks.setElementAttribute(_hookUserData, uiObject, attr)) {
+        return true;
+    }
+    if (_hooks.enableLvglObjectHelpers) {
+        return set_element_attribute_with_helpers(uiObject, attr);
+    }
+    return false;
+}
+
+bool EezLvglAdapter::applyElementAttributeBatch(const SetElementAttributeBatch& batch) {
+    bool allOk = true;
+    for (pb_size_t i = 0; i < batch.attributes_count; ++i) {
+        if (!setElementAttribute(batch.attributes[i])) {
+            allOk = false;
+        }
+    }
+    return allOk;
 }
 
 bool EezLvglAdapter::applyBatch(const SetBatch& batch) {
