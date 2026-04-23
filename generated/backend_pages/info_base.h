@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 
-#include "Screen/Screen.h"
-#include "pages/IHostPage.h"
+#include "runtime/PageRuntime.h"
+#include "element_types.generated.h"
 
 #include "../shared/element_ids.generated.h"
 #include "../shared/page_ids.generated.h"
@@ -15,46 +15,51 @@
 namespace screenui {
 
 template <typename TPage>
-class InfoBase : public screenlib::IHostPage {
+class InfoPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_INFO;
-    // Открывает страницу через системный фасад экрана.
-    static bool show() {
-        return machine32::screen::Screen::getInstance().showPage<TPage>();
-    }
+    InfoPage()
+      : cnt_PAGE_6(this, ::cnt_PAGE_6)
+      , cnt_BAR_7(this, ::cnt_BAR_7)
+      , btn_INFO_BACK(this, ::btn_INFO_BACK)
+      , pnl_INFO_TITLE(this, ::pnl_INFO_TITLE)
+      , btn_INFO_NEXT(this, ::btn_INFO_NEXT)
+      , cnt_BUTTON_6(this, ::cnt_BUTTON_6)
+      , btn_INFO_FIELD1(this, ::btn_INFO_FIELD1)
+      , btn_INFO_FIELD2(this, ::btn_INFO_FIELD2)
+      , btn_INFO_FIELD3(this, ::btn_INFO_FIELD3)
+      , btn_INFO_CANCEL(this, ::btn_INFO_CANCEL)
+      , btn_INFO_OK(this, ::btn_INFO_OK)
+    {}
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    // === Кнопки ===
-    virtual void onButtonInfoBack(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoBack(); (void)action; }
-    virtual void onClickInfoBack() {}
-    virtual void onButtonInfoNext(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoNext(); (void)action; }
-    virtual void onClickInfoNext() {}
-    virtual void onButtonInfoField1(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField1(); (void)action; }
-    virtual void onClickInfoField1() {}
-    virtual void onButtonInfoField2(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField2(); (void)action; }
-    virtual void onClickInfoField2() {}
-    virtual void onButtonInfoField3(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoField3(); (void)action; }
-    virtual void onClickInfoField3() {}
-    virtual void onButtonInfoCancel(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoCancel(); (void)action; }
-    virtual void onClickInfoCancel() {}
-    virtual void onButtonInfoOk(ButtonAction action) { if (action == ButtonAction_CLICK) onClickInfoOk(); (void)action; }
-    virtual void onClickInfoOk() {}
+    screenui::generated::TypeContainer cnt_PAGE_6;
+    screenui::generated::TypeContainer cnt_BAR_7;
+    screenui::generated::TypeButton btn_INFO_BACK;
+    screenui::generated::TypePanel pnl_INFO_TITLE;
+    screenui::generated::TypeButton btn_INFO_NEXT;
+    screenui::generated::TypeContainer cnt_BUTTON_6;
+    screenui::generated::TypeButton btn_INFO_FIELD1;
+    screenui::generated::TypeButton btn_INFO_FIELD2;
+    screenui::generated::TypeButton btn_INFO_FIELD3;
+    screenui::generated::TypeButton btn_INFO_CANCEL;
+    screenui::generated::TypeButton btn_INFO_OK;
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
+        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case btn_INFO_BACK: onButtonInfoBack(action); break;
-            case btn_INFO_NEXT: onButtonInfoNext(action); break;
-            case btn_INFO_FIELD1: onButtonInfoField1(action); break;
-            case btn_INFO_FIELD2: onButtonInfoField2(action); break;
-            case btn_INFO_FIELD3: onButtonInfoField3(action); break;
-            case btn_INFO_CANCEL: onButtonInfoCancel(action); break;
-            case btn_INFO_OK: onButtonInfoOk(action); break;
+            case ::btn_INFO_BACK: btn_INFO_BACK.onClick.emit(); break;
+            case ::btn_INFO_NEXT: btn_INFO_NEXT.onClick.emit(); break;
+            case ::btn_INFO_FIELD1: btn_INFO_FIELD1.onClick.emit(); break;
+            case ::btn_INFO_FIELD2: btn_INFO_FIELD2.onClick.emit(); break;
+            case ::btn_INFO_FIELD3: btn_INFO_FIELD3.onClick.emit(); break;
+            case ::btn_INFO_CANCEL: btn_INFO_CANCEL.onClick.emit(); break;
+            case ::btn_INFO_OK: btn_INFO_OK.onClick.emit(); break;
             default: break;
         }
     }
-
 };
 
 }  // namespace screenui

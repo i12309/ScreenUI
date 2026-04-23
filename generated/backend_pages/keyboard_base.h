@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 
-#include "Screen/Screen.h"
-#include "pages/IHostPage.h"
+#include "runtime/PageRuntime.h"
+#include "element_types.generated.h"
 
 #include "../shared/element_ids.generated.h"
 #include "../shared/page_ids.generated.h"
@@ -15,17 +15,13 @@
 namespace screenui {
 
 template <typename TPage>
-class KeyboardBase : public screenlib::IHostPage {
+class KeyboardPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_KEYBOARD;
-    // Открывает страницу через системный фасад экрана.
-    static bool show() {
-        return machine32::screen::Screen::getInstance().showPage<TPage>();
-    }
+    KeyboardPage() = default;
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-private:
 };
 
 }  // namespace screenui

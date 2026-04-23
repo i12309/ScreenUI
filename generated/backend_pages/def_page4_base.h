@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 
-#include "Screen/Screen.h"
-#include "pages/IHostPage.h"
+#include "runtime/PageRuntime.h"
+#include "element_types.generated.h"
 
 #include "../shared/element_ids.generated.h"
 #include "../shared/page_ids.generated.h"
@@ -15,37 +15,42 @@
 namespace screenui {
 
 template <typename TPage>
-class DefPage4Base : public screenlib::IHostPage {
+class DefPage4Page : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_DEF_PAGE4;
-    // Открывает страницу через системный фасад экрана.
-    static bool show() {
-        return machine32::screen::Screen::getInstance().showPage<TPage>();
-    }
+    DefPage4Page()
+      : cnt_PAGE_3(this, ::cnt_PAGE_3)
+      , cnt_BAR_4(this, ::cnt_BAR_4)
+      , btn_BACK_4(this, ::btn_BACK_4)
+      , pnl_TITLE_4(this, ::pnl_TITLE_4)
+      , btn_NEXT_10(this, ::btn_NEXT_10)
+      , btn_NEXT_11(this, ::btn_NEXT_11)
+      , btn_NEXT_12(this, ::btn_NEXT_12)
+      , cnt_BUTTON_3(this, ::cnt_BUTTON_3)
+    {}
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    // === Кнопки ===
-    virtual void onButtonBack4(ButtonAction action) { if (action == ButtonAction_CLICK) onClickBack4(); (void)action; }
-    virtual void onClickBack4() {}
-    virtual void onButtonNext10(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext10(); (void)action; }
-    virtual void onClickNext10() {}
-    virtual void onButtonNext11(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext11(); (void)action; }
-    virtual void onClickNext11() {}
-    virtual void onButtonNext12(ButtonAction action) { if (action == ButtonAction_CLICK) onClickNext12(); (void)action; }
-    virtual void onClickNext12() {}
+    screenui::generated::TypeContainer cnt_PAGE_3;
+    screenui::generated::TypeContainer cnt_BAR_4;
+    screenui::generated::TypeButton btn_BACK_4;
+    screenui::generated::TypePanel pnl_TITLE_4;
+    screenui::generated::TypeButton btn_NEXT_10;
+    screenui::generated::TypeButton btn_NEXT_11;
+    screenui::generated::TypeButton btn_NEXT_12;
+    screenui::generated::TypeContainer cnt_BUTTON_3;
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
+        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case btn_BACK_4: onButtonBack4(action); break;
-            case btn_NEXT_10: onButtonNext10(action); break;
-            case btn_NEXT_11: onButtonNext11(action); break;
-            case btn_NEXT_12: onButtonNext12(action); break;
+            case ::btn_BACK_4: btn_BACK_4.onClick.emit(); break;
+            case ::btn_NEXT_10: btn_NEXT_10.onClick.emit(); break;
+            case ::btn_NEXT_11: btn_NEXT_11.onClick.emit(); break;
+            case ::btn_NEXT_12: btn_NEXT_12.onClick.emit(); break;
             default: break;
         }
     }
-
 };
 
 }  // namespace screenui

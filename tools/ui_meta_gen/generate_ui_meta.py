@@ -239,18 +239,42 @@ ATTRIBUTE_NAME_TO_ENUM_VALUE: Dict[str, int] = {
     "y":            12,  # ELEMENT_ATTRIBUTE_Y
 }
 
+ATTRIBUTE_CPP_SPEC: Dict[str, tuple[str, str, str]] = {
+    "width":        ("int32_t",     "ELEMENT_ATTRIBUTE_POSITION_WIDTH",  "width"),
+    "height":       ("int32_t",     "ELEMENT_ATTRIBUTE_POSITION_HEIGHT", "height"),
+    "x":            ("int32_t",     "ELEMENT_ATTRIBUTE_X",               "x"),
+    "y":            ("int32_t",     "ELEMENT_ATTRIBUTE_Y",               "y"),
+    "bg_color":     ("uint32_t",    "ELEMENT_ATTRIBUTE_BACKGROUND_COLOR","bgColor"),
+    "border_color": ("uint32_t",    "ELEMENT_ATTRIBUTE_BORDER_COLOR",    "borderColor"),
+    "border_width": ("int32_t",     "ELEMENT_ATTRIBUTE_BORDER_WIDTH",    "borderWidth"),
+    "text":         ("const char*", "ELEMENT_ATTRIBUTE_TEXT",            "text"),
+    "text_color":   ("uint32_t",    "ELEMENT_ATTRIBUTE_TEXT_COLOR",      "textColor"),
+    "text_font":    ("ElementFont", "ELEMENT_ATTRIBUTE_TEXT_FONT",       "font"),
+    "value":        ("int32_t",     "ELEMENT_ATTRIBUTE_VALUE",           "value"),
+    "visible":      ("bool",        "ELEMENT_ATTRIBUTE_VISIBLE",         "visible"),
+}
+
+ELEMENT_BASE_ATTRIBUTES = {"visible", "width", "height"}
+
 
 @dataclass(frozen=True)
 class SyncedAttrsConfig:
     """Распаршенный synced_attrs.yaml: какие атрибуты у какого типа synced."""
 
-    defaults: Set[str]
-    by_type: Dict[str, Set[str]]
+    defaults: tuple[str, ...]
+    by_type: Dict[str, tuple[str, ...]]
 
-    def synced_names_for(self, type_name: str) -> Set[str]:
-        """Вернёт имена synced-атрибутов для типа (с дефолтами)."""
+    def synced_names_for(self, type_name: str) -> List[str]:
+        """Вернёт имена synced-атрибутов для типа (с дефолтами, с сохранением порядка)."""
 
-        return set(self.defaults) | self.by_type.get(type_name, set())
+        ordered: List[str] = []
+        seen: Set[str] = set()
+        for name in (*self.defaults, *self.by_type.get(type_name, ())):
+            if name in seen:
+                continue
+            ordered.append(name)
+            seen.add(name)
+        return ordered
 
     def synced_mask_for(self, type_name: str) -> int:
         """Битовая маска synced-атрибутов по enum ElementAttribute."""
@@ -273,9 +297,9 @@ def load_synced_attrs(path: Path = SYNCED_ATTRS_YAML) -> SyncedAttrsConfig:
     if not isinstance(raw, dict):
         raise RuntimeError(f"synced_attrs.yaml: top-level must be a mapping")
 
-    defaults = set(raw.get("defaults") or [])
+    defaults = tuple(raw.get("defaults") or [])
 
-    by_type: Dict[str, Set[str]] = {}
+    by_type: Dict[str, tuple[str, ...]] = {}
     known_types = {name for name, _ in ELEMENT_TYPES}
     for key, value in raw.items():
         if key == "defaults":
@@ -289,7 +313,7 @@ def load_synced_attrs(path: Path = SYNCED_ATTRS_YAML) -> SyncedAttrsConfig:
             raise RuntimeError(
                 f"synced_attrs.yaml: value for '{key}' must be a list"
             )
-        by_type[key] = set(value)
+        by_type[key] = tuple(value)
 
     # Проверим, что все упомянутые имена атрибутов нам известны.
     all_names = set(defaults)
@@ -793,40 +817,111 @@ def page_class_name(page: PageInfo) -> str:
     return to_pascal_case(page.object_name)
 
 
+def page_template_class_name(page: PageInfo) -> str:
+    return page_class_name(page) + "Page"
+
+
+def element_type_class_name(type_name: str) -> str:
+    parts = type_name[len("TYPE_") :].lower().split("_")
+    return "Type" + "".join(p[:1].upper() + p[1:] for p in parts)
+
+
+def element_member_name(info: ElementInfo) -> str:
+    return make_element_enum_name(info.object_name, infer_element_type(info))
+
+
 def element_handler_suffix(object_name: str) -> str:
     # b_main_task -> BMainTask
     return to_pascal_case(object_name)
 
 
-def render_page_base_header(
-    page: PageInfo,
-    page_elements: List[ElementInfo],
-    element_ids: Dict[str, int],
+def render_element_types_header(
+    synced_attrs: SyncedAttrsConfig,
+    used_types: Set[str],
 ) -> str:
-    cls = page_class_name(page) + "Base"
-    page_id_macro = make_page_enum_name(page.enum_name)
-
-    buttons: List[ElementInfo] = []
-    int_inputs: List[ElementInfo] = []
-    text_inputs: List[ElementInfo] = []
-
-    for info in page_elements:
-        elem_type, flags = infer_type_and_flags(info)
-        if flags["emits_button_event"]:
-            buttons.append(info)
-        elif flags["emits_input_event"]:
-            if elem_type in TEXT_INPUT_TYPES:
-                text_inputs.append(info)
-            else:
-                int_inputs.append(info)
+    ordered_used_types = [name for name, _ in ELEMENT_TYPES if name in used_types]
 
     lines = [
         "#pragma once",
         "",
         "#include <stdint.h>",
         "",
-        "#include \"Screen/Screen.h\"",
-        "#include \"pages/IHostPage.h\"",
+        "#include \"pages/Element.h\"",
+        "",
+        "namespace screenui::generated {",
+        "",
+        "class TypeGeneric : public screenlib::ElementBase {",
+        "public:",
+        "    using screenlib::ElementBase::ElementBase;",
+        "};",
+        "",
+    ]
+
+    for type_name in ordered_used_types:
+        class_name = element_type_class_name(type_name)
+        attrs = [
+            name
+            for name in synced_attrs.synced_names_for(type_name)
+            if name not in ELEMENT_BASE_ATTRIBUTES
+        ]
+        emits_click = type_name in BUTTON_EVENT_TYPES
+
+        lines.append(f"class {class_name} : public screenlib::ElementBase {{")
+        lines.append("public:")
+
+        if attrs:
+            lines.append(f"    {class_name}(screenlib::IPage* page, uint32_t id)")
+            lines.append("      : ElementBase(page, id)")
+            for attr_name in attrs:
+                spec = ATTRIBUTE_CPP_SPEC.get(attr_name)
+                if spec is None:
+                    raise RuntimeError(
+                        f"render_element_types_header: unsupported attribute '{attr_name}' for {type_name}"
+                    )
+                field_name = spec[2]
+                lines.append(f"      , {field_name}(page, id)")
+            lines.append("    {}")
+        else:
+            lines.append("    using screenlib::ElementBase::ElementBase;")
+
+        lines.append("")
+
+        for attr_name in attrs:
+            cpp_type, enum_name, field_name = ATTRIBUTE_CPP_SPEC[attr_name]
+            lines.append(f"    screenlib::Property<{cpp_type}, {enum_name}> {field_name};")
+        if emits_click:
+            lines.append("    screenlib::Signal<> onClick;")
+
+        if not attrs and not emits_click:
+            lines.append("    // Тип не имеет дополнительных synced-полей сверх ElementBase.")
+
+        lines.append("};")
+        lines.append("")
+
+    lines.append("}  // namespace screenui::generated")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def render_page_base_header(
+    page: PageInfo,
+    page_elements: List[ElementInfo],
+    element_ids: Dict[str, int],
+    synced_attrs: SyncedAttrsConfig,
+) -> str:
+    cls = page_template_class_name(page)
+    page_id_macro = make_page_enum_name(page.enum_name)
+    buttons = [
+        info for info in page_elements if infer_element_type(info) in BUTTON_EVENT_TYPES
+    ]
+
+    lines = [
+        "#pragma once",
+        "",
+        "#include <stdint.h>",
+        "",
+        "#include \"runtime/PageRuntime.h\"",
+        "#include \"element_types.generated.h\"",
         "",
         "#include \"../shared/element_ids.generated.h\"",
         "#include \"../shared/page_ids.generated.h\"",
@@ -834,84 +929,47 @@ def render_page_base_header(
         "namespace screenui {",
         "",
         "template <typename TPage>",
-        f"class {cls} : public screenlib::IHostPage {{",
+        f"class {cls} : public screenlib::IPage {{",
         "public:",
         f"    static constexpr uint32_t kPageId = {page_id_macro};",
-        "    // Открывает страницу через системный фасад экрана.",
-        "    static bool show() {",
-        "        return machine32::screen::Screen::getInstance().showPage<TPage>();",
-        "    }",
+    ]
+
+    if page_elements:
+        lines.append(f"    {cls}()")
+        for index, info in enumerate(page_elements):
+            member_name = element_member_name(info)
+            prefix = ":" if index == 0 else ","
+            lines.append(f"      {prefix} {member_name}(this, ::{member_name})")
+        lines.append("    {}")
+    else:
+        lines.append(f"    {cls}() = default;")
+
+    lines.extend(
+        [
         f"    uint32_t pageId() const final {{ return kPageId; }}",
         "",
         "protected:",
-    ]
+        ]
+    )
+
+    for info in page_elements:
+        element_type = infer_element_type(info)
+        _ = synced_attrs.synced_names_for(element_type)
+        member_name = element_member_name(info)
+        type_class = element_type_class_name(element_type)
+        lines.append(f"    screenui::generated::{type_class} {member_name};")
 
     if buttons:
-        lines.append("    // === Кнопки ===")
-        for info in buttons:
-            button_handler = "onButton" + element_handler_suffix(info.object_name)
-            handler = "onClick" + element_handler_suffix(info.object_name)
-            lines.append(
-                f"    virtual void {button_handler}(ButtonAction action) {{ "
-                f"if (action == ButtonAction_CLICK) {handler}(); (void)action; }}"
-            )
-            lines.append(f"    virtual void {handler}() {{}}")
-        lines.append("")
-
-    if int_inputs:
-        lines.append("    // === Числовые поля (slider/bar/arc/spinbox/roller/dropdown/switch) ===")
-        for info in int_inputs:
-            handler = "onChange" + element_handler_suffix(info.object_name)
-            lines.append(f"    virtual void {handler}(int32_t value) {{ (void)value; }}")
-        lines.append("")
-
-    if text_inputs:
-        lines.append("    // === Текстовые поля ===")
-        for info in text_inputs:
-            handler = "onChange" + element_handler_suffix(info.object_name)
-            lines.append(f"    virtual void {handler}(const char* text) {{ (void)text; }}")
-        lines.append("")
-
-    # Диспатч из IHostPage в типизированные обработчики.
-    lines.append("private:")
-
-    if buttons:
+        lines.extend(["", "private:"])
         lines.append("    void onButton(uint32_t elementId, ButtonAction action) final {")
+        lines.append("        if (action != ButtonAction_CLICK) return;")
         lines.append("        switch (elementId) {")
         for info in buttons:
-            button_handler = "onButton" + element_handler_suffix(info.object_name)
-            elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
-            lines.append(
-                f"            case {elem_macro}: {button_handler}(action); break;"
-            )
+            member_name = element_member_name(info)
+            lines.append(f"            case ::{member_name}: {member_name}.onClick.emit(); break;")
         lines.append("            default: break;")
         lines.append("        }")
         lines.append("    }")
-        lines.append("")
-
-    if int_inputs:
-        lines.append("    void onInputInt(uint32_t elementId, int32_t value) final {")
-        lines.append("        switch (elementId) {")
-        for info in int_inputs:
-            handler = "onChange" + element_handler_suffix(info.object_name)
-            elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
-            lines.append(f"            case {elem_macro}: {handler}(value); break;")
-        lines.append("            default: break;")
-        lines.append("        }")
-        lines.append("    }")
-        lines.append("")
-
-    if text_inputs:
-        lines.append("    void onInputText(uint32_t elementId, const char* text) final {")
-        lines.append("        switch (elementId) {")
-        for info in text_inputs:
-            handler = "onChange" + element_handler_suffix(info.object_name)
-            elem_macro = make_element_enum_name(info.object_name, infer_element_type(info))
-            lines.append(f"            case {elem_macro}: {handler}(text); break;")
-        lines.append("            default: break;")
-        lines.append("        }")
-        lines.append("    }")
-        lines.append("")
 
     lines.append("};")
     lines.append("")
@@ -1161,6 +1219,7 @@ def generate() -> None:
 
     used_ids = {page.page_id for page in pages}
     element_ids = {name: stable_element_id(name, used_ids) for name in element_order}
+    used_types = {infer_element_type(assignments[name]) for name in element_order}
 
     write_file(OUT_SHARED_DIR / "page_ids.generated.h", render_page_ids_header(pages))
     write_file(
@@ -1171,6 +1230,10 @@ def generate() -> None:
     write_file(
         OUT_SHARED_DIR / "element_descriptors.generated.h",
         render_element_descriptors_header(element_order, assignments, element_ids, synced_attrs),
+    )
+    write_file(
+        OUT_BACKEND_PAGES_DIR / "element_types.generated.h",
+        render_element_types_header(synced_attrs, used_types),
     )
     write_file(OUT_FRONTEND_META_DIR / "ui_object_map.generated.h", render_ui_object_map_header())
     write_file(
@@ -1187,34 +1250,38 @@ def generate() -> None:
     for page in pages:
         write_file(
             OUT_BACKEND_PAGES_DIR / f"{page.object_name}_base.h",
-            render_page_base_header(page, elements_by_page.get(page.enum_name, []), element_ids),
+            render_page_base_header(
+                page,
+                elements_by_page.get(page.enum_name, []),
+                element_ids,
+                synced_attrs,
+            ),
         )
     write_file(OUT_BACKEND_PAGES_DIR / "pages.h", render_pages_aggregator(pages))
 
     # PIO-манифест для папки. Без него LDF не подхватит библиотеку как зависимость.
     backend_pages_lib_json = OUT_BACKEND_PAGES_DIR / "library.json"
-    if not backend_pages_lib_json.exists():
-        backend_pages_lib_json.write_text(
-            (
-                "{\n"
-                "  \"name\": \"screenui-backend-pages\",\n"
-                "  \"version\": \"0.1.0\",\n"
-                "  \"description\": \"Generated per-page base classes for backend (inherits screenlib::IHostPage)\",\n"
-                "  \"frameworks\": [\"arduino\"],\n"
-                "  \"platforms\": [\"espressif32\"],\n"
-                "  \"build\": {\n"
-                "    \"includeDir\": \".\",\n"
-                "    \"srcFilter\": \"-<*>\"\n"
-                "  },\n"
-                "  \"dependencies\": [\n"
-                "    { \"name\": \"screenlib-host\" },\n"
-                "    { \"name\": \"screenui-shared-meta\" }\n"
-                "  ]\n"
-                "}\n"
-            ),
-            encoding="utf-8",
-            newline="\n",
-        )
+    backend_pages_lib_json.write_text(
+        (
+            "{\n"
+            "  \"name\": \"screenui-backend-pages\",\n"
+            "  \"version\": \"0.1.0\",\n"
+            "  \"description\": \"Generated per-page base classes for backend (inherits screenlib::IPage)\",\n"
+            "  \"frameworks\": [\"arduino\"],\n"
+            "  \"platforms\": [\"espressif32\"],\n"
+            "  \"build\": {\n"
+            "    \"includeDir\": \".\",\n"
+            "    \"srcFilter\": \"-<*>\"\n"
+            "  },\n"
+            "  \"dependencies\": [\n"
+            "    { \"name\": \"screenlib-host\" },\n"
+            "    { \"name\": \"screenui-shared-meta\" }\n"
+            "  ]\n"
+            "}\n"
+        ),
+        encoding="utf-8",
+        newline="\n",
+    )
 
     print(f"Generated shared meta in: {OUT_SHARED_DIR}")
     print(f"Generated frontend meta in: {OUT_FRONTEND_META_DIR}")
