@@ -791,57 +791,7 @@
                       "topUnit": "px",
                       "widthUnit": "%",
                       "heightUnit": "%",
-                      "children": [
-                        {
-                          "objID": "7b35ae42-c3d0-415b-bea0-3cedc8c2b6fa",
-                          "type": "LVGLLabelWidget",
-                          "left": 0,
-                          "top": 0,
-                          "width": 18,
-                          "height": 30,
-                          "customInputs": [],
-                          "customOutputs": [],
-                          "style": {
-                            "objID": "9390995d-aa83-4e8a-806e-dd1cb2471c45",
-                            "useStyle": "default",
-                            "conditionalStyles": [],
-                            "childStyles": []
-                          },
-                          "timeline": [],
-                          "eventHandlers": [],
-                          "leftUnit": "px",
-                          "topUnit": "px",
-                          "widthUnit": "content",
-                          "heightUnit": "content",
-                          "children": [],
-                          "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
-                          "hiddenFlagType": "literal",
-                          "clickableFlagType": "literal",
-                          "flagScrollbarMode": "",
-                          "flagScrollDirection": "",
-                          "scrollSnapX": "",
-                          "scrollSnapY": "",
-                          "checkedStateType": "literal",
-                          "disabledStateType": "literal",
-                          "states": "",
-                          "localStyles": {
-                            "objID": "138d1d2a-2e8a-441b-a7d2-3b3aa2387b2e",
-                            "definition": {
-                              "MAIN": {
-                                "DEFAULT": {
-                                  "text_font": "M_24"
-                                }
-                              }
-                            }
-                          },
-                          "group": "",
-                          "groupIndex": 0,
-                          "text": "A",
-                          "textType": "literal",
-                          "longMode": "WRAP",
-                          "recolor": false
-                        }
-                      ],
+                      "children": [],
                       "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
                       "hiddenFlagType": "literal",
                       "clickableFlag": true,
@@ -5006,7 +4956,8 @@
                                   "MAIN": {
                                     "DEFAULT": {
                                       "flex_grow": 1,
-                                      "bg_color": "#cdcecd"
+                                      "bg_color": "#cdcecd",
+                                      "text_color": "#5a5d5a"
                                     }
                                   }
                                 }
@@ -5105,7 +5056,8 @@
                                   "MAIN": {
                                     "DEFAULT": {
                                       "flex_grow": 1,
-                                      "bg_color": "#e6e6e6"
+                                      "bg_color": "#e6e6e6",
+                                      "text_color": "#5a5d5a"
                                     }
                                   }
                                 }
@@ -5278,7 +5230,8 @@
                                       "MAIN": {
                                         "DEFAULT": {
                                           "flex_grow": 1,
-                                          "bg_color": "#cdcecd"
+                                          "bg_color": "#cdcecd",
+                                          "text_color": "#5a5d5a"
                                         }
                                       }
                                     }
@@ -5377,7 +5330,8 @@
                                       "MAIN": {
                                         "DEFAULT": {
                                           "flex_grow": 1,
-                                          "bg_color": "#e6e6e6"
+                                          "bg_color": "#e6e6e6",
+                                          "text_color": "#5a5d5a"
                                         }
                                       }
                                     }
@@ -6509,7 +6463,8 @@
                               "MAIN": {
                                 "DEFAULT": {
                                   "flex_grow": 1,
-                                  "bg_color": "#cdcecd"
+                                  "bg_color": "#cdcecd",
+                                  "text_color": "#5a5d5a"
                                 }
                               }
                             }
@@ -7201,7 +7156,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "align": "CENTER"
+                                      "align": "LEFT_MID"
                                     }
                                   }
                                 }
@@ -7349,7 +7304,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "align": "CENTER"
+                                      "align": "LEFT_MID"
                                     }
                                   }
                                 }
@@ -7504,7 +7459,7 @@
                               },
                               "group": "",
                               "groupIndex": 0,
-                              "text": "   Введите\nинформацию",
+                              "text": "      Введите\nинформацию",
                               "textType": "literal",
                               "longMode": "WRAP",
                               "recolor": false
@@ -7596,7 +7551,7 @@
                                 "definition": {
                                   "MAIN": {
                                     "DEFAULT": {
-                                      "align": "CENTER"
+                                      "align": "LEFT_MID"
                                     }
                                   }
                                 }
