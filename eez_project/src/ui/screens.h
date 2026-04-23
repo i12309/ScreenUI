@@ -20,14 +20,15 @@ enum ScreensEnum {
     SCREEN_ID_INPUT = 7,
     SCREEN_ID_INIT = 8,
     SCREEN_ID_WAIT = 9,
-    SCREEN_ID_KEYBOARD = 10,
-    SCREEN_ID_SERVICE = 11,
-    SCREEN_ID_SERVICE2 = 12,
-    SCREEN_ID_DEF_PAGE = 13,
-    SCREEN_ID_DEF_PAGE2 = 14,
-    SCREEN_ID_DEF_PAGE3 = 15,
-    SCREEN_ID_DEF_PAGE4 = 16,
-    _SCREEN_ID_LAST = 16
+    SCREEN_ID_SERVICE = 10,
+    SCREEN_ID_SERVICE2 = 11,
+    SCREEN_ID_DEF_PAGE = 12,
+    SCREEN_ID_DEF_PAGE2 = 13,
+    SCREEN_ID_DEF_PAGE3 = 14,
+    SCREEN_ID_DEF_PAGE4 = 15,
+    SCREEN_ID_KEYBOARD_OLD = 16,
+    SCREEN_ID_KEYBOARD = 17,
+    _SCREEN_ID_LAST = 17
 };
 
 typedef struct _objects_t {
@@ -40,13 +41,14 @@ typedef struct _objects_t {
     lv_obj_t *input;
     lv_obj_t *init;
     lv_obj_t *wait;
-    lv_obj_t *keyboard;
     lv_obj_t *service;
     lv_obj_t *service2;
     lv_obj_t *def_page;
     lv_obj_t *def_page2;
     lv_obj_t *def_page3;
     lv_obj_t *def_page4;
+    lv_obj_t *keyboard_old;
+    lv_obj_t *keyboard;
     lv_obj_t *obj0;
     lv_obj_t *obj1;
     lv_obj_t *obj2;
@@ -139,9 +141,8 @@ typedef struct _objects_t {
     lv_obj_t *obj35;
     lv_obj_t *init_machine;
     lv_obj_t *obj36;
-    lv_obj_t *obj37;
     lv_obj_t *init_group;
-    lv_obj_t *obj38;
+    lv_obj_t *obj37;
     lv_obj_t *init_name;
     lv_obj_t *init_access_point;
     lv_obj_t *init_r_access_point;
@@ -150,53 +151,11 @@ typedef struct _objects_t {
     lv_obj_t *wait_text1;
     lv_obj_t *wait_text2;
     lv_obj_t *wait_text3;
-    lv_obj_t *obj39;
-    lv_obj_t *obj40;
-    lv_obj_t *obj41;
-    lv_obj_t *obj42;
-    lv_obj_t *obj43;
-    lv_obj_t *obj44;
-    lv_obj_t *obj45;
-    lv_obj_t *obj46;
-    lv_obj_t *obj47;
-    lv_obj_t *obj48;
-    lv_obj_t *obj49;
-    lv_obj_t *obj50;
-    lv_obj_t *obj51;
-    lv_obj_t *obj52;
-    lv_obj_t *obj53;
-    lv_obj_t *obj54;
-    lv_obj_t *obj55;
-    lv_obj_t *obj56;
-    lv_obj_t *obj57;
-    lv_obj_t *obj58;
-    lv_obj_t *obj59;
-    lv_obj_t *obj60;
-    lv_obj_t *obj61;
-    lv_obj_t *obj62;
-    lv_obj_t *obj63;
-    lv_obj_t *obj64;
-    lv_obj_t *obj65;
-    lv_obj_t *obj66;
-    lv_obj_t *obj67;
-    lv_obj_t *obj68;
-    lv_obj_t *obj69;
-    lv_obj_t *obj70;
-    lv_obj_t *obj71;
-    lv_obj_t *obj72;
-    lv_obj_t *obj73;
-    lv_obj_t *obj74;
-    lv_obj_t *obj75;
-    lv_obj_t *obj76;
-    lv_obj_t *obj77;
-    lv_obj_t *obj78;
-    lv_obj_t *obj79;
-    lv_obj_t *obj80;
     lv_obj_t *c_page;
     lv_obj_t *c_bar;
     lv_obj_t *service_back;
     lv_obj_t *service_title;
-    lv_obj_t *obj81;
+    lv_obj_t *obj38;
     lv_obj_t *next_2;
     lv_obj_t *c_button;
     lv_obj_t *service_table;
@@ -209,19 +168,19 @@ typedef struct _objects_t {
     lv_obj_t *c_bar_11;
     lv_obj_t *service2_back;
     lv_obj_t *service2_title;
-    lv_obj_t *obj82;
+    lv_obj_t *obj39;
     lv_obj_t *c_button_10;
     lv_obj_t *service_table_1;
     lv_obj_t *service_paper_1;
     lv_obj_t *service_guillotine_1;
-    lv_obj_t *obj83;
-    lv_obj_t *obj84;
-    lv_obj_t *obj85;
+    lv_obj_t *obj40;
+    lv_obj_t *obj41;
+    lv_obj_t *obj42;
     lv_obj_t *c_page_9;
     lv_obj_t *c_bar_10;
-    lv_obj_t *obj86;
+    lv_obj_t *obj43;
     lv_obj_t *title_6;
-    lv_obj_t *obj87;
+    lv_obj_t *obj44;
     lv_obj_t *sig_3;
     lv_obj_t *b_sig1_6;
     lv_obj_t *b_sig1_7;
@@ -238,11 +197,70 @@ typedef struct _objects_t {
     lv_obj_t *c_bar_6;
     lv_obj_t *back_5;
     lv_obj_t *title_5;
-    lv_obj_t *obj88;
+    lv_obj_t *obj45;
     lv_obj_t *next_13;
     lv_obj_t *next_14;
     lv_obj_t *next_15;
     lv_obj_t *c_button_5;
+    lv_obj_t *obj46;
+    lv_obj_t *obj47;
+    lv_obj_t *obj48;
+    lv_obj_t *obj49;
+    lv_obj_t *obj50;
+    lv_obj_t *obj51;
+    lv_obj_t *obj52;
+    lv_obj_t *obj53;
+    lv_obj_t *obj54;
+    lv_obj_t *obj55;
+    lv_obj_t *obj56;
+    lv_obj_t *obj57;
+    lv_obj_t *c_page_2;
+    lv_obj_t *c_bar_3;
+    lv_obj_t *back_3;
+    lv_obj_t *title_3;
+    lv_obj_t *obj58;
+    lv_obj_t *next_7;
+    lv_obj_t *next_8;
+    lv_obj_t *next_9;
+    lv_obj_t *c_button_2;
+    lv_obj_t *obj59;
+    lv_obj_t *obj60;
+    lv_obj_t *obj61;
+    lv_obj_t *obj62;
+    lv_obj_t *obj63;
+    lv_obj_t *obj64;
+    lv_obj_t *obj65;
+    lv_obj_t *obj66;
+    lv_obj_t *obj67;
+    lv_obj_t *obj68;
+    lv_obj_t *obj69;
+    lv_obj_t *obj70;
+    lv_obj_t *obj71;
+    lv_obj_t *obj72;
+    lv_obj_t *obj73;
+    lv_obj_t *obj74;
+    lv_obj_t *c_page_3;
+    lv_obj_t *c_bar_4;
+    lv_obj_t *back_4;
+    lv_obj_t *title_4;
+    lv_obj_t *obj75;
+    lv_obj_t *next_10;
+    lv_obj_t *next_11;
+    lv_obj_t *next_12;
+    lv_obj_t *c_button_3;
+    lv_obj_t *obj76;
+    lv_obj_t *obj77;
+    lv_obj_t *obj78;
+    lv_obj_t *obj79;
+    lv_obj_t *obj80;
+    lv_obj_t *obj81;
+    lv_obj_t *obj82;
+    lv_obj_t *obj83;
+    lv_obj_t *obj84;
+    lv_obj_t *obj85;
+    lv_obj_t *obj86;
+    lv_obj_t *obj87;
+    lv_obj_t *obj88;
     lv_obj_t *obj89;
     lv_obj_t *obj90;
     lv_obj_t *obj91;
@@ -255,15 +273,7 @@ typedef struct _objects_t {
     lv_obj_t *obj98;
     lv_obj_t *obj99;
     lv_obj_t *obj100;
-    lv_obj_t *c_page_2;
-    lv_obj_t *c_bar_3;
-    lv_obj_t *back_3;
-    lv_obj_t *title_3;
     lv_obj_t *obj101;
-    lv_obj_t *next_7;
-    lv_obj_t *next_8;
-    lv_obj_t *next_9;
-    lv_obj_t *c_button_2;
     lv_obj_t *obj102;
     lv_obj_t *obj103;
     lv_obj_t *obj104;
@@ -280,15 +290,7 @@ typedef struct _objects_t {
     lv_obj_t *obj115;
     lv_obj_t *obj116;
     lv_obj_t *obj117;
-    lv_obj_t *c_page_3;
-    lv_obj_t *c_bar_4;
-    lv_obj_t *back_4;
-    lv_obj_t *title_4;
     lv_obj_t *obj118;
-    lv_obj_t *next_10;
-    lv_obj_t *next_11;
-    lv_obj_t *next_12;
-    lv_obj_t *c_button_3;
     lv_obj_t *obj119;
     lv_obj_t *obj120;
     lv_obj_t *obj121;
@@ -333,9 +335,6 @@ void tick_screen_init();
 void create_screen_wait();
 void tick_screen_wait();
 
-void create_screen_keyboard();
-void tick_screen_keyboard();
-
 void create_screen_service();
 void tick_screen_service();
 
@@ -353,6 +352,12 @@ void tick_screen_def_page3();
 
 void create_screen_def_page4();
 void tick_screen_def_page4();
+
+void create_screen_keyboard_old();
+void tick_screen_keyboard_old();
+
+void create_screen_keyboard();
+void tick_screen_keyboard();
 
 void create_user_widget_123(lv_obj_t *parent_obj, int startWidgetIndex);
 void tick_user_widget_123(int startWidgetIndex);

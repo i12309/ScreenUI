@@ -160,8 +160,7 @@
                       "enableClose": false,
                       "icon": "material:code"
                     }
-                  ],
-                  "active": true
+                  ]
                 },
                 {
                   "type": "tabset",
@@ -228,7 +227,8 @@
                   },
                   "icon": "svg:page"
                 }
-              ]
+              ],
+              "active": true
             },
             {
               "type": "tabset",
@@ -1475,9 +1475,10 @@
         "0": {
           "0": {
             "0": {
-              "3": {
+              "1": {
                 "$selected": true
-              }
+              },
+              "3": {}
             },
             "1": {
               "0": {
@@ -1629,8 +1630,9 @@
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
-    "PADDING",
-    "MARGIN"
+    "MARGIN",
+    "BACKGROUND",
+    "LAYOUT"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,

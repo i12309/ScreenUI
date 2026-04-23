@@ -25718,7 +25718,7 @@
                   "type": "LVGLContainerWidget",
                   "left": 0,
                   "top": 0,
-                  "width": 300,
+                  "width": 100,
                   "height": 200,
                   "customInputs": [],
                   "customOutputs": [],
@@ -25732,7 +25732,7 @@
                   "eventHandlers": [],
                   "leftUnit": "px",
                   "topUnit": "px",
-                  "widthUnit": "px",
+                  "widthUnit": "%",
                   "heightUnit": "px",
                   "children": [],
                   "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
@@ -25797,7 +25797,7 @@
                     "definition": {
                       "MAIN": {
                         "DEFAULT": {
-                          "flex_grow": 1
+                          "flex_grow": 2
                         }
                       }
                     }
@@ -25817,7 +25817,7 @@
                   "type": "LVGLContainerWidget",
                   "left": 0,
                   "top": 0,
-                  "width": 300,
+                  "width": 100,
                   "height": 200,
                   "customInputs": [],
                   "customOutputs": [],
@@ -25831,7 +25831,7 @@
                   "eventHandlers": [],
                   "leftUnit": "px",
                   "topUnit": "px",
-                  "widthUnit": "px",
+                  "widthUnit": "%",
                   "heightUnit": "px",
                   "children": [],
                   "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
@@ -25947,7 +25947,8 @@
                     "definition": {
                       "MAIN": {
                         "DEFAULT": {
-                          "align": "DEFAULT"
+                          "align": "DEFAULT",
+                          "bg_color": "#3E424E"
                         }
                       }
                     }
@@ -25995,7 +25996,8 @@
               "MAIN": {
                 "DEFAULT": {
                   "layout": "FLEX",
-                  "flex_flow": "COLUMN"
+                  "flex_flow": "COLUMN",
+                  "bg_color": "#3E424E"
                 }
               }
             }
