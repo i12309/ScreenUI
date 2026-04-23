@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/9",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/16",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
     "selectedFontObject": "[SMIT_v1.eez-project]:/fonts/3",
@@ -24,7 +24,7 @@
           },
           {
             "type": "border",
-            "selected": 0,
+            "selected": 5,
             "size": 240,
             "location": "right",
             "children": [
@@ -67,6 +67,14 @@
                 "component": "lvgl-groups",
                 "enableClose": false,
                 "icon": "material:view_compact"
+              },
+              {
+                "type": "tab",
+                "id": "COMPONENTS_PALETTE",
+                "name": "Components Palette",
+                "component": "componentsPalette",
+                "enableClose": false,
+                "icon": "svg:components"
               }
             ]
           },
@@ -152,7 +160,8 @@
                       "enableClose": false,
                       "icon": "material:code"
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
@@ -214,48 +223,25 @@
                   "name": "Keyboard",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/9",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/16",
                     "permanent": false
                   },
                   "icon": "svg:page"
                 }
-              ],
-              "active": true
+              ]
             },
             {
-              "type": "row",
-              "id": "#fec9b186-65ed-4c4a-b51f-2bc43ef8f0f3",
+              "type": "tabset",
+              "id": "#87f8d590-209d-4cad-a579-4724fb881894",
               "weight": 28.515807962529273,
               "children": [
                 {
-                  "type": "tabset",
-                  "id": "#87f8d590-209d-4cad-a579-4724fb881894",
-                  "weight": 2.4965893587994543,
-                  "children": [
-                    {
-                      "type": "tab",
-                      "id": "PROPERTIES",
-                      "name": "Properties",
-                      "component": "propertiesPanel",
-                      "enableClose": false,
-                      "icon": "svg:properties"
-                    }
-                  ]
-                },
-                {
-                  "type": "tabset",
-                  "id": "#5b9a21e0-8cc0-4493-b1b2-739513db8a35",
-                  "weight": 0.5034106412005457,
-                  "children": [
-                    {
-                      "type": "tab",
-                      "id": "COMPONENTS_PALETTE",
-                      "name": "Components Palette",
-                      "component": "componentsPalette",
-                      "enableClose": false,
-                      "icon": "svg:components"
-                    }
-                  ]
+                  "type": "tab",
+                  "id": "PROPERTIES",
+                  "name": "Properties",
+                  "component": "propertiesPanel",
+                  "enableClose": false,
+                  "icon": "svg:properties"
                 }
               ]
             }
@@ -1573,23 +1559,50 @@
       "selectionFront": {},
       "selectionBack": {
         "0": {
-          "0": {},
-          "1": {
+          "0": {
             "0": {},
-            "1": {},
-            "2": {},
-            "3": {},
-            "4": {
-              "0": {}
+            "1": {
+              "0": {},
+              "1": {},
+              "2": {},
+              "3": {
+                "0": {}
+              }
             }
           },
-          "2": {}
+          "1": {
+            "0": {}
+          }
         }
       },
       "transform": {
         "translate": {
-          "x": -488.9462615966796,
-          "y": -383.199951171875
+          "x": -400,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[SMIT_v1.eez-project]:/userPages/16[flow-state]": {
+      "selectionFront": {},
+      "selectionBack": {
+        "0": {
+          "0": {
+            "2": {}
+          },
+          "1": {}
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -400,
+          "y": -240
         },
         "scale": 1
       },
@@ -1616,7 +1629,8 @@
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
   "lvglExpandedPropertiesGroup": [
-    "TEXT"
+    "PADDING",
+    "MARGIN"
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
