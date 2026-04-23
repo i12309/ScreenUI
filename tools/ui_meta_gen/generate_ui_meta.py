@@ -22,7 +22,9 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Iterable, List, Optional, Set
+
+import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 UI_DIR = REPO_ROOT / "eez_project" / "src" / "ui"
@@ -33,6 +35,7 @@ OUT_BACKEND_PAGES_DIR = REPO_ROOT / "generated" / "backend_pages"
 SCREENS_H = UI_DIR / "screens.h"
 SCREENS_C = UI_DIR / "screens.c"
 EEZ_PROJECT_DIR = UI_DIR.parents[1]
+SYNCED_ATTRS_YAML = Path(__file__).resolve().parent / "synced_attrs.yaml"
 
 
 @dataclass(frozen=True)
@@ -217,6 +220,88 @@ STUDIO_WIDGET_TO_ELEMENT_TYPE: Dict[str, str] = {
     "LVGLContainerWidget": "TYPE_CONTAINER",
     "LVGLPanelWidget": "TYPE_PANEL",
 }
+
+# Маппинг имени атрибута из synced_attrs.yaml -> значение enum ElementAttribute
+# из screenLIB/lib/core/src/proto/machine.proto. Не менять без синхронного
+# обновления proto.
+ATTRIBUTE_NAME_TO_ENUM_VALUE: Dict[str, int] = {
+    "width":        1,   # ELEMENT_ATTRIBUTE_POSITION_WIDTH
+    "height":       2,   # ELEMENT_ATTRIBUTE_POSITION_HEIGHT
+    "bg_color":     3,   # ELEMENT_ATTRIBUTE_BACKGROUND_COLOR
+    "border_color": 4,   # ELEMENT_ATTRIBUTE_BORDER_COLOR
+    "border_width": 5,   # ELEMENT_ATTRIBUTE_BORDER_WIDTH
+    "text_color":   6,   # ELEMENT_ATTRIBUTE_TEXT_COLOR
+    "text_font":    7,   # ELEMENT_ATTRIBUTE_TEXT_FONT
+    "visible":      8,   # ELEMENT_ATTRIBUTE_VISIBLE
+    "text":         9,   # ELEMENT_ATTRIBUTE_TEXT
+    "value":        10,  # ELEMENT_ATTRIBUTE_VALUE
+    "x":            11,  # ELEMENT_ATTRIBUTE_X
+    "y":            12,  # ELEMENT_ATTRIBUTE_Y
+}
+
+
+@dataclass(frozen=True)
+class SyncedAttrsConfig:
+    """Распаршенный synced_attrs.yaml: какие атрибуты у какого типа synced."""
+
+    defaults: Set[str]
+    by_type: Dict[str, Set[str]]
+
+    def synced_names_for(self, type_name: str) -> Set[str]:
+        """Вернёт имена synced-атрибутов для типа (с дефолтами)."""
+
+        return set(self.defaults) | self.by_type.get(type_name, set())
+
+    def synced_mask_for(self, type_name: str) -> int:
+        """Битовая маска synced-атрибутов по enum ElementAttribute."""
+
+        mask = 0
+        for name in self.synced_names_for(type_name):
+            value = ATTRIBUTE_NAME_TO_ENUM_VALUE.get(name)
+            if value is None:
+                raise RuntimeError(
+                    f"synced_attrs.yaml: unknown attribute name '{name}' for type {type_name}"
+                )
+            mask |= (1 << value)
+        return mask
+
+
+def load_synced_attrs(path: Path = SYNCED_ATTRS_YAML) -> SyncedAttrsConfig:
+    """Читает synced_attrs.yaml и возвращает типизированную конфигурацию."""
+
+    raw = yaml.safe_load(read_text(path))
+    if not isinstance(raw, dict):
+        raise RuntimeError(f"synced_attrs.yaml: top-level must be a mapping")
+
+    defaults = set(raw.get("defaults") or [])
+
+    by_type: Dict[str, Set[str]] = {}
+    known_types = {name for name, _ in ELEMENT_TYPES}
+    for key, value in raw.items():
+        if key == "defaults":
+            continue
+        if key not in known_types:
+            raise RuntimeError(
+                f"synced_attrs.yaml: unknown element type '{key}' "
+                f"(not in Screen32ElementType)"
+            )
+        if not isinstance(value, list):
+            raise RuntimeError(
+                f"synced_attrs.yaml: value for '{key}' must be a list"
+            )
+        by_type[key] = set(value)
+
+    # Проверим, что все упомянутые имена атрибутов нам известны.
+    all_names = set(defaults)
+    for names in by_type.values():
+        all_names.update(names)
+    unknown = all_names - set(ATTRIBUTE_NAME_TO_ENUM_VALUE.keys())
+    if unknown:
+        raise RuntimeError(
+            f"synced_attrs.yaml: unknown attribute names: {sorted(unknown)}"
+        )
+
+    return SyncedAttrsConfig(defaults=defaults, by_type=by_type)
 
 
 def read_text(path: Path) -> str:
@@ -602,6 +687,7 @@ def render_element_descriptors_header(
     element_order: List[str],
     element_map: Dict[str, ElementInfo],
     element_ids: Dict[str, int],
+    synced_attrs: SyncedAttrsConfig,
 ) -> str:
     lines = [
         "#pragma once",
@@ -638,6 +724,10 @@ def render_element_descriptors_header(
         "    bool supports_color;",
         "    bool emits_button_event;",
         "    bool emits_input_event;",
+        "    // Битовая маска synced-атрибутов. Бит i установлен, если атрибут",
+        "    // с значением enum ElementAttribute = i синхронизируется.",
+        "    // Определяется tools/ui_meta_gen/synced_attrs.yaml.",
+        "    uint16_t synced_mask;",
         "} Screen32ElementDescriptor;",
         "",
         "static const Screen32ElementDescriptor g_screen32_element_descriptors[SCREEN32_ELEMENT_DESCRIPTOR_COUNT] = {",
@@ -647,6 +737,7 @@ def render_element_descriptors_header(
         info = element_map[name]
         elem_type, flags = infer_type_and_flags(info)
         page_short = info.page_enum[len("SCREEN_ID_") :]
+        synced_mask = synced_attrs.synced_mask_for(elem_type)
         lines.append(
             "    "
             + "{"
@@ -661,7 +752,8 @@ def render_element_descriptors_header(
             + f"{str(flags['supports_visible']).lower()}, "
             + f"{str(flags['supports_color']).lower()}, "
             + f"{str(flags['emits_button_event']).lower()}, "
-            + f"{str(flags['emits_input_event']).lower()}"
+            + f"{str(flags['emits_input_event']).lower()}, "
+            + f"0x{synced_mask:04X}u"
             + "},"
         )
 
@@ -1049,6 +1141,7 @@ def generate() -> None:
     screens_h = read_text(SCREENS_H)
     screens_c = read_text(SCREENS_C)
     studio_type_hints = parse_studio_widget_hints()
+    synced_attrs = load_synced_attrs()
 
     pages, objects = parse_pages_and_objects(screens_h)
     assignments = parse_object_assignments(screens_c, pages, studio_type_hints)
@@ -1077,7 +1170,7 @@ def generate() -> None:
     write_file(OUT_SHARED_DIR / "page_descriptors.generated.h", render_page_descriptors_header(pages))
     write_file(
         OUT_SHARED_DIR / "element_descriptors.generated.h",
-        render_element_descriptors_header(element_order, assignments, element_ids),
+        render_element_descriptors_header(element_order, assignments, element_ids, synced_attrs),
     )
     write_file(OUT_FRONTEND_META_DIR / "ui_object_map.generated.h", render_ui_object_map_header())
     write_file(
