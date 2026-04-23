@@ -1,0 +1,44 @@
+# ============================================================
+# synced_attrs.yaml
+#
+# Определяет, какие атрибуты элементов синхронизируются через
+# объектную модель (PageSnapshot + AttributeChanged).
+#
+# Ключ — тип элемента (совпадает с Screen32ElementType в
+# generated/shared/element_descriptors.generated.h).
+# Значение — список имён атрибутов (из enum ElementAttribute
+# в screenLIB/lib/core/src/proto/machine.proto, без префикса
+# "ELEMENT_ATTRIBUTE_"; нижним регистром).
+#
+# Типы, не перечисленные явно, получают только defaults.
+#
+# Поддерживаемые имена атрибутов:
+#   visible       — bool
+#   width         — int32 (POSITION_WIDTH)
+#   height        — int32 (POSITION_HEIGHT)
+#   x             — int32
+#   y             — int32
+#   bg_color      — uint32 RGB888 (BACKGROUND_COLOR)
+#   border_color  — uint32 RGB888
+#   border_width  — int32
+#   text          — string
+#   text_color    — uint32 RGB888
+#   text_font     — ElementFont
+#   value         — int32 (slider/bar/checkbox/switch/dropdown)
+# ============================================================
+
+defaults: [visible]
+
+TYPE_BUTTON:        [visible, width, height, text, bg_color, text_color]
+TYPE_PANEL:         [visible, width, height, x, y, bg_color]
+TYPE_CONTAINER:     [visible, width, height, x, y, bg_color]
+TYPE_TEXT:          [visible, width, text, text_color, text_font]
+TYPE_TEXTAREA:      [visible, width, text]
+TYPE_IMAGE:         [visible, width, height, x, y]
+TYPE_SLIDER:        [visible, width, value]
+TYPE_CHECKBOX:      [visible, value, text]
+TYPE_BAR:           [visible, width, value]
+TYPE_SWITCH:        [visible, value]
+TYPE_DROPDOWN:      [visible, value, text]
+TYPE_IMAGE_BUTTON:  [visible, width, height]
+TYPE_LED:           [visible, bg_color]
