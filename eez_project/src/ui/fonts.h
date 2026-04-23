@@ -10,6 +10,7 @@ extern "C" {
 extern const lv_font_t ui_font_m_18;
 extern const lv_font_t ui_font_m_20;
 extern const lv_font_t ui_font_m_24;
+extern const lv_font_t ui_font_m_35;
 extern const lv_font_t ui_font_m_48;
 extern const lv_font_t ui_font_m_70;
 extern const lv_font_t ui_font_m_100;

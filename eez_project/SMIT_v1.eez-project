@@ -12371,7 +12371,10 @@
                       "MAIN": {
                         "DEFAULT": {
                           "flex_grow": 2,
-                          "text_font": "MONTSERRAT_26"
+                          "text_font": "M_35",
+                          "pad_bottom": 0,
+                          "pad_top": 14,
+                          "text_color": "#4D4D4D"
                         }
                       }
                     }
@@ -21859,6 +21862,35 @@
           {
             "from": 0,
             "to": 255
+          }
+        ],
+        "symbols": ""
+      },
+      "embeddedFontFileIndex": 0
+    },
+    {
+      "objID": "f991a3c3-21a3-417b-e230-82afd107b223",
+      "name": "M_35",
+      "renderingEngine": "LVGL",
+      "source": {
+        "objID": "5c09a41a-307a-4c8b-9642-b2a4b0c3d834",
+        "filePath": "Font\\Montserrat-Medium.ttf",
+        "size": 35
+      },
+      "bpp": 8,
+      "threshold": 128,
+      "height": 37,
+      "ascent": 30,
+      "descent": 7,
+      "glyphs": [],
+      "lvglRanges": "32-127,1025,1040-1103,1105",
+      "lvglSymbols": "",
+      "lvglAdditionalSources": [],
+      "lvglGlyphs": {
+        "encodings": [
+          {
+            "from": 32,
+            "to": 127
           }
         ],
         "symbols": ""

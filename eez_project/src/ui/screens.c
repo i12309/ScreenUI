@@ -3293,7 +3293,10 @@ void create_screen_keyboard() {
                     lv_textarea_set_one_line(obj, true);
                     lv_textarea_set_password_mode(obj, false);
                     lv_obj_set_style_flex_grow(obj, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_26, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_text_font(obj, &ui_font_m_35, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_pad_top(obj, 14, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0x4d4d4d), LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -5356,6 +5359,7 @@ void create_screen_def_page4() {
                                             add_style_button_style(obj);
                                             lv_obj_set_style_flex_grow(obj, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
                                             lv_obj_set_style_bg_color(obj, lv_color_hex(0xcdcecd), LV_PART_MAIN | LV_STATE_DEFAULT);
+                                            lv_obj_set_style_text_font(obj, &ui_font_m_48, LV_PART_MAIN | LV_STATE_DEFAULT);
                                             {
                                                 lv_obj_t *parent_obj = obj;
                                                 {
@@ -5586,6 +5590,7 @@ ext_font_desc_t fonts[] = {
     { "M_18", &ui_font_m_18 },
     { "M_20", &ui_font_m_20 },
     { "M_24", &ui_font_m_24 },
+    { "M_35", &ui_font_m_35 },
     { "M_48", &ui_font_m_48 },
     { "M_70", &ui_font_m_70 },
     { "M_100", &ui_font_m_100 },
