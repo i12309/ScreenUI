@@ -29,13 +29,14 @@ static const Screen32PageDescriptor g_screen32_page_descriptors[SCREEN32_PAGE_DE
     {7u, "INPUT", "input"},
     {8u, "INIT", "init"},
     {9u, "WAIT", "wait"},
-    {10u, "KEYBOARD", "keyboard"},
-    {11u, "SERVICE", "service"},
-    {12u, "SERVICE2", "service2"},
-    {13u, "DEF_PAGE", "def_page"},
-    {14u, "DEF_PAGE2", "def_page2"},
-    {15u, "DEF_PAGE3", "def_page3"},
-    {16u, "DEF_PAGE4", "def_page4"},
+    {10u, "SERVICE", "service"},
+    {11u, "SERVICE2", "service2"},
+    {12u, "DEF_PAGE", "def_page"},
+    {13u, "DEF_PAGE2", "def_page2"},
+    {14u, "DEF_PAGE3", "def_page3"},
+    {15u, "DEF_PAGE4", "def_page4"},
+    {16u, "KEYBOARD_OLD", "keyboard_old"},
+    {17u, "KEYBOARD", "keyboard"},
 };
 
 static inline size_t screen32_page_descriptor_count(void) {

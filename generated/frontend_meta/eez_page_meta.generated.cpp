@@ -20,13 +20,14 @@ uint32_t screen32_current_page_id() {
     if (active == objects.input) return 7u;
     if (active == objects.init) return 8u;
     if (active == objects.wait) return 9u;
-    if (active == objects.keyboard) return 10u;
-    if (active == objects.service) return 11u;
-    if (active == objects.service2) return 12u;
-    if (active == objects.def_page) return 13u;
-    if (active == objects.def_page2) return 14u;
-    if (active == objects.def_page3) return 15u;
-    if (active == objects.def_page4) return 16u;
+    if (active == objects.service) return 10u;
+    if (active == objects.service2) return 11u;
+    if (active == objects.def_page) return 12u;
+    if (active == objects.def_page2) return 13u;
+    if (active == objects.def_page3) return 14u;
+    if (active == objects.def_page4) return 15u;
+    if (active == objects.keyboard_old) return 16u;
+    if (active == objects.keyboard) return 17u;
     return 1u;
 }
 
@@ -44,13 +45,14 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == objects.input) { loadScreen(SCREEN_ID_INPUT); return true; }
     if (target == objects.init) { loadScreen(SCREEN_ID_INIT); return true; }
     if (target == objects.wait) { loadScreen(SCREEN_ID_WAIT); return true; }
-    if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }
     if (target == objects.service) { loadScreen(SCREEN_ID_SERVICE); return true; }
     if (target == objects.service2) { loadScreen(SCREEN_ID_SERVICE2); return true; }
     if (target == objects.def_page) { loadScreen(SCREEN_ID_DEF_PAGE); return true; }
     if (target == objects.def_page2) { loadScreen(SCREEN_ID_DEF_PAGE2); return true; }
     if (target == objects.def_page3) { loadScreen(SCREEN_ID_DEF_PAGE3); return true; }
     if (target == objects.def_page4) { loadScreen(SCREEN_ID_DEF_PAGE4); return true; }
+    if (target == objects.keyboard_old) { loadScreen(SCREEN_ID_KEYBOARD_OLD); return true; }
+    if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }
     return false;
 }
 

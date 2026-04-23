@@ -138,7 +138,7 @@ bool as_valid_lv_obj(void* uiObject, lv_obj_t*& outObj) {
 }
 
 uint32_t lvgl_color_to_rgb888(lv_color_t color) {
-    return normalize_rgb_color(color.full);
+    return normalize_rgb_color(lv_color_to_u32(color));
 }
 
 #if LV_USE_LABEL

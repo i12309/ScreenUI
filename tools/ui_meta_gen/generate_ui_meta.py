@@ -24,7 +24,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Set
 
-import yaml
+try:
+    import yaml
+except ModuleNotFoundError:
+    yaml = None
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 UI_DIR = REPO_ROOT / "eez_project" / "src" / "ui"
@@ -290,14 +293,78 @@ class SyncedAttrsConfig:
         return mask
 
 
+def parse_simple_yaml_mapping(text: str) -> Dict[str, List[str]]:
+    """Parse the limited YAML subset used by synced_attrs.yaml.
+
+    Supported forms:
+    - `key: [a, b, c]`
+    - `key:` followed by indented `- value` items
+    - blank lines and `#` comments
+    """
+
+    result: Dict[str, List[str]] = {}
+    current_key: Optional[str] = None
+
+    for line_no, raw_line in enumerate(text.splitlines(), start=1):
+        content = raw_line.split("#", 1)[0].rstrip()
+        if not content.strip():
+            continue
+
+        stripped = content.lstrip()
+        if stripped.startswith("-"):
+            if current_key is None:
+                raise RuntimeError(
+                    f"synced_attrs.yaml:{line_no}: list item without a preceding key"
+                )
+            item = stripped[1:].strip()
+            if not item:
+                raise RuntimeError(
+                    f"synced_attrs.yaml:{line_no}: empty list item is not supported"
+                )
+            result[current_key].append(item)
+            continue
+
+        if ":" not in stripped:
+            raise RuntimeError(
+                f"synced_attrs.yaml:{line_no}: expected `key: value` mapping entry"
+            )
+
+        key, raw_value = stripped.split(":", 1)
+        key = key.strip()
+        value = raw_value.strip()
+        if not key:
+            raise RuntimeError(f"synced_attrs.yaml:{line_no}: empty key")
+
+        current_key = None
+        if not value:
+            result[key] = []
+            current_key = key
+            continue
+
+        if value.startswith("[") and value.endswith("]"):
+            inner = value[1:-1].strip()
+            result[key] = [] if not inner else [part.strip() for part in inner.split(",")]
+            continue
+
+        raise RuntimeError(
+            f"synced_attrs.yaml:{line_no}: unsupported value format `{value}`"
+        )
+
+    return result
+
+
 def load_synced_attrs(path: Path = SYNCED_ATTRS_YAML) -> SyncedAttrsConfig:
     """Читает synced_attrs.yaml и возвращает типизированную конфигурацию."""
 
-    raw = yaml.safe_load(read_text(path))
+    text = read_text(path)
+    raw = yaml.safe_load(text) if yaml is not None else parse_simple_yaml_mapping(text)
     if not isinstance(raw, dict):
         raise RuntimeError(f"synced_attrs.yaml: top-level must be a mapping")
 
-    defaults = tuple(raw.get("defaults") or [])
+    raw_defaults = raw.get("defaults") or []
+    if not isinstance(raw_defaults, list):
+        raise RuntimeError("synced_attrs.yaml: defaults must be a list")
+    defaults = tuple(raw_defaults)
 
     by_type: Dict[str, tuple[str, ...]] = {}
     known_types = {name for name, _ in ELEMENT_TYPES}
