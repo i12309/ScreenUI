@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 #include "IUiAdapter.h"
 #include "lvgl_eez/UiObjectMap.h"
 
@@ -40,8 +42,20 @@ public:
     bool setVisible(uint32_t elementId, bool visible) override;
     bool setColor(uint32_t elementId, uint32_t bgColor, uint32_t fgColor) override;
     bool setElementAttribute(const SetElementAttribute& attr) override;
-    bool applyElementAttributeBatch(const SetElementAttributeBatch& batch) override;
     bool applyBatch(const SetBatch& batch) override;
+
+    using AttributeChangeCb = void (*)(uint32_t elementId,
+                                       const ElementAttributeValue& value,
+                                       AttributeChangeReason reason,
+                                       void* userData);
+
+    bool buildPageSnapshot(uint32_t pageId, PageSnapshot& out);
+    bool applyAttributeValue(uint32_t elementId,
+                             const ElementAttributeValue& in,
+                             ElementAttributeValue& appliedOut);
+    void installChangeListeners(uint32_t pageId, AttributeChangeCb cb, void* userData);
+    void flushPendingChanges();
+    void handleLvglEventObject(void* uiObject, uint32_t eventCode);
 
     void setEventSink(EventSink sink, void* userData) override;
     void tickInput() override;
@@ -61,7 +75,28 @@ private:
     EventSink _sink = nullptr;
     void* _sinkUser = nullptr;
 
+    static constexpr size_t kMaxPendingChanges = 256;
+
+    struct PendingAttributeChange {
+        bool used = false;
+        uint32_t elementId = 0;
+        ElementAttributeValue value{};
+        AttributeChangeReason reason = AttributeChangeReason_REASON_UNKNOWN;
+    };
+
+    AttributeChangeCb _attributeChangeCb = nullptr;
+    void* _attributeChangeUser = nullptr;
+    uint32_t _listenedPageId = 0;
+    PendingAttributeChange _pendingChanges[kMaxPendingChanges]{};
+
     bool emitEnvelope(const Envelope& env);
+    bool readAttributeValue(uint32_t elementId,
+                            ElementAttribute attribute,
+                            ElementAttributeValue& out) const;
+    bool queuePendingChange(uint32_t elementId,
+                            const ElementAttributeValue& value,
+                            AttributeChangeReason reason);
+    bool findElementIdByObject(void* uiObject, uint32_t pageId, uint32_t& elementIdOut) const;
     static void copyTextSafe(char* dst, size_t dstSize, const char* src);
 };
 
