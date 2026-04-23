@@ -95,6 +95,8 @@ typedef enum Screen32ElementId {
     btn_SERVICE_TABLE_1 = 748959496u,
     btn_SERVICE_PAPER_1 = 620561065u,
     btn_SERVICE_GUILLOTINE_1 = 937444719u,
+    txa_KBD_TEXT = 782111236u,
+    kbd_KBD_KEY = 635953031u,
     cnt_PAGE_9 = 598393631u,
     cnt_BAR_10 = 749654442u,
     pnl_TITLE_6 = 705408621u,
@@ -134,8 +136,6 @@ typedef enum Screen32ElementId {
     btn_NEXT_11 = 1033400519u,
     btn_NEXT_12 = 600400769u,
     cnt_BUTTON_3 = 937141394u,
-    txa_KBD_TEXT = 782111236u,
-    kbd_KBD_KEY = 635953031u,
 } Screen32ElementId;
 
 #define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 125
