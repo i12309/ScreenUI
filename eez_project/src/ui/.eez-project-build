@@ -11,9 +11,11 @@
     "styles.h",
     "ui.c",
     "ui.h",
+    "ui_font_m_100.c",
     "ui_font_m_18.c",
     "ui_font_m_20.c",
     "ui_font_m_24.c",
+    "ui_font_m_48.c",
     "ui_font_m_70.c",
     "vars.h"
   ]

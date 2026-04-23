@@ -26,8 +26,8 @@ typedef enum Screen32PageId {
     scr_DEF_PAGE2 = 13,
     scr_DEF_PAGE3 = 14,
     scr_DEF_PAGE4 = 15,
-    scr_KEYBOARD_OLD = 16,
-    scr_KEYBOARD = 17,
+    scr_KEYBOARD = 16,
+    scr_KEYBOARD_OLD = 17,
 } Screen32PageId;
 
 #define SCREEN32_PAGE_DESCRIPTOR_COUNT 17

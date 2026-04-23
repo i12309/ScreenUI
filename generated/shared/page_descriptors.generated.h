@@ -35,8 +35,8 @@ static const Screen32PageDescriptor g_screen32_page_descriptors[SCREEN32_PAGE_DE
     {13u, "DEF_PAGE2", "def_page2"},
     {14u, "DEF_PAGE3", "def_page3"},
     {15u, "DEF_PAGE4", "def_page4"},
-    {16u, "KEYBOARD_OLD", "keyboard_old"},
-    {17u, "KEYBOARD", "keyboard"},
+    {16u, "KEYBOARD", "keyboard"},
+    {17u, "KEYBOARD_OLD", "keyboard_old"},
 };
 
 static inline size_t screen32_page_descriptor_count(void) {

@@ -198,6 +198,8 @@ static const Screen32ElementDescriptor g_screen32_element_descriptors[SCREEN32_E
     {1033400519u, "btn_NEXT_11", "next_11", 15u, "DEF_PAGE4", TYPE_BUTTON, true, false, true, true, true, false, 0x034Eu},
     {600400769u, "btn_NEXT_12", "next_12", 15u, "DEF_PAGE4", TYPE_BUTTON, true, false, true, true, true, false, 0x034Eu},
     {937141394u, "cnt_BUTTON_3", "c_button_3", 15u, "DEF_PAGE4", TYPE_CONTAINER, true, false, true, true, false, false, 0x190Eu},
+    {782111236u, "txa_KBD_TEXT", "kbd_text", 16u, "KEYBOARD", TYPE_TEXTAREA, true, false, true, true, false, true, 0x0302u},
+    {635953031u, "kbd_KBD_KEY", "kbd_key", 16u, "KEYBOARD", TYPE_KEYBOARD, false, false, true, true, false, true, 0x0100u},
 };
 
 static inline size_t screen32_element_descriptor_count(void) {

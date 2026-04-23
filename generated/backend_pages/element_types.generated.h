@@ -72,6 +72,16 @@ public:
     screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_BACKGROUND_COLOR> bgColor;
 };
 
+class TypeTextarea : public screenlib::ElementBase {
+public:
+    TypeTextarea(screenlib::IPage* page, uint32_t id)
+      : ElementBase(page, id)
+      , text(page, id)
+    {}
+
+    screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
+};
+
 class TypeCheckbox : public screenlib::ElementBase {
 public:
     TypeCheckbox(screenlib::IPage* page, uint32_t id)
@@ -94,6 +104,13 @@ public:
 
     screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_VALUE> value;
     screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
+};
+
+class TypeKeyboard : public screenlib::ElementBase {
+public:
+    using screenlib::ElementBase::ElementBase;
+
+    // Тип не имеет дополнительных synced-полей сверх ElementBase.
 };
 
 }  // namespace screenui::generated

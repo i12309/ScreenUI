@@ -134,9 +134,11 @@ typedef enum Screen32ElementId {
     btn_NEXT_11 = 1033400519u,
     btn_NEXT_12 = 600400769u,
     cnt_BUTTON_3 = 937141394u,
+    txa_KBD_TEXT = 782111236u,
+    kbd_KBD_KEY = 635953031u,
 } Screen32ElementId;
 
-#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 123
+#define SCREEN32_ELEMENT_DESCRIPTOR_COUNT 125
 
 #ifdef __cplusplus
 }

@@ -64,8 +64,8 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_page(objectMap, 13u, objects.def_page2) && allOk;
     allOk = bind_page(objectMap, 14u, objects.def_page3) && allOk;
     allOk = bind_page(objectMap, 15u, objects.def_page4) && allOk;
-    allOk = bind_page(objectMap, 16u, objects.keyboard_old) && allOk;
-    allOk = bind_page(objectMap, 17u, objects.keyboard) && allOk;
+    allOk = bind_page(objectMap, 16u, objects.keyboard) && allOk;
+    allOk = bind_page(objectMap, 17u, objects.keyboard_old) && allOk;
 
     // Карта элементов
 
@@ -192,6 +192,8 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_element(objectMap, 1033400519u, 15u, objects.next_11, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 600400769u, 15u, objects.next_12, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 937141394u, 15u, objects.c_button_3, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 782111236u, 16u, objects.kbd_text, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 635953031u, 16u, objects.kbd_key, outElements, outCapacity, boundCount) && allOk;
 
     if (outCount != nullptr) {
         *outCount = boundCount;

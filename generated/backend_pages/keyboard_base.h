@@ -18,10 +18,15 @@ template <typename TPage>
 class KeyboardPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_KEYBOARD;
-    KeyboardPage() = default;
+    KeyboardPage()
+      : txa_KBD_TEXT(this, ::txa_KBD_TEXT)
+      , kbd_KBD_KEY(this, ::kbd_KBD_KEY)
+    {}
     uint32_t pageId() const final { return kPageId; }
 
 protected:
+    screenui::generated::TypeTextarea txa_KBD_TEXT;
+    screenui::generated::TypeKeyboard kbd_KBD_KEY;
 };
 
 }  // namespace screenui

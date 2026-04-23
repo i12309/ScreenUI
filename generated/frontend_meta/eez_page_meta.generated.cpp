@@ -26,8 +26,8 @@ uint32_t screen32_current_page_id() {
     if (active == objects.def_page2) return 13u;
     if (active == objects.def_page3) return 14u;
     if (active == objects.def_page4) return 15u;
-    if (active == objects.keyboard_old) return 16u;
-    if (active == objects.keyboard) return 17u;
+    if (active == objects.keyboard) return 16u;
+    if (active == objects.keyboard_old) return 17u;
     return 1u;
 }
 
@@ -51,8 +51,8 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == objects.def_page2) { loadScreen(SCREEN_ID_DEF_PAGE2); return true; }
     if (target == objects.def_page3) { loadScreen(SCREEN_ID_DEF_PAGE3); return true; }
     if (target == objects.def_page4) { loadScreen(SCREEN_ID_DEF_PAGE4); return true; }
-    if (target == objects.keyboard_old) { loadScreen(SCREEN_ID_KEYBOARD_OLD); return true; }
     if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }
+    if (target == objects.keyboard_old) { loadScreen(SCREEN_ID_KEYBOARD_OLD); return true; }
     return false;
 }
 
