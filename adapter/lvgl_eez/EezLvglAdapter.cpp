@@ -445,25 +445,6 @@ bool set_visible_with_helpers(void* uiObject, bool visible) {
     return true;
 }
 
-bool set_color_with_helpers(void* uiObject, uint32_t bgColor, uint32_t fgColor) {
-    lv_obj_t* obj = nullptr;
-    if (!as_valid_lv_obj(uiObject, obj)) {
-        return false;
-    }
-
-    lv_obj_set_style_bg_color(
-        obj,
-        lv_color_hex(normalize_rgb_color(bgColor)),
-        LV_PART_MAIN | LV_STATE_DEFAULT
-    );
-    lv_obj_set_style_text_color(
-        obj,
-        lv_color_hex(normalize_rgb_color(fgColor)),
-        LV_PART_MAIN | LV_STATE_DEFAULT
-    );
-    return true;
-}
-
 bool read_attribute_with_helpers(void* uiObject,
                                  ElementAttribute attribute,
                                  ElementAttributeValue& out) {
@@ -644,13 +625,6 @@ bool set_visible_with_helpers(void* uiObject, bool visible) {
     return false;
 }
 
-bool set_color_with_helpers(void* uiObject, uint32_t bgColor, uint32_t fgColor) {
-    (void)uiObject;
-    (void)bgColor;
-    (void)fgColor;
-    return false;
-}
-
 bool set_element_attribute_with_helpers(void* uiObject, const SetElementAttribute& attr) {
     (void)uiObject;
     (void)attr;
@@ -687,83 +661,6 @@ bool EezLvglAdapter::showPage(uint32_t pageId) {
     return _hooks.showPage(_hookUserData, pageTarget);
 }
 
-bool EezLvglAdapter::setText(uint32_t elementId, const char* text) {
-    if (_objectMap == nullptr) {
-        return false;
-    }
-
-    void* uiObject = _objectMap->findElement(elementId);
-    if (uiObject == nullptr) {
-        return false;
-    }
-
-    const char* safeText = (text != nullptr) ? text : "";
-    if (_hooks.setText != nullptr && _hooks.setText(_hookUserData, uiObject, safeText)) {
-        return true;
-    }
-    if (_hooks.enableLvglObjectHelpers) {
-        return set_text_with_helpers(uiObject, safeText);
-    }
-    return false;
-}
-
-bool EezLvglAdapter::setValue(uint32_t elementId, int32_t value) {
-    if (_objectMap == nullptr) {
-        return false;
-    }
-
-    void* uiObject = _objectMap->findElement(elementId);
-    if (uiObject == nullptr) {
-        return false;
-    }
-
-    if (_hooks.setValue != nullptr && _hooks.setValue(_hookUserData, uiObject, value)) {
-        return true;
-    }
-    if (_hooks.enableLvglObjectHelpers) {
-        return set_value_with_helpers(uiObject, value);
-    }
-    return false;
-}
-
-bool EezLvglAdapter::setVisible(uint32_t elementId, bool visible) {
-    if (_objectMap == nullptr) {
-        return false;
-    }
-
-    void* uiObject = _objectMap->findElement(elementId);
-    if (uiObject == nullptr) {
-        return false;
-    }
-
-    if (_hooks.setVisible != nullptr && _hooks.setVisible(_hookUserData, uiObject, visible)) {
-        return true;
-    }
-    if (_hooks.enableLvglObjectHelpers) {
-        return set_visible_with_helpers(uiObject, visible);
-    }
-    return false;
-}
-
-bool EezLvglAdapter::setColor(uint32_t elementId, uint32_t bgColor, uint32_t fgColor) {
-    if (_objectMap == nullptr) {
-        return false;
-    }
-
-    void* uiObject = _objectMap->findElement(elementId);
-    if (uiObject == nullptr) {
-        return false;
-    }
-
-    if (_hooks.setColor != nullptr && _hooks.setColor(_hookUserData, uiObject, bgColor, fgColor)) {
-        return true;
-    }
-    if (_hooks.enableLvglObjectHelpers) {
-        return set_color_with_helpers(uiObject, bgColor, fgColor);
-    }
-    return false;
-}
-
 bool EezLvglAdapter::setElementAttribute(const SetElementAttribute& attr) {
     if (_objectMap == nullptr) {
         return false;
@@ -782,38 +679,6 @@ bool EezLvglAdapter::setElementAttribute(const SetElementAttribute& attr) {
         return set_element_attribute_with_helpers(uiObject, attr);
     }
     return false;
-}
-
-bool EezLvglAdapter::applyBatch(const SetBatch& batch) {
-    bool allOk = true;
-
-    for (pb_size_t i = 0; i < batch.texts_count; ++i) {
-        if (!setText(batch.texts[i].element_id, batch.texts[i].text)) {
-            allOk = false;
-        }
-    }
-
-    for (pb_size_t i = 0; i < batch.values_count; ++i) {
-        if (!setValue(batch.values[i].element_id, batch.values[i].value)) {
-            allOk = false;
-        }
-    }
-
-    for (pb_size_t i = 0; i < batch.visibles_count; ++i) {
-        if (!setVisible(batch.visibles[i].element_id, batch.visibles[i].visible)) {
-            allOk = false;
-        }
-    }
-
-    for (pb_size_t i = 0; i < batch.colors_count; ++i) {
-        if (!setColor(batch.colors[i].element_id,
-                      batch.colors[i].bg_color,
-                      batch.colors[i].fg_color)) {
-            allOk = false;
-        }
-    }
-
-    return allOk;
 }
 
 bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId, uint32_t sessionId, PageSnapshot& out) {

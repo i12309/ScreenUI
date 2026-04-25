@@ -37,12 +37,7 @@ public:
     void setHooks(const EezLvglHooks& hooks, void* hookUserData = nullptr);
 
     bool showPage(uint32_t pageId) override;
-    bool setText(uint32_t elementId, const char* text) override;
-    bool setValue(uint32_t elementId, int32_t value) override;
-    bool setVisible(uint32_t elementId, bool visible) override;
-    bool setColor(uint32_t elementId, uint32_t bgColor, uint32_t fgColor) override;
     bool setElementAttribute(const SetElementAttribute& attr) override;
-    bool applyBatch(const SetBatch& batch) override;
 
     using AttributeChangeCb = void (*)(uint32_t elementId,
                                        const ElementAttributeValue& value,
