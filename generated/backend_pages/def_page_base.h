@@ -56,18 +56,97 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_SIG1_6: btn_SIG1_6.onClick.emit(); break;
-            case ::btn_SIG1_7: btn_SIG1_7.onClick.emit(); break;
-            case ::btn_SIG1_8: btn_SIG1_8.onClick.emit(); break;
-            case ::btn_NEXT_3: btn_NEXT_3.onClick.emit(); break;
-            case ::btn_B1_1: btn_B1_1.onClick.emit(); break;
-            case ::btn_B2_1: btn_B2_1.onClick.emit(); break;
-            case ::btn_B3_1: btn_B3_1.onClick.emit(); break;
-            case ::btn_B4_1: btn_B4_1.onClick.emit(); break;
-            case ::btn_B5_1: btn_B5_1.onClick.emit(); break;
-            case ::btn_B6_1: btn_B6_1.onClick.emit(); break;
+            case ::btn_SIG1_6:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SIG1_6.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SIG1_6.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SIG1_6.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SIG1_6.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_SIG1_7:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SIG1_7.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SIG1_7.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SIG1_7.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SIG1_7.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_SIG1_8:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SIG1_8.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SIG1_8.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SIG1_8.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SIG1_8.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_NEXT_3:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_NEXT_3.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_NEXT_3.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_NEXT_3.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_NEXT_3.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_B1_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_B1_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_B1_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_B1_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_B1_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_B2_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_B2_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_B2_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_B2_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_B2_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_B3_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_B3_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_B3_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_B3_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_B3_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_B4_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_B4_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_B4_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_B4_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_B4_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_B5_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_B5_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_B5_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_B5_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_B5_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_B6_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_B6_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_B6_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_B6_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_B6_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

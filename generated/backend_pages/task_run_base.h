@@ -50,16 +50,79 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_TASK_RUN_BACK: btn_TASK_RUN_BACK.onClick.emit(); break;
-            case ::btn_TASK_RUN_LIST_TASK: btn_TASK_RUN_LIST_TASK.onClick.emit(); break;
-            case ::btn_TASK_RUN_LIST_PROFILE: btn_TASK_RUN_LIST_PROFILE.onClick.emit(); break;
-            case ::btn_TASK_RUN_LABEL: btn_TASK_RUN_LABEL.onClick.emit(); break;
-            case ::btn_TASK_RUN_CYCLES: btn_TASK_RUN_CYCLES.onClick.emit(); break;
-            case ::btn_TASK_RUN_PLUS: btn_TASK_RUN_PLUS.onClick.emit(); break;
-            case ::btn_TASK_RUN_MINUS: btn_TASK_RUN_MINUS.onClick.emit(); break;
-            case ::btn_TASK_RUN_START: btn_TASK_RUN_START.onClick.emit(); break;
+            case ::btn_TASK_RUN_BACK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_BACK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_BACK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_BACK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_BACK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_LIST_TASK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_LIST_TASK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_LIST_TASK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_LIST_TASK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_LIST_TASK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_LIST_PROFILE:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_LIST_PROFILE.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_LIST_PROFILE.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_LIST_PROFILE.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_LIST_PROFILE.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_LABEL:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_LABEL.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_LABEL.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_LABEL.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_LABEL.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_CYCLES:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_CYCLES.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_CYCLES.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_CYCLES.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_CYCLES.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_PLUS:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_PLUS.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_PLUS.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_PLUS.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_PLUS.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_MINUS:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_MINUS.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_MINUS.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_MINUS.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_MINUS.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_TASK_RUN_START:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_TASK_RUN_START.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_TASK_RUN_START.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_TASK_RUN_START.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_TASK_RUN_START.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

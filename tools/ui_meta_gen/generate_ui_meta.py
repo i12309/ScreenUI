@@ -958,6 +958,9 @@ def render_element_types_header(
             lines.append(f"    screenlib::Property<{cpp_type}, {enum_name}> {field_name};")
         if emits_click:
             lines.append("    screenlib::Signal<> onClick;")
+            lines.append("    screenlib::Signal<> onPush;")
+            lines.append("    screenlib::Signal<> onPop;")
+            lines.append("    screenlib::Signal<> onRepeat;")
 
         if not attrs and not emits_click:
             lines.append("    // Тип не имеет дополнительных synced-полей сверх ElementBase.")
@@ -1029,11 +1032,18 @@ def render_page_base_header(
     if buttons:
         lines.extend(["", "private:"])
         lines.append("    void onButton(uint32_t elementId, ButtonAction action) final {")
-        lines.append("        if (action != ButtonAction_CLICK) return;")
         lines.append("        switch (elementId) {")
         for info in buttons:
             member_name = element_member_name(info)
-            lines.append(f"            case ::{member_name}: {member_name}.onClick.emit(); break;")
+            lines.append(f"            case ::{member_name}:")
+            lines.append("                switch (action) {")
+            lines.append(f"                    case ButtonAction_CLICK:  {member_name}.onClick.emit();  break;")
+            lines.append(f"                    case ButtonAction_PUSH:   {member_name}.onPush.emit();   break;")
+            lines.append(f"                    case ButtonAction_POP:    {member_name}.onPop.emit();    break;")
+            lines.append(f"                    case ButtonAction_REPEAT: {member_name}.onRepeat.emit(); break;")
+            lines.append("                    default: break;")
+            lines.append("                }")
+            lines.append("                break;")
         lines.append("            default: break;")
         lines.append("        }")
         lines.append("    }")

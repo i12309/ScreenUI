@@ -28,6 +28,9 @@ public:
     screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_BACKGROUND_COLOR> bgColor;
     screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_TEXT_COLOR> textColor;
     screenlib::Signal<> onClick;
+    screenlib::Signal<> onPush;
+    screenlib::Signal<> onPop;
+    screenlib::Signal<> onRepeat;
 };
 
 class TypeContainer : public screenlib::ElementBase {

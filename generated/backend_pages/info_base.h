@@ -48,15 +48,70 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_INFO_BACK: btn_INFO_BACK.onClick.emit(); break;
-            case ::btn_INFO_NEXT: btn_INFO_NEXT.onClick.emit(); break;
-            case ::btn_INFO_FIELD1: btn_INFO_FIELD1.onClick.emit(); break;
-            case ::btn_INFO_FIELD2: btn_INFO_FIELD2.onClick.emit(); break;
-            case ::btn_INFO_FIELD3: btn_INFO_FIELD3.onClick.emit(); break;
-            case ::btn_INFO_CANCEL: btn_INFO_CANCEL.onClick.emit(); break;
-            case ::btn_INFO_OK: btn_INFO_OK.onClick.emit(); break;
+            case ::btn_INFO_BACK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_BACK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_BACK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_BACK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_BACK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INFO_NEXT:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_NEXT.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_NEXT.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_NEXT.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_NEXT.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INFO_FIELD1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_FIELD1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_FIELD1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_FIELD1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_FIELD1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INFO_FIELD2:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_FIELD2.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_FIELD2.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_FIELD2.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_FIELD2.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INFO_FIELD3:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_FIELD3.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_FIELD3.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_FIELD3.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_FIELD3.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INFO_CANCEL:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_CANCEL.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_CANCEL.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_CANCEL.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_CANCEL.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INFO_OK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INFO_OK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INFO_OK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INFO_OK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INFO_OK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

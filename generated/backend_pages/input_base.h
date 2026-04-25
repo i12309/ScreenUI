@@ -46,14 +46,61 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_INPUT_FIELD1: btn_INPUT_FIELD1.onClick.emit(); break;
-            case ::btn_INPUT_FIELD2: btn_INPUT_FIELD2.onClick.emit(); break;
-            case ::btn_INPUT_FIELD4: btn_INPUT_FIELD4.onClick.emit(); break;
-            case ::btn_INPUT_FIELD3: btn_INPUT_FIELD3.onClick.emit(); break;
-            case ::btn_INPUT_CANCEL: btn_INPUT_CANCEL.onClick.emit(); break;
-            case ::btn_INPUT_OK: btn_INPUT_OK.onClick.emit(); break;
+            case ::btn_INPUT_FIELD1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INPUT_FIELD1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INPUT_FIELD1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INPUT_FIELD1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INPUT_FIELD1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INPUT_FIELD2:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INPUT_FIELD2.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INPUT_FIELD2.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INPUT_FIELD2.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INPUT_FIELD2.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INPUT_FIELD4:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INPUT_FIELD4.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INPUT_FIELD4.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INPUT_FIELD4.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INPUT_FIELD4.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INPUT_FIELD3:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INPUT_FIELD3.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INPUT_FIELD3.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INPUT_FIELD3.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INPUT_FIELD3.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INPUT_CANCEL:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INPUT_CANCEL.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INPUT_CANCEL.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INPUT_CANCEL.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INPUT_CANCEL.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INPUT_OK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INPUT_OK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INPUT_OK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INPUT_OK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INPUT_OK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

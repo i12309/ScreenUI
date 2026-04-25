@@ -32,11 +32,34 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_WAIT_TEXT1: btn_WAIT_TEXT1.onClick.emit(); break;
-            case ::btn_WAIT_TEXT2: btn_WAIT_TEXT2.onClick.emit(); break;
-            case ::btn_WAIT_TEXT3: btn_WAIT_TEXT3.onClick.emit(); break;
+            case ::btn_WAIT_TEXT1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_WAIT_TEXT1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_WAIT_TEXT1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_WAIT_TEXT1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_WAIT_TEXT1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_WAIT_TEXT2:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_WAIT_TEXT2.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_WAIT_TEXT2.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_WAIT_TEXT2.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_WAIT_TEXT2.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_WAIT_TEXT3:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_WAIT_TEXT3.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_WAIT_TEXT3.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_WAIT_TEXT3.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_WAIT_TEXT3.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

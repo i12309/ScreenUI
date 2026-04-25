@@ -42,12 +42,43 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_BACK_4: btn_BACK_4.onClick.emit(); break;
-            case ::btn_NEXT_10: btn_NEXT_10.onClick.emit(); break;
-            case ::btn_NEXT_11: btn_NEXT_11.onClick.emit(); break;
-            case ::btn_NEXT_12: btn_NEXT_12.onClick.emit(); break;
+            case ::btn_BACK_4:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_BACK_4.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_BACK_4.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_BACK_4.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_BACK_4.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_NEXT_10:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_NEXT_10.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_NEXT_10.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_NEXT_10.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_NEXT_10.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_NEXT_11:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_NEXT_11.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_NEXT_11.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_NEXT_11.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_NEXT_11.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_NEXT_12:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_NEXT_12.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_NEXT_12.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_NEXT_12.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_NEXT_12.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

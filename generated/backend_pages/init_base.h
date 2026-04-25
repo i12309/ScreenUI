@@ -52,14 +52,61 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_INIT_HTTP: btn_INIT_HTTP.onClick.emit(); break;
-            case ::btn_INIT_OK: btn_INIT_OK.onClick.emit(); break;
-            case ::btn_INIT_GROUP: btn_INIT_GROUP.onClick.emit(); break;
-            case ::btn_INIT_NAME: btn_INIT_NAME.onClick.emit(); break;
-            case ::btn_INIT_ACCESS_POINT: btn_INIT_ACCESS_POINT.onClick.emit(); break;
-            case ::btn_INIT_TEST: btn_INIT_TEST.onClick.emit(); break;
+            case ::btn_INIT_HTTP:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INIT_HTTP.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INIT_HTTP.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INIT_HTTP.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INIT_HTTP.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INIT_OK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INIT_OK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INIT_OK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INIT_OK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INIT_OK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INIT_GROUP:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INIT_GROUP.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INIT_GROUP.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INIT_GROUP.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INIT_GROUP.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INIT_NAME:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INIT_NAME.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INIT_NAME.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INIT_NAME.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INIT_NAME.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INIT_ACCESS_POINT:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INIT_ACCESS_POINT.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INIT_ACCESS_POINT.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INIT_ACCESS_POINT.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INIT_ACCESS_POINT.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_INIT_TEST:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_INIT_TEST.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_INIT_TEST.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_INIT_TEST.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_INIT_TEST.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }

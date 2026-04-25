@@ -42,12 +42,43 @@ protected:
 
 private:
     void onButton(uint32_t elementId, ButtonAction action) final {
-        if (action != ButtonAction_CLICK) return;
         switch (elementId) {
-            case ::btn_SERVICE2_BACK: btn_SERVICE2_BACK.onClick.emit(); break;
-            case ::btn_SERVICE_TABLE_1: btn_SERVICE_TABLE_1.onClick.emit(); break;
-            case ::btn_SERVICE_PAPER_1: btn_SERVICE_PAPER_1.onClick.emit(); break;
-            case ::btn_SERVICE_GUILLOTINE_1: btn_SERVICE_GUILLOTINE_1.onClick.emit(); break;
+            case ::btn_SERVICE2_BACK:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SERVICE2_BACK.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SERVICE2_BACK.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SERVICE2_BACK.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SERVICE2_BACK.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_SERVICE_TABLE_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SERVICE_TABLE_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SERVICE_TABLE_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SERVICE_TABLE_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SERVICE_TABLE_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_SERVICE_PAPER_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SERVICE_PAPER_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SERVICE_PAPER_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SERVICE_PAPER_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SERVICE_PAPER_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
+            case ::btn_SERVICE_GUILLOTINE_1:
+                switch (action) {
+                    case ButtonAction_CLICK:  btn_SERVICE_GUILLOTINE_1.onClick.emit();  break;
+                    case ButtonAction_PUSH:   btn_SERVICE_GUILLOTINE_1.onPush.emit();   break;
+                    case ButtonAction_POP:    btn_SERVICE_GUILLOTINE_1.onPop.emit();    break;
+                    case ButtonAction_REPEAT: btn_SERVICE_GUILLOTINE_1.onRepeat.emit(); break;
+                    default: break;
+                }
+                break;
             default: break;
         }
     }
