@@ -2051,6 +2051,7 @@ void create_screen_input() {
                                     objects.input_field3 = obj;
                                     lv_obj_set_pos(obj, 0, 0);
                                     lv_obj_set_size(obj, LV_PCT(0), LV_PCT(100));
+                                    lv_obj_add_event_cb(obj, action_keyboard_text, LV_EVENT_CLICKED, (void *)32);
                                     add_style_button_style(obj);
                                     lv_obj_set_style_flex_grow(obj, 7, LV_PART_MAIN | LV_STATE_DEFAULT);
                                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xcdcecd), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3333,6 +3334,7 @@ void create_screen_keyboard() {
                     objects.kbd_key = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_PCT(100), LV_PCT(100));
+                    lv_keyboard_set_mode(obj, LV_KEYBOARD_MODE_USER_1);
                     lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0x3e424e), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_font(obj, &ui_font_m_24, LV_PART_MAIN | LV_STATE_DEFAULT);

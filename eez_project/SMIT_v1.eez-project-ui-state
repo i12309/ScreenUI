@@ -1,7 +1,8 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/1",
+    "selectedUserPageObject": "[SMIT_v1.eez-project]:/userPages/7",
     "selectedUserWidgetObject": "[SMIT_v1.eez-project]:/userWidgets/0",
+    "selectedActionObject": "[SMIT_v1.eez-project]:/actions/0",
     "selectedThemeObject": "[SMIT_v1.eez-project]:/themes/0",
     "selectedFontObject": "[SMIT_v1.eez-project]:/fonts/4",
     "subnavigationSelectedItems": {}
@@ -206,10 +207,10 @@
                 {
                   "type": "tab",
                   "id": "#a4631874-0765-4081-9d29-35c8272fc50d",
-                  "name": "Load",
+                  "name": "INIT",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[SMIT_v1.eez-project]:/userPages/1",
+                    "objectPath": "[SMIT_v1.eez-project]:/userPages/7",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -1159,7 +1160,9 @@
               "1": {
                 "0": {},
                 "1": {
-                  "0": {},
+                  "0": {
+                    "$selected": true
+                  },
                   "1": {
                     "0": {},
                     "1": {}
@@ -1314,7 +1317,9 @@
                 "0": {
                   "0": {}
                 },
-                "1": {}
+                "1": {
+                  "$selected": true
+                }
               },
               "3": {
                 "0": {},
@@ -1357,13 +1362,13 @@
                 "0": {
                   "0": {}
                 },
-                "1": {}
+                "1": {
+                  "$selected": true
+                }
               },
               "3": {
                 "0": {
-                  "0": {
-                    "$selected": true
-                  }
+                  "0": {}
                 }
               }
             }
@@ -1417,13 +1422,17 @@
           "0": {
             "1": {}
           },
-          "1": {}
+          "1": {
+            "0": {
+              "$selected": true
+            }
+          }
         }
       },
       "transform": {
         "translate": {
           "x": -400,
-          "y": -240
+          "y": 60
         },
         "scale": 1
       },

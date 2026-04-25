@@ -115,13 +115,22 @@
   },
   "actions": [
     {
-      "objID": "5c4b6c64-dabe-40c4-8d02-b190e95d9d68",
+      "objID": "5efd9892-ef4e-4637-dfc2-c44ea2a57e70",
       "components": [],
       "connectionLines": [],
       "localVariables": [],
       "componentGroups": [],
       "userProperties": [],
-      "name": "show"
+      "name": "keyboard_text"
+    },
+    {
+      "objID": "f482fc19-e8f6-4682-be75-3d34693ad231",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "componentGroups": [],
+      "userProperties": [],
+      "name": "keyboard_number"
     }
   ],
   "userPages": [
@@ -3508,7 +3517,15 @@
                               },
                               "hiddenInEditor": false,
                               "timeline": [],
-                              "eventHandlers": [],
+                              "eventHandlers": [
+                                {
+                                  "objID": "b6178b41-e8f3-409c-852b-cd049695b6ed",
+                                  "eventName": "CLICKED",
+                                  "handlerType": "action",
+                                  "action": "keyboard_text",
+                                  "userData": 8
+                                }
+                              ],
                               "identifier": "TaskRun_CYCLES",
                               "leftUnit": "px",
                               "topUnit": "px",
@@ -7509,7 +7526,15 @@
                             "childStyles": []
                           },
                           "timeline": [],
-                          "eventHandlers": [],
+                          "eventHandlers": [
+                            {
+                              "objID": "ce770475-8e44-46a8-862b-7f5a82894290",
+                              "eventName": "CLICKED",
+                              "handlerType": "action",
+                              "action": "keyboard_text",
+                              "userData": 32
+                            }
+                          ],
                           "identifier": "Input_field3",
                           "leftUnit": "px",
                           "topUnit": "px",
@@ -8741,7 +8766,15 @@
                             "childStyles": []
                           },
                           "timeline": [],
-                          "eventHandlers": [],
+                          "eventHandlers": [
+                            {
+                              "objID": "c1246bce-1b02-4205-e3d6-0ad4a729c4cc",
+                              "eventName": "CLICKED",
+                              "handlerType": "action",
+                              "action": "keyboard_text",
+                              "userData": 32
+                            }
+                          ],
                           "identifier": "INIT_Group",
                           "leftUnit": "px",
                           "topUnit": "px",
@@ -8988,7 +9021,15 @@
                             "childStyles": []
                           },
                           "timeline": [],
-                          "eventHandlers": [],
+                          "eventHandlers": [
+                            {
+                              "objID": "7c9bfc3e-ee59-4296-ee6c-2ffab4e4ae25",
+                              "eventName": "CLICKED",
+                              "handlerType": "action",
+                              "action": "keyboard_text",
+                              "userData": 8
+                            }
+                          ],
                           "identifier": "INIT_Name",
                           "leftUnit": "px",
                           "topUnit": "px",
@@ -12535,7 +12576,7 @@
                   "group": "",
                   "groupIndex": 0,
                   "textarea": "kbd_text",
-                  "mode": "TEXT_LOWER"
+                  "mode": "USER_1"
                 }
               ],
               "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
