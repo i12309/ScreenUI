@@ -30,7 +30,7 @@
 defaults: [visible]
 
 TYPE_BUTTON:        [visible, width, height, text, bg_color, text_color]
-TYPE_PANEL:         [visible, width, height, x, y, bg_color]
+TYPE_PANEL:         [visible, width, height, x, y, bg_color, text]
 TYPE_CONTAINER:     [visible, width, height, x, y, bg_color]
 TYPE_TEXT:          [visible, width, text, text_color, text_font]
 TYPE_TEXTAREA:      [visible, width, text]

@@ -68,11 +68,13 @@ public:
       , x(page, id)
       , y(page, id)
       , bgColor(page, id)
+      , text(page, id)
     {}
 
     screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_X> x;
     screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_Y> y;
     screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_BACKGROUND_COLOR> bgColor;
+    screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
 };
 
 class TypeTextarea : public screenlib::ElementBase {
