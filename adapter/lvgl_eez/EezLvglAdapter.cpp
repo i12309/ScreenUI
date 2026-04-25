@@ -816,10 +816,10 @@ bool EezLvglAdapter::applyBatch(const SetBatch& batch) {
     return allOk;
 }
 
-bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId, PageSnapshot& out) {
+bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId, uint32_t sessionId, PageSnapshot& out) {
     memset(&out, 0, sizeof(out));
     out.page_id = pageId;
-    out.session_id = 0;
+    out.session_id = sessionId;
 
     if (_objectMap == nullptr) {
         return false;

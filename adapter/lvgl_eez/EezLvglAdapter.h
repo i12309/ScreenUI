@@ -49,7 +49,10 @@ public:
                                        AttributeChangeReason reason,
                                        void* userData);
 
-    bool buildPageSnapshot(uint32_t pageId, PageSnapshot& out);
+    // session_id - эпоха страницы из последнего полученного ShowPage от backend.
+    // Поле session_id в snapshot должно совпадать с этой эпохой, иначе backend
+    // отбросит snapshot как stale.
+    bool buildPageSnapshot(uint32_t pageId, uint32_t sessionId, PageSnapshot& out);
     bool applyAttributeValue(uint32_t elementId,
                              const ElementAttributeValue& in,
                              ElementAttributeValue& appliedOut);
