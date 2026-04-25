@@ -59,6 +59,16 @@ class ElementInfo:
     page_id: int
     creator: str
     studio_type: Optional[str] = None
+    keyboard_kind: str = "KEYBOARD_NONE"
+    keyboard_max_length: int = 0
+
+
+@dataclass(frozen=True)
+class KeyboardWidgetHint:
+    """Метаданные кнопки из EEZ, которая открывает локальную клавиатуру."""
+
+    kind: str
+    max_length: int
 
 
 # Полный набор типовых элементов (ориентир: палитра LVGL/Studio из задачи).
@@ -258,6 +268,7 @@ ATTRIBUTE_CPP_SPEC: Dict[str, tuple[str, str, str]] = {
 }
 
 ELEMENT_BASE_ATTRIBUTES = {"visible", "width", "height"}
+DEFAULT_KEYBOARD_MAX_LENGTH = 32
 
 
 @dataclass(frozen=True)
@@ -404,6 +415,10 @@ def read_text(path: Path) -> str:
 def find_eez_project_file() -> Optional[Path]:
     """Находит основной `.eez-project` файл в каталоге `eez_project`."""
 
+    project_file = EEZ_PROJECT_DIR / "SMIT_v1.eez-project"
+    if project_file.exists():
+        return project_file
+
     candidates = sorted(EEZ_PROJECT_DIR.glob("*.eez-project"))
     return candidates[0] if candidates else None
 
@@ -416,24 +431,97 @@ def normalize_identifier(identifier: str) -> str:
     return snake.lower()
 
 
-def _walk_widgets(node: object, out: Dict[str, str]) -> None:
-    """Рекурсивно собирает identifier -> element type из JSON дерева проекта."""
+def parse_positive_int(value: object, default_value: int) -> int:
+    """Безопасно читает положительный int из EEZ userData."""
+
+    try:
+        if value is None:
+            return default_value
+        if isinstance(value, str) and not value.strip():
+            return default_value
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return default_value
+
+    return parsed if parsed > 0 else default_value
+
+
+def normalize_event_name(value: object) -> str:
+    """Приводит имя события EEZ к верхнему регистру без лишнего префикса."""
+
+    if not isinstance(value, str):
+        return ""
+    text = value.strip().upper()
+    if text.startswith("LV_EVENT_"):
+        text = text[len("LV_EVENT_") :]
+    return text
+
+
+def extract_event_action(handler: Dict[str, object]) -> str:
+    """Достаёт имя action из разных вариантов сохранения EEZ eventHandlers."""
+
+    for key in ("action", "actionName", "userAction", "actionId", "handler"):
+        value = handler.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def keyboard_hint_from_handlers(handlers: object) -> Optional[KeyboardWidgetHint]:
+    """Ищет CLICKED handler keyboard_text/keyboard_number и возвращает его параметры."""
+
+    if not isinstance(handlers, list):
+        return None
+
+    for handler in handlers:
+        if not isinstance(handler, dict):
+            continue
+        if normalize_event_name(handler.get("eventName") or handler.get("event")) != "CLICKED":
+            continue
+
+        action = extract_event_action(handler)
+        if action == "keyboard_text":
+            return KeyboardWidgetHint(
+                kind="KEYBOARD_TEXT",
+                max_length=parse_positive_int(handler.get("userData"), DEFAULT_KEYBOARD_MAX_LENGTH),
+            )
+        if action == "keyboard_number":
+            return KeyboardWidgetHint(
+                kind="KEYBOARD_NUMBER",
+                max_length=parse_positive_int(handler.get("userData"), DEFAULT_KEYBOARD_MAX_LENGTH),
+            )
+
+    return None
+
+
+def _walk_widgets(
+    node: object,
+    type_hints: Dict[str, str],
+    keyboard_hints: Optional[Dict[str, KeyboardWidgetHint]] = None,
+) -> None:
+    """Рекурсивно собирает identifier -> type и keyboard metadata из JSON дерева проекта."""
 
     if isinstance(node, dict):
         raw_identifier = node.get("identifier")
         raw_widget_type = node.get("type")
         if isinstance(raw_identifier, str) and isinstance(raw_widget_type, str):
+            normalized_identifier = normalize_identifier(raw_identifier)
             mapped = STUDIO_WIDGET_TO_ELEMENT_TYPE.get(raw_widget_type)
             if mapped is not None:
-                out[normalize_identifier(raw_identifier)] = mapped
+                type_hints[normalized_identifier] = mapped
+
+            if raw_widget_type == "LVGLButtonWidget" and keyboard_hints is not None:
+                hint = keyboard_hint_from_handlers(node.get("eventHandlers"))
+                if hint is not None:
+                    keyboard_hints[normalized_identifier] = hint
 
         for value in node.values():
-            _walk_widgets(value, out)
+            _walk_widgets(value, type_hints, keyboard_hints)
         return
 
     if isinstance(node, list):
         for item in node:
-            _walk_widgets(item, out)
+            _walk_widgets(item, type_hints, keyboard_hints)
 
 
 def parse_studio_widget_hints() -> Dict[str, str]:
@@ -452,6 +540,25 @@ def parse_studio_widget_hints() -> Dict[str, str]:
     hints: Dict[str, str] = {}
     _walk_widgets(data, hints)
     return hints
+
+
+def parse_studio_keyboard_hints() -> Dict[str, KeyboardWidgetHint]:
+    """Читает `.eez-project` и возвращает кнопки, открывающие Screen32 клавиатуру."""
+
+    project_file = find_eez_project_file()
+    if project_file is None:
+        return {}
+
+    try:
+        data = json.loads(read_text(project_file))
+    except Exception:
+        # Метаданные клавиатуры не должны ломать генерацию при временно битом JSON.
+        return {}
+
+    type_hints: Dict[str, str] = {}
+    keyboard_hints: Dict[str, KeyboardWidgetHint] = {}
+    _walk_widgets(data, type_hints, keyboard_hints)
+    return keyboard_hints
 
 
 def to_object_name(page_enum_name: str) -> str:
@@ -521,9 +628,11 @@ def parse_object_assignments(
     screens_c: str,
     pages: List[PageInfo],
     studio_type_hints: Optional[Dict[str, str]] = None,
+    studio_keyboard_hints: Optional[Dict[str, KeyboardWidgetHint]] = None,
 ) -> Dict[str, ElementInfo]:
     func_to_page: Dict[str, PageInfo] = {to_create_function(p.enum_name): p for p in pages}
     hints = studio_type_hints or {}
+    keyboard_hints = studio_keyboard_hints or {}
 
     current_page: PageInfo | None = None
     current_creator = "lv_obj"
@@ -548,12 +657,15 @@ def parse_object_assignments(
         assign_match = assign_re.search(raw_line)
         if assign_match and current_page is not None:
             obj_name = assign_match.group(1)
+            keyboard_hint = keyboard_hints.get(obj_name)
             out[obj_name] = ElementInfo(
                 object_name=obj_name,
                 page_enum=current_page.enum_name,
                 page_id=current_page.page_id,
                 creator=current_creator,
                 studio_type=hints.get(obj_name),
+                keyboard_kind=keyboard_hint.kind if keyboard_hint is not None else "KEYBOARD_NONE",
+                keyboard_max_length=keyboard_hint.max_length if keyboard_hint is not None else 0,
             )
 
     return out
@@ -802,6 +914,12 @@ def render_element_descriptors_header(
         [
         "} Screen32ElementType;",
         "",
+        "typedef enum Screen32KeyboardKind {",
+        "    KEYBOARD_NONE = 0,",
+        "    KEYBOARD_TEXT = 1,",
+        "    KEYBOARD_NUMBER = 2,",
+        "} Screen32KeyboardKind;",
+        "",
         "typedef struct Screen32ElementDescriptor {",
         "    uint32_t element_id;",
         "    const char* element_name;",
@@ -815,6 +933,9 @@ def render_element_descriptors_header(
         "    bool supports_color;",
         "    bool emits_button_event;",
         "    bool emits_input_event;",
+        "    bool opens_keyboard;",
+        "    Screen32KeyboardKind keyboard_kind;",
+        "    uint16_t keyboard_max_length;",
         "    // Битовая маска synced-атрибутов. Бит i установлен, если атрибут",
         "    // с значением enum ElementAttribute = i синхронизируется.",
         "    // Определяется tools/ui_meta_gen/synced_attrs.yaml.",
@@ -844,6 +965,9 @@ def render_element_descriptors_header(
             + f"{str(flags['supports_color']).lower()}, "
             + f"{str(flags['emits_button_event']).lower()}, "
             + f"{str(flags['emits_input_event']).lower()}, "
+            + f"{str(info.keyboard_kind != 'KEYBOARD_NONE').lower()}, "
+            + f"{info.keyboard_kind}, "
+            + f"{info.keyboard_max_length}u, "
             + f"0x{synced_mask:04X}u"
             + "},"
         )
@@ -1276,10 +1400,11 @@ def generate() -> None:
     screens_h = read_text(SCREENS_H)
     screens_c = read_text(SCREENS_C)
     studio_type_hints = parse_studio_widget_hints()
+    studio_keyboard_hints = parse_studio_keyboard_hints()
     synced_attrs = load_synced_attrs()
 
     pages, objects = parse_pages_and_objects(screens_h)
-    assignments = parse_object_assignments(screens_c, pages, studio_type_hints)
+    assignments = parse_object_assignments(screens_c, pages, studio_type_hints, studio_keyboard_hints)
 
     page_object_names = {page.object_name for page in pages}
     element_order = [
