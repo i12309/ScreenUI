@@ -943,9 +943,14 @@ void EezLvglAdapter::tickInput() {
     }
 }
 
+Envelope& EezLvglAdapter::prepareEventEnvelope(pb_size_t payloadTag) {
+    memset(&_eventEnvelope, 0, sizeof(_eventEnvelope));
+    _eventEnvelope.which_payload = payloadTag;
+    return _eventEnvelope;
+}
+
 bool EezLvglAdapter::emitButtonEvent(uint32_t elementId, uint32_t pageId, ButtonAction action) {
-    Envelope env{};
-    env.which_payload = Envelope_button_event_tag;
+    Envelope& env = prepareEventEnvelope(Envelope_button_event_tag);
     env.payload.button_event.element_id = elementId;
     env.payload.button_event.page_id = pageId;
     env.payload.button_event.action = action;
@@ -953,8 +958,7 @@ bool EezLvglAdapter::emitButtonEvent(uint32_t elementId, uint32_t pageId, Button
 }
 
 bool EezLvglAdapter::emitInputEventInt(uint32_t elementId, uint32_t pageId, int32_t value) {
-    Envelope env{};
-    env.which_payload = Envelope_input_event_tag;
+    Envelope& env = prepareEventEnvelope(Envelope_input_event_tag);
     env.payload.input_event.element_id = elementId;
     env.payload.input_event.page_id = pageId;
     env.payload.input_event.which_value = InputEvent_int_value_tag;
@@ -963,8 +967,7 @@ bool EezLvglAdapter::emitInputEventInt(uint32_t elementId, uint32_t pageId, int3
 }
 
 bool EezLvglAdapter::emitInputEventString(uint32_t elementId, uint32_t pageId, const char* text) {
-    Envelope env{};
-    env.which_payload = Envelope_input_event_tag;
+    Envelope& env = prepareEventEnvelope(Envelope_input_event_tag);
     env.payload.input_event.element_id = elementId;
     env.payload.input_event.page_id = pageId;
     env.payload.input_event.which_value = InputEvent_string_value_tag;

@@ -91,7 +91,9 @@ private:
     void* _attributeChangeUser = nullptr;
     uint32_t _listenedPageId = 0;
     PendingAttributeChange _pendingChanges[kMaxPendingChanges]{};
+    Envelope _eventEnvelope = Envelope_init_zero;
 
+    Envelope& prepareEventEnvelope(pb_size_t payloadTag);
     bool emitEnvelope(const Envelope& env);
     bool readAttributeValue(uint32_t elementId,
                             ElementAttribute attribute,
