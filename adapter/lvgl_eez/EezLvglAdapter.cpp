@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "chunk/TextChunkSender.h"
+
 #include "../../generated/shared/element_descriptors.generated.h"
 
 #if defined(__has_include)
@@ -88,10 +90,26 @@ void fill_bool_value(ElementAttributeValue& out, ElementAttribute attribute, boo
     out.value.bool_value = value;
 }
 
-void fill_string_value(ElementAttributeValue& out, ElementAttribute attribute, const char* value) {
+void fill_string_value(ElementAttributeValue& out,
+                       ElementAttribute attribute,
+                       const char* value,
+                       uint32_t elementId = 0,
+                       std::vector<SnapshotLongTextField>* longTextFields = nullptr) {
     reset_attribute_value(out, attribute);
     out.which_value = ElementAttributeValue_string_value_tag;
-    copy_text_safe(out.value.string_value, sizeof(out.value.string_value), value);
+    const char* safeValue = value != nullptr ? value : "";
+    if (longTextFields != nullptr && strlen(safeValue) > sizeof(out.value.string_value) - 1) {
+        out.value.string_value[0] = '\0';
+        if (longTextFields != nullptr) {
+            SnapshotLongTextField field;
+            field.elementId = elementId;
+            field.attribute = attribute;
+            field.text = safeValue;
+            longTextFields->push_back(field);
+        }
+        return;
+    }
+    copy_text_safe(out.value.string_value, sizeof(out.value.string_value), safeValue);
 }
 
 bool copy_attribute_value_to_set_cmd(uint32_t elementId,
@@ -119,13 +137,7 @@ bool copy_attribute_value_to_set_cmd(uint32_t elementId,
             dst.value.bool_value = src.value.bool_value;
             return true;
         case ElementAttributeValue_string_value_tag:
-            dst.which_value = SetElementAttribute_string_value_tag;
-            copy_text_safe(
-                dst.value.string_value,
-                sizeof(dst.value.string_value),
-                src.value.string_value
-            );
-            return true;
+            return false;
         default:
             return false;
     }
@@ -244,7 +256,10 @@ bool set_text_with_helpers(void* uiObject, const char* text) {
     return false;
 }
 
-bool read_text_with_helpers(void* uiObject, ElementAttributeValue& out) {
+bool read_text_with_helpers(void* uiObject,
+                            uint32_t elementId,
+                            ElementAttributeValue& out,
+                            std::vector<SnapshotLongTextField>* longTextFields) {
     lv_obj_t* obj = nullptr;
     if (!as_valid_lv_obj(uiObject, obj)) {
         return false;
@@ -252,21 +267,21 @@ bool read_text_with_helpers(void* uiObject, ElementAttributeValue& out) {
 
 #if LV_USE_LABEL
     if (lv_obj_check_type(obj, &lv_label_class)) {
-        fill_string_value(out, out.attribute, lv_label_get_text(obj));
+        fill_string_value(out, out.attribute, lv_label_get_text(obj), elementId, longTextFields);
         return true;
     }
 #endif
 
 #if LV_USE_TEXTAREA
     if (lv_obj_check_type(obj, &lv_textarea_class)) {
-        fill_string_value(out, out.attribute, lv_textarea_get_text(obj));
+        fill_string_value(out, out.attribute, lv_textarea_get_text(obj), elementId, longTextFields);
         return true;
     }
 #endif
 
 #if LV_USE_CHECKBOX
     if (lv_obj_check_type(obj, &lv_checkbox_class)) {
-        fill_string_value(out, out.attribute, lv_checkbox_get_text(obj));
+        fill_string_value(out, out.attribute, lv_checkbox_get_text(obj), elementId, longTextFields);
         return true;
     }
 #endif
@@ -275,7 +290,7 @@ bool read_text_with_helpers(void* uiObject, ElementAttributeValue& out) {
     if (lv_obj_check_type(obj, &lv_dropdown_class)) {
         char text[sizeof(out.value.string_value)] = {};
         lv_dropdown_get_selected_str(obj, text, sizeof(text));
-        fill_string_value(out, out.attribute, text);
+        fill_string_value(out, out.attribute, text, elementId, longTextFields);
         return true;
     }
 #endif
@@ -283,7 +298,7 @@ bool read_text_with_helpers(void* uiObject, ElementAttributeValue& out) {
 #if LV_USE_LABEL
     lv_obj_t* label = find_first_label_descendant(obj);
     if (label != nullptr) {
-        fill_string_value(out, out.attribute, lv_label_get_text(label));
+        fill_string_value(out, out.attribute, lv_label_get_text(label), elementId, longTextFields);
         return true;
     }
 #endif
@@ -447,7 +462,9 @@ bool set_visible_with_helpers(void* uiObject, bool visible) {
 
 bool read_attribute_with_helpers(void* uiObject,
                                  ElementAttribute attribute,
-                                 ElementAttributeValue& out) {
+                                 ElementAttributeValue& out,
+                                 uint32_t elementId = 0,
+                                 std::vector<SnapshotLongTextField>* longTextFields = nullptr) {
     lv_obj_t* obj = nullptr;
     if (!as_valid_lv_obj(uiObject, obj)) {
         return false;
@@ -502,7 +519,7 @@ bool read_attribute_with_helpers(void* uiObject,
             return true;
         case ElementAttribute_ELEMENT_ATTRIBUTE_TEXT:
             reset_attribute_value(out, attribute);
-            return read_text_with_helpers(uiObject, out);
+            return read_text_with_helpers(uiObject, elementId, out, longTextFields);
         case ElementAttribute_ELEMENT_ATTRIBUTE_VALUE:
             reset_attribute_value(out, attribute);
             return read_value_with_helpers(uiObject, out);
@@ -576,8 +593,7 @@ bool set_element_attribute_with_helpers(void* uiObject, const SetElementAttribut
             if (attr.which_value != SetElementAttribute_bool_value_tag) return false;
             return set_visible_with_helpers(uiObject, attr.value.bool_value);
         case ElementAttribute_ELEMENT_ATTRIBUTE_TEXT:
-            if (attr.which_value != SetElementAttribute_string_value_tag) return false;
-            return set_text_with_helpers(uiObject, attr.value.string_value);
+            return false;
         case ElementAttribute_ELEMENT_ATTRIBUTE_VALUE:
             if (attr.which_value != SetElementAttribute_int_value_tag) return false;
             return set_value_with_helpers(uiObject, attr.value.int_value);
@@ -600,10 +616,14 @@ void on_lvgl_adapter_event(lv_event_t* e) {
 #else
 bool read_attribute_with_helpers(void* uiObject,
                                  ElementAttribute attribute,
-                                 ElementAttributeValue& out) {
+                                 ElementAttributeValue& out,
+                                 uint32_t elementId = 0,
+                                 std::vector<SnapshotLongTextField>* longTextFields = nullptr) {
     (void)uiObject;
     (void)attribute;
     (void)out;
+    (void)elementId;
+    (void)longTextFields;
     return false;
 }
 
@@ -633,6 +653,11 @@ bool set_element_attribute_with_helpers(void* uiObject, const SetElementAttribut
 #endif
 
 }  // namespace
+
+bool send_adapter_envelope(const Envelope& env, void* userData) {
+    EezLvglAdapter* adapter = static_cast<EezLvglAdapter*>(userData);
+    return adapter != nullptr && adapter->emitEnvelope(env);
+}
 
 EezLvglAdapter::EezLvglAdapter(UiObjectMap* objectMap,
                                const EezLvglHooks& hooks,
@@ -681,10 +706,48 @@ bool EezLvglAdapter::setElementAttribute(const SetElementAttribute& attr) {
     return false;
 }
 
+bool EezLvglAdapter::setTextAttribute(uint32_t elementId, const char* text) {
+    if (_objectMap == nullptr) {
+        return false;
+    }
+
+    void* uiObject = _objectMap->findElement(elementId);
+    if (uiObject == nullptr) {
+        return false;
+    }
+
+    if (_hooks.setText != nullptr &&
+        _hooks.setText(_hookUserData, uiObject, text != nullptr ? text : "")) {
+        return true;
+    }
+    if (_hooks.enableLvglObjectHelpers) {
+        return set_text_with_helpers(uiObject, text);
+    }
+    return false;
+}
+
 bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId, uint32_t sessionId, PageSnapshot& out) {
+    return buildPageSnapshotInternal(pageId, sessionId, out, nullptr);
+}
+
+bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId,
+                                       uint32_t sessionId,
+                                       PageSnapshot& out,
+                                       std::vector<SnapshotLongTextField>& longTextFields) {
+    return buildPageSnapshotInternal(pageId, sessionId, out, &longTextFields);
+}
+
+bool EezLvglAdapter::buildPageSnapshotInternal(
+    uint32_t pageId,
+    uint32_t sessionId,
+    PageSnapshot& out,
+    std::vector<SnapshotLongTextField>* longTextFields) {
     memset(&out, 0, sizeof(out));
     out.page_id = pageId;
     out.session_id = sessionId;
+    if (longTextFields != nullptr) {
+        longTextFields->clear();
+    }
 
     if (_objectMap == nullptr) {
         return false;
@@ -717,7 +780,10 @@ bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId, uint32_t sessionId, Page
             }
 
             ElementAttributeValue value{};
-            if (!readAttributeValue(desc.element_id, static_cast<ElementAttribute>(bit), value)) {
+            if (!readAttributeValue(desc.element_id,
+                                    static_cast<ElementAttribute>(bit),
+                                    value,
+                                    longTextFields)) {
                 allOk = false;
                 continue;
             }
@@ -736,6 +802,11 @@ bool EezLvglAdapter::buildPageSnapshot(uint32_t pageId, uint32_t sessionId, Page
 bool EezLvglAdapter::applyAttributeValue(uint32_t elementId,
                                          const ElementAttributeValue& in,
                                          ElementAttributeValue& appliedOut) {
+    if (in.which_value == ElementAttributeValue_string_value_tag &&
+        in.attribute == ElementAttribute_ELEMENT_ATTRIBUTE_TEXT) {
+        return applyTextAttribute(elementId, in.value.string_value, appliedOut);
+    }
+
     SetElementAttribute cmd{};
     if (!copy_attribute_value_to_set_cmd(elementId, in, cmd)) {
         return false;
@@ -746,6 +817,21 @@ bool EezLvglAdapter::applyAttributeValue(uint32_t elementId,
     }
 
     return readAttributeValue(elementId, in.attribute, appliedOut);
+}
+
+bool EezLvglAdapter::applyTextAttribute(uint32_t elementId,
+                                        const char* text,
+                                        ElementAttributeValue& appliedOut) {
+    if (!setTextAttribute(elementId, text)) {
+        return false;
+    }
+    if (readAttributeValue(elementId, ElementAttribute_ELEMENT_ATTRIBUTE_TEXT, appliedOut)) {
+        return true;
+    }
+    reset_attribute_value(appliedOut, ElementAttribute_ELEMENT_ATTRIBUTE_TEXT);
+    appliedOut.which_value = ElementAttributeValue_string_value_tag;
+    copy_text_safe(appliedOut.value.string_value, sizeof(appliedOut.value.string_value), text);
+    return true;
 }
 
 void EezLvglAdapter::installChangeListeners(uint32_t pageId,
@@ -832,14 +918,20 @@ bool EezLvglAdapter::emitInputEventInt(uint32_t elementId, uint32_t pageId, int3
 }
 
 bool EezLvglAdapter::emitInputEventString(uint32_t elementId, uint32_t pageId, const char* text) {
-    Envelope& env = prepareEventEnvelope(Envelope_input_event_tag);
-    env.payload.input_event.element_id = elementId;
-    env.payload.input_event.page_id = pageId;
-    env.payload.input_event.which_value = InputEvent_string_value_tag;
-    copyTextSafe(env.payload.input_event.value.string_value,
-                 sizeof(env.payload.input_event.value.string_value),
-                 text);
-    return emitEnvelope(env);
+    const uint32_t transferId = _nextTransferId++;
+    if (_nextTransferId == 0) {
+        _nextTransferId = 1;
+    }
+    return chunk::sendTextChunks(&send_adapter_envelope,
+                                 this,
+                                 TextChunkKind_TEXT_CHUNK_INPUT_EVENT,
+                                 transferId,
+                                 0,
+                                 pageId,
+                                 elementId,
+                                 ElementAttribute_ELEMENT_ATTRIBUTE_UNKNOWN,
+                                 0,
+                                 text != nullptr ? text : "");
 }
 
 bool EezLvglAdapter::emitEnvelope(const Envelope& env) {
@@ -852,6 +944,14 @@ bool EezLvglAdapter::emitEnvelope(const Envelope& env) {
 bool EezLvglAdapter::readAttributeValue(uint32_t elementId,
                                         ElementAttribute attribute,
                                         ElementAttributeValue& out) const {
+    return readAttributeValue(elementId, attribute, out, nullptr);
+}
+
+bool EezLvglAdapter::readAttributeValue(
+    uint32_t elementId,
+    ElementAttribute attribute,
+    ElementAttributeValue& out,
+    std::vector<SnapshotLongTextField>* longTextFields) const {
     if (_objectMap == nullptr) {
         return false;
     }
@@ -861,7 +961,7 @@ bool EezLvglAdapter::readAttributeValue(uint32_t elementId,
         return false;
     }
 
-    return read_attribute_with_helpers(uiObject, attribute, out);
+    return read_attribute_with_helpers(uiObject, attribute, out, elementId, longTextFields);
 }
 
 bool EezLvglAdapter::queuePendingChange(uint32_t elementId,

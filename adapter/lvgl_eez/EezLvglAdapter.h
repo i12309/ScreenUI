@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstddef>
+#include <string>
+#include <vector>
 
 #include "IUiAdapter.h"
 #include "lvgl_eez/UiObjectMap.h"
@@ -8,6 +10,12 @@
 namespace screenlib::adapter {
 
 class EezLvglAdapter;
+
+struct SnapshotLongTextField {
+    uint32_t elementId = 0;
+    ElementAttribute attribute = ElementAttribute_ELEMENT_ATTRIBUTE_UNKNOWN;
+    std::string text;
+};
 
 // Hooks для интеграции с реальным EEZ/LVGL generated UI.
 // Библиотека не дублирует generated код, а вызывает переданные callbacks.
@@ -28,6 +36,8 @@ struct EezLvglHooks {
 
 // Первая concrete реализация IUiAdapter для EEZ/LVGL.
 class EezLvglAdapter : public IUiAdapter {
+    friend bool send_adapter_envelope(const Envelope& env, void* userData);
+
 public:
     EezLvglAdapter(UiObjectMap* objectMap = nullptr,
                    const EezLvglHooks& hooks = EezLvglHooks{},
@@ -38,6 +48,7 @@ public:
 
     bool showPage(uint32_t pageId) override;
     bool setElementAttribute(const SetElementAttribute& attr) override;
+    bool setTextAttribute(uint32_t elementId, const char* text) override;
 
     using AttributeChangeCb = void (*)(uint32_t elementId,
                                        const ElementAttributeValue& value,
@@ -48,9 +59,16 @@ public:
     // Поле session_id в snapshot должно совпадать с этой эпохой, иначе backend
     // отбросит snapshot как stale.
     bool buildPageSnapshot(uint32_t pageId, uint32_t sessionId, PageSnapshot& out);
+    bool buildPageSnapshot(uint32_t pageId,
+                           uint32_t sessionId,
+                           PageSnapshot& out,
+                           std::vector<SnapshotLongTextField>& longTextFields);
     bool applyAttributeValue(uint32_t elementId,
                              const ElementAttributeValue& in,
                              ElementAttributeValue& appliedOut);
+    bool applyTextAttribute(uint32_t elementId,
+                            const char* text,
+                            ElementAttributeValue& appliedOut);
     void installChangeListeners(uint32_t pageId, AttributeChangeCb cb, void* userData);
     void flushPendingChanges();
     void handleLvglEventObject(void* uiObject, uint32_t eventCode);
@@ -85,14 +103,23 @@ private:
     AttributeChangeCb _attributeChangeCb = nullptr;
     void* _attributeChangeUser = nullptr;
     uint32_t _listenedPageId = 0;
+    uint32_t _nextTransferId = 1;
     PendingAttributeChange _pendingChanges[kMaxPendingChanges]{};
-    Envelope _eventEnvelope = Envelope_init_zero;
+    Envelope _eventEnvelope = {};
 
     Envelope& prepareEventEnvelope(pb_size_t payloadTag);
     bool emitEnvelope(const Envelope& env);
+    bool buildPageSnapshotInternal(uint32_t pageId,
+                                   uint32_t sessionId,
+                                   PageSnapshot& out,
+                                   std::vector<SnapshotLongTextField>* longTextFields);
     bool readAttributeValue(uint32_t elementId,
                             ElementAttribute attribute,
                             ElementAttributeValue& out) const;
+    bool readAttributeValue(uint32_t elementId,
+                            ElementAttribute attribute,
+                            ElementAttributeValue& out,
+                            std::vector<SnapshotLongTextField>* longTextFields) const;
     bool queuePendingChange(uint32_t elementId,
                             const ElementAttributeValue& value,
                             AttributeChangeReason reason);
