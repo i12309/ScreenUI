@@ -153,28 +153,43 @@ uint32_t lvgl_color_to_rgb888(lv_color_t color) {
     return normalize_rgb_color(lv_color_to_u32(color));
 }
 
-#if LV_USE_LABEL
-lv_obj_t* find_first_label_descendant(lv_obj_t* root) {
+lv_obj_t* find_first_text_descendant(lv_obj_t* root) {
     if (root == nullptr) {
         return nullptr;
     }
 
+#if LV_USE_LABEL
     if (lv_obj_check_type(root, &lv_label_class)) {
         return root;
     }
+#endif
+#if LV_USE_TEXTAREA
+    if (lv_obj_check_type(root, &lv_textarea_class)) {
+        return root;
+    }
+#endif
+#if LV_USE_CHECKBOX
+    if (lv_obj_check_type(root, &lv_checkbox_class)) {
+        return root;
+    }
+#endif
+#if LV_USE_DROPDOWN
+    if (lv_obj_check_type(root, &lv_dropdown_class)) {
+        return root;
+    }
+#endif
 
     const uint32_t childCount = lv_obj_get_child_count(root);
     for (uint32_t i = 0; i < childCount; ++i) {
         lv_obj_t* child = lv_obj_get_child(root, static_cast<int32_t>(i));
-        lv_obj_t* label = find_first_label_descendant(child);
-        if (label != nullptr) {
-            return label;
+        lv_obj_t* textObj = find_first_text_descendant(child);
+        if (textObj != nullptr) {
+            return textObj;
         }
     }
 
     return nullptr;
 }
-#endif
 
 const lv_font_t* map_proto_font(ElementFont font) {
 #if SCREENUI_EEZ_FONT_MAP_AVAILABLE
@@ -245,13 +260,10 @@ bool set_text_with_helpers(void* uiObject, const char* text) {
     }
 #endif
 
-#if LV_USE_LABEL
-    lv_obj_t* label = find_first_label_descendant(obj);
-    if (label != nullptr) {
-        lv_label_set_text(label, safeText);
-        return true;
+    lv_obj_t* textObj = find_first_text_descendant(obj);
+    if (textObj != nullptr && textObj != obj) {
+        return set_text_with_helpers(textObj, safeText);
     }
-#endif
 
     return false;
 }
@@ -295,13 +307,10 @@ bool read_text_with_helpers(void* uiObject,
     }
 #endif
 
-#if LV_USE_LABEL
-    lv_obj_t* label = find_first_label_descendant(obj);
-    if (label != nullptr) {
-        fill_string_value(out, out.attribute, lv_label_get_text(label), elementId, longTextFields);
-        return true;
+    lv_obj_t* textObj = find_first_text_descendant(obj);
+    if (textObj != nullptr && textObj != obj) {
+        return read_text_with_helpers(textObj, elementId, out, longTextFields);
     }
-#endif
 
     return false;
 }
