@@ -12,10 +12,10 @@ lv_style_t *get_style_button_style_MAIN_DEFAULT();
 void add_style_button_style(lv_obj_t *obj);
 void remove_style_button_style(lv_obj_t *obj);
 
-// Style: Panel
-lv_style_t *get_style_panel_MAIN_DEFAULT();
-void add_style_panel(lv_obj_t *obj);
-void remove_style_panel(lv_obj_t *obj);
+// Style: TitlePanel
+lv_style_t *get_style_title_panel_MAIN_DEFAULT();
+void add_style_title_panel(lv_obj_t *obj);
+void remove_style_title_panel(lv_obj_t *obj);
 
 // Style: Drop
 lv_style_t *get_style_drop_MAIN_DEFAULT();

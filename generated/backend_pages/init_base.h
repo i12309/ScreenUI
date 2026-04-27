@@ -51,6 +51,58 @@ protected:
     screenui::generated::TypeCheckbox chk_INIT_R_TEST;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::pnl_INIT_TITLE:
+                pnl_INIT_TITLE.text = text;
+                pnl_INIT_TITLE.fireChanged();
+                break;
+            case ::btn_INIT_HTTP:
+                btn_INIT_HTTP.text = text;
+                btn_INIT_HTTP.fireChanged();
+                break;
+            case ::btn_INIT_OK:
+                btn_INIT_OK.text = text;
+                btn_INIT_OK.fireChanged();
+                break;
+            case ::btn_INIT_GROUP:
+                btn_INIT_GROUP.text = text;
+                btn_INIT_GROUP.fireChanged();
+                break;
+            case ::btn_INIT_NAME:
+                btn_INIT_NAME.text = text;
+                btn_INIT_NAME.fireChanged();
+                break;
+            case ::btn_INIT_ACCESS_POINT:
+                btn_INIT_ACCESS_POINT.text = text;
+                btn_INIT_ACCESS_POINT.fireChanged();
+                break;
+            case ::btn_INIT_TEST:
+                btn_INIT_TEST.text = text;
+                btn_INIT_TEST.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
+    void onInputInt(uint32_t elementId, int32_t value) final {
+        switch (elementId) {
+            case ::drp_INIT_MACHINE:
+                drp_INIT_MACHINE.value = value;
+                drp_INIT_MACHINE.fireChanged();
+                break;
+            case ::chk_INIT_R_ACCESS_POINT:
+                chk_INIT_R_ACCESS_POINT.value = value;
+                chk_INIT_R_ACCESS_POINT.fireChanged();
+                break;
+            case ::chk_INIT_R_TEST:
+                chk_INIT_R_TEST.value = value;
+                chk_INIT_R_TEST.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_INIT_HTTP:

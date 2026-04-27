@@ -29,6 +29,25 @@ protected:
     screenui::generated::TypePanel pnl_LOAD_MODEL;
     screenui::generated::TypeText txt_LOAD_MA_CADDRESS;
     screenui::generated::TypeText txt_LOAD_VERSION;
+
+private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::pnl_LOAD_MODEL:
+                pnl_LOAD_MODEL.text = text;
+                pnl_LOAD_MODEL.fireChanged();
+                break;
+            case ::txt_LOAD_MA_CADDRESS:
+                txt_LOAD_MA_CADDRESS.text = text;
+                txt_LOAD_MA_CADDRESS.fireChanged();
+                break;
+            case ::txt_LOAD_VERSION:
+                txt_LOAD_VERSION.text = text;
+                txt_LOAD_VERSION.fireChanged();
+                break;
+            default: break;
+        }
+    }
 };
 
 }  // namespace screenui

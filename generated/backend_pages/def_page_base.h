@@ -55,6 +55,60 @@ protected:
     screenui::generated::TypeButton btn_B6_1;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::pnl_TITLE_6:
+                pnl_TITLE_6.text = text;
+                pnl_TITLE_6.fireChanged();
+                break;
+            case ::pnl_SIG_3:
+                pnl_SIG_3.text = text;
+                pnl_SIG_3.fireChanged();
+                break;
+            case ::btn_SIG1_6:
+                btn_SIG1_6.text = text;
+                btn_SIG1_6.fireChanged();
+                break;
+            case ::btn_SIG1_7:
+                btn_SIG1_7.text = text;
+                btn_SIG1_7.fireChanged();
+                break;
+            case ::btn_SIG1_8:
+                btn_SIG1_8.text = text;
+                btn_SIG1_8.fireChanged();
+                break;
+            case ::btn_NEXT_3:
+                btn_NEXT_3.text = text;
+                btn_NEXT_3.fireChanged();
+                break;
+            case ::btn_B1_1:
+                btn_B1_1.text = text;
+                btn_B1_1.fireChanged();
+                break;
+            case ::btn_B2_1:
+                btn_B2_1.text = text;
+                btn_B2_1.fireChanged();
+                break;
+            case ::btn_B3_1:
+                btn_B3_1.text = text;
+                btn_B3_1.fireChanged();
+                break;
+            case ::btn_B4_1:
+                btn_B4_1.text = text;
+                btn_B4_1.fireChanged();
+                break;
+            case ::btn_B5_1:
+                btn_B5_1.text = text;
+                btn_B5_1.fireChanged();
+                break;
+            case ::btn_B6_1:
+                btn_B6_1.text = text;
+                btn_B6_1.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_SIG1_6:

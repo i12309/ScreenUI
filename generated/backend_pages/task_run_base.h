@@ -49,6 +49,48 @@ protected:
     screenui::generated::TypeButton btn_TASK_RUN_START;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_TASK_RUN_BACK:
+                btn_TASK_RUN_BACK.text = text;
+                btn_TASK_RUN_BACK.fireChanged();
+                break;
+            case ::pnl_TASK_RUN_TITLE:
+                pnl_TASK_RUN_TITLE.text = text;
+                pnl_TASK_RUN_TITLE.fireChanged();
+                break;
+            case ::btn_TASK_RUN_LIST_TASK:
+                btn_TASK_RUN_LIST_TASK.text = text;
+                btn_TASK_RUN_LIST_TASK.fireChanged();
+                break;
+            case ::btn_TASK_RUN_LIST_PROFILE:
+                btn_TASK_RUN_LIST_PROFILE.text = text;
+                btn_TASK_RUN_LIST_PROFILE.fireChanged();
+                break;
+            case ::btn_TASK_RUN_LABEL:
+                btn_TASK_RUN_LABEL.text = text;
+                btn_TASK_RUN_LABEL.fireChanged();
+                break;
+            case ::btn_TASK_RUN_CYCLES:
+                btn_TASK_RUN_CYCLES.text = text;
+                btn_TASK_RUN_CYCLES.fireChanged();
+                break;
+            case ::btn_TASK_RUN_PLUS:
+                btn_TASK_RUN_PLUS.text = text;
+                btn_TASK_RUN_PLUS.fireChanged();
+                break;
+            case ::btn_TASK_RUN_MINUS:
+                btn_TASK_RUN_MINUS.text = text;
+                btn_TASK_RUN_MINUS.fireChanged();
+                break;
+            case ::btn_TASK_RUN_START:
+                btn_TASK_RUN_START.text = text;
+                btn_TASK_RUN_START.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_TASK_RUN_BACK:

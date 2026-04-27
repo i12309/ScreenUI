@@ -31,6 +31,17 @@ protected:
     screenui::generated::TypeContainer cnt_BAR_1;
     screenui::generated::TypePanel pnl_TITLE_1;
     screenui::generated::TypeContainer cnt_BUTTON_1;
+
+private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::pnl_TITLE_1:
+                pnl_TITLE_1.text = text;
+                pnl_TITLE_1.fireChanged();
+                break;
+            default: break;
+        }
+    }
 };
 
 }  // namespace screenui

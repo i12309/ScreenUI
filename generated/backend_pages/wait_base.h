@@ -31,6 +31,24 @@ protected:
     screenui::generated::TypeButton btn_WAIT_TEXT3;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_WAIT_TEXT1:
+                btn_WAIT_TEXT1.text = text;
+                btn_WAIT_TEXT1.fireChanged();
+                break;
+            case ::btn_WAIT_TEXT2:
+                btn_WAIT_TEXT2.text = text;
+                btn_WAIT_TEXT2.fireChanged();
+                break;
+            case ::btn_WAIT_TEXT3:
+                btn_WAIT_TEXT3.text = text;
+                btn_WAIT_TEXT3.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_WAIT_TEXT1:

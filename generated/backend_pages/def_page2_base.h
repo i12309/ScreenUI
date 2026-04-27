@@ -41,6 +41,32 @@ protected:
     screenui::generated::TypeContainer cnt_BUTTON_5;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_BACK_5:
+                btn_BACK_5.text = text;
+                btn_BACK_5.fireChanged();
+                break;
+            case ::pnl_TITLE_5:
+                pnl_TITLE_5.text = text;
+                pnl_TITLE_5.fireChanged();
+                break;
+            case ::btn_NEXT_13:
+                btn_NEXT_13.text = text;
+                btn_NEXT_13.fireChanged();
+                break;
+            case ::btn_NEXT_14:
+                btn_NEXT_14.text = text;
+                btn_NEXT_14.fireChanged();
+                break;
+            case ::btn_NEXT_15:
+                btn_NEXT_15.text = text;
+                btn_NEXT_15.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_BACK_5:

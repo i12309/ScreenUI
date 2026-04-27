@@ -1056,6 +1056,8 @@ def render_element_types_header(
             if name not in ELEMENT_BASE_ATTRIBUTES
         ]
         emits_click = type_name in BUTTON_EVENT_TYPES
+        emits_text_change = "text" in attrs and "value" not in attrs
+        emits_value_change = "value" in attrs
 
         lines.append(f"class {class_name} : public screenlib::ElementBase {{")
         lines.append("public:")
@@ -1085,8 +1087,14 @@ def render_element_types_header(
             lines.append("    screenlib::Signal<> onPush;")
             lines.append("    screenlib::Signal<> onPop;")
             lines.append("    screenlib::Signal<> onRepeat;")
+        if emits_text_change:
+            lines.append("    screenlib::Signal<const char*> onChange;")
+            lines.append("    void fireChanged() { onChange.emit(text); }")
+        if emits_value_change:
+            lines.append("    screenlib::Signal<int32_t> onChange;")
+            lines.append("    void fireChanged() { onChange.emit(value); }")
 
-        if not attrs and not emits_click:
+        if not attrs and not emits_click and not emits_text_change and not emits_value_change:
             lines.append("    // Тип не имеет дополнительных synced-полей сверх ElementBase.")
 
         lines.append("};")
@@ -1107,6 +1115,17 @@ def render_page_base_header(
     page_id_macro = make_page_enum_name(page.enum_name)
     buttons = [
         info for info in page_elements if infer_element_type(info) in BUTTON_EVENT_TYPES
+    ]
+    text_inputs = [
+        info
+        for info in page_elements
+        if "text" in synced_attrs.synced_names_for(infer_element_type(info))
+        and "value" not in synced_attrs.synced_names_for(infer_element_type(info))
+    ]
+    int_inputs = [
+        info
+        for info in page_elements
+        if "value" in synced_attrs.synced_names_for(infer_element_type(info))
     ]
 
     lines = [
@@ -1153,8 +1172,39 @@ def render_page_base_header(
         type_class = element_type_class_name(element_type)
         lines.append(f"    screenui::generated::{type_class} {member_name};")
 
-    if buttons:
+    if buttons or text_inputs or int_inputs:
         lines.extend(["", "private:"])
+    if text_inputs:
+        lines.append("    void onInputText(uint32_t elementId, const char* text) final {")
+        lines.append("        switch (elementId) {")
+        for info in text_inputs:
+            member_name = element_member_name(info)
+            lines.append(f"            case ::{member_name}:")
+            lines.append(f"                {member_name}.text = text;")
+            lines.append(f"                {member_name}.fireChanged();")
+            lines.append("                break;")
+        lines.append("            default: break;")
+        lines.append("        }")
+        lines.append("    }")
+
+    if int_inputs:
+        if text_inputs:
+            lines.append("")
+        lines.append("    void onInputInt(uint32_t elementId, int32_t value) final {")
+        lines.append("        switch (elementId) {")
+        for info in int_inputs:
+            member_name = element_member_name(info)
+            lines.append(f"            case ::{member_name}:")
+            lines.append(f"                {member_name}.value = value;")
+            lines.append(f"                {member_name}.fireChanged();")
+            lines.append("                break;")
+        lines.append("            default: break;")
+        lines.append("        }")
+        lines.append("    }")
+
+    if buttons:
+        if text_inputs or int_inputs:
+            lines.append("")
         lines.append("    void onButton(uint32_t elementId, ButtonAction action) final {")
         lines.append("        switch (elementId) {")
         for info in buttons:

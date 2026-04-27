@@ -31,6 +31,8 @@ public:
     screenlib::Signal<> onPush;
     screenlib::Signal<> onPop;
     screenlib::Signal<> onRepeat;
+    screenlib::Signal<const char*> onChange;
+    void fireChanged() { onChange.emit(text); }
 };
 
 class TypeContainer : public screenlib::ElementBase {
@@ -59,6 +61,8 @@ public:
     screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
     screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_TEXT_COLOR> textColor;
     screenlib::Property<ElementFont, ELEMENT_ATTRIBUTE_TEXT_FONT> font;
+    screenlib::Signal<const char*> onChange;
+    void fireChanged() { onChange.emit(text); }
 };
 
 class TypePanel : public screenlib::ElementBase {
@@ -75,6 +79,8 @@ public:
     screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_Y> y;
     screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_BACKGROUND_COLOR> bgColor;
     screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
+    screenlib::Signal<const char*> onChange;
+    void fireChanged() { onChange.emit(text); }
 };
 
 class TypeTextarea : public screenlib::ElementBase {
@@ -85,6 +91,8 @@ public:
     {}
 
     screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
+    screenlib::Signal<const char*> onChange;
+    void fireChanged() { onChange.emit(text); }
 };
 
 class TypeCheckbox : public screenlib::ElementBase {
@@ -97,6 +105,8 @@ public:
 
     screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_VALUE> value;
     screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
+    screenlib::Signal<int32_t> onChange;
+    void fireChanged() { onChange.emit(value); }
 };
 
 class TypeDropdown : public screenlib::ElementBase {
@@ -109,6 +119,8 @@ public:
 
     screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_VALUE> value;
     screenlib::Property<const char*, ELEMENT_ATTRIBUTE_TEXT> text;
+    screenlib::Signal<int32_t> onChange;
+    void fireChanged() { onChange.emit(value); }
 };
 
 class TypeKeyboard : public screenlib::ElementBase {

@@ -45,6 +45,40 @@ protected:
     screenui::generated::TypeButton btn_INPUT_OK;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::pnl_INPUT_TITLE_1:
+                pnl_INPUT_TITLE_1.text = text;
+                pnl_INPUT_TITLE_1.fireChanged();
+                break;
+            case ::btn_INPUT_FIELD1:
+                btn_INPUT_FIELD1.text = text;
+                btn_INPUT_FIELD1.fireChanged();
+                break;
+            case ::btn_INPUT_FIELD2:
+                btn_INPUT_FIELD2.text = text;
+                btn_INPUT_FIELD2.fireChanged();
+                break;
+            case ::btn_INPUT_FIELD4:
+                btn_INPUT_FIELD4.text = text;
+                btn_INPUT_FIELD4.fireChanged();
+                break;
+            case ::btn_INPUT_FIELD3:
+                btn_INPUT_FIELD3.text = text;
+                btn_INPUT_FIELD3.fireChanged();
+                break;
+            case ::btn_INPUT_CANCEL:
+                btn_INPUT_CANCEL.text = text;
+                btn_INPUT_CANCEL.fireChanged();
+                break;
+            case ::btn_INPUT_OK:
+                btn_INPUT_OK.text = text;
+                btn_INPUT_OK.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_INPUT_FIELD1:

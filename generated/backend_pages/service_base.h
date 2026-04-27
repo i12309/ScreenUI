@@ -49,6 +49,48 @@ protected:
     screenui::generated::TypeButton btn_SERVICE_PROBA;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_SERVICE_BACK:
+                btn_SERVICE_BACK.text = text;
+                btn_SERVICE_BACK.fireChanged();
+                break;
+            case ::pnl_SERVICE_TITLE:
+                pnl_SERVICE_TITLE.text = text;
+                pnl_SERVICE_TITLE.fireChanged();
+                break;
+            case ::btn_NEXT_2:
+                btn_NEXT_2.text = text;
+                btn_NEXT_2.fireChanged();
+                break;
+            case ::btn_SERVICE_TABLE:
+                btn_SERVICE_TABLE.text = text;
+                btn_SERVICE_TABLE.fireChanged();
+                break;
+            case ::btn_SERVICE_PAPER:
+                btn_SERVICE_PAPER.text = text;
+                btn_SERVICE_PAPER.fireChanged();
+                break;
+            case ::btn_SERVICE_GUILLOTINE:
+                btn_SERVICE_GUILLOTINE.text = text;
+                btn_SERVICE_GUILLOTINE.fireChanged();
+                break;
+            case ::btn_SERVICE_SLICE:
+                btn_SERVICE_SLICE.text = text;
+                btn_SERVICE_SLICE.fireChanged();
+                break;
+            case ::btn_SERVICE_CALIBRATION:
+                btn_SERVICE_CALIBRATION.text = text;
+                btn_SERVICE_CALIBRATION.fireChanged();
+                break;
+            case ::btn_SERVICE_PROBA:
+                btn_SERVICE_PROBA.text = text;
+                btn_SERVICE_PROBA.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_SERVICE_BACK:

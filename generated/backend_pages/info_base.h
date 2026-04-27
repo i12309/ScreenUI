@@ -47,6 +47,44 @@ protected:
     screenui::generated::TypeButton btn_INFO_OK;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_INFO_BACK:
+                btn_INFO_BACK.text = text;
+                btn_INFO_BACK.fireChanged();
+                break;
+            case ::pnl_INFO_TITLE:
+                pnl_INFO_TITLE.text = text;
+                pnl_INFO_TITLE.fireChanged();
+                break;
+            case ::btn_INFO_NEXT:
+                btn_INFO_NEXT.text = text;
+                btn_INFO_NEXT.fireChanged();
+                break;
+            case ::btn_INFO_FIELD1:
+                btn_INFO_FIELD1.text = text;
+                btn_INFO_FIELD1.fireChanged();
+                break;
+            case ::btn_INFO_FIELD2:
+                btn_INFO_FIELD2.text = text;
+                btn_INFO_FIELD2.fireChanged();
+                break;
+            case ::btn_INFO_FIELD3:
+                btn_INFO_FIELD3.text = text;
+                btn_INFO_FIELD3.fireChanged();
+                break;
+            case ::btn_INFO_CANCEL:
+                btn_INFO_CANCEL.text = text;
+                btn_INFO_CANCEL.fireChanged();
+                break;
+            case ::btn_INFO_OK:
+                btn_INFO_OK.text = text;
+                btn_INFO_OK.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_INFO_BACK:

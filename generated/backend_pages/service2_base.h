@@ -41,6 +41,32 @@ protected:
     screenui::generated::TypeButton btn_SERVICE_GUILLOTINE_1;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_SERVICE2_BACK:
+                btn_SERVICE2_BACK.text = text;
+                btn_SERVICE2_BACK.fireChanged();
+                break;
+            case ::pnl_SERVICE2_TITLE:
+                pnl_SERVICE2_TITLE.text = text;
+                pnl_SERVICE2_TITLE.fireChanged();
+                break;
+            case ::btn_SERVICE_TABLE_1:
+                btn_SERVICE_TABLE_1.text = text;
+                btn_SERVICE_TABLE_1.fireChanged();
+                break;
+            case ::btn_SERVICE_PAPER_1:
+                btn_SERVICE_PAPER_1.text = text;
+                btn_SERVICE_PAPER_1.fireChanged();
+                break;
+            case ::btn_SERVICE_GUILLOTINE_1:
+                btn_SERVICE_GUILLOTINE_1.text = text;
+                btn_SERVICE_GUILLOTINE_1.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_SERVICE2_BACK:

@@ -25,6 +25,17 @@ public:
 
 protected:
     screenui::generated::TypePanel pnl_LOAD_MODEL_1;
+
+private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::pnl_LOAD_MODEL_1:
+                pnl_LOAD_MODEL_1.text = text;
+                pnl_LOAD_MODEL_1.fireChanged();
+                break;
+            default: break;
+        }
+    }
 };
 
 }  // namespace screenui

@@ -27,6 +27,17 @@ public:
 protected:
     screenui::generated::TypeTextarea txa_KBD_TEXT;
     screenui::generated::TypeKeyboard kbd_KBD_KEY;
+
+private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::txa_KBD_TEXT:
+                txa_KBD_TEXT.text = text;
+                txa_KBD_TEXT.fireChanged();
+                break;
+            default: break;
+        }
+    }
 };
 
 }  // namespace screenui

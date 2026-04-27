@@ -39,6 +39,36 @@ protected:
     screenui::generated::TypeButton btn_MAIN_SUPPORT;
 
 private:
+    void onInputText(uint32_t elementId, const char* text) final {
+        switch (elementId) {
+            case ::btn_MAIN_TASK:
+                btn_MAIN_TASK.text = text;
+                btn_MAIN_TASK.fireChanged();
+                break;
+            case ::btn_MAIN_PROFILE:
+                btn_MAIN_PROFILE.text = text;
+                btn_MAIN_PROFILE.fireChanged();
+                break;
+            case ::btn_MAIN_NET:
+                btn_MAIN_NET.text = text;
+                btn_MAIN_NET.fireChanged();
+                break;
+            case ::btn_MAIN_SERVICE:
+                btn_MAIN_SERVICE.text = text;
+                btn_MAIN_SERVICE.fireChanged();
+                break;
+            case ::btn_MAIN_STATS:
+                btn_MAIN_STATS.text = text;
+                btn_MAIN_STATS.fireChanged();
+                break;
+            case ::btn_MAIN_SUPPORT:
+                btn_MAIN_SUPPORT.text = text;
+                btn_MAIN_SUPPORT.fireChanged();
+                break;
+            default: break;
+        }
+    }
+
     void onButton(uint32_t elementId, ButtonAction action) final {
         switch (elementId) {
             case ::btn_MAIN_TASK:
