@@ -1556,7 +1556,7 @@ void create_screen_info() {
                             lv_obj_t *obj = lv_obj_create(parent_obj);
                             objects.info_title = obj;
                             lv_obj_set_pos(obj, 0, 0);
-                            lv_obj_set_size(obj, LV_PCT(0), LV_PCT(100));
+                            lv_obj_set_size(obj, LV_PCT(100), LV_PCT(100));
                             add_style_title_panel(obj);
                             lv_obj_set_style_flex_grow(obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
                             {
