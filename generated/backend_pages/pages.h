@@ -24,7 +24,7 @@
 #include "paper_base.h"
 #include "guillotine_base.h"
 #include "service2_base.h"
-#include "throw_base.h"
+#include "throws_base.h"
 #include "bigel_base.h"
 #include "wifi_base.h"
 #include "keyboard_base.h"

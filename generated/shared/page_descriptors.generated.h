@@ -37,7 +37,7 @@ static const Screen32PageDescriptor g_screen32_page_descriptors[SCREEN32_PAGE_DE
     {15u, "PAPER", "paper"},
     {16u, "GUILLOTINE", "guillotine"},
     {17u, "SERVICE2", "service2"},
-    {18u, "THROW", "throw"},
+    {18u, "THROWS", "throws"},
     {19u, "BIGEL", "bigel"},
     {20u, "WIFI", "wifi"},
     {21u, "KEYBOARD", "keyboard"},

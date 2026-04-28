@@ -28,7 +28,7 @@ uint32_t screen32_current_page_id() {
     if (active == objects.paper) return 15u;
     if (active == objects.guillotine) return 16u;
     if (active == objects.service2) return 17u;
-    if (active == objects.throw) return 18u;
+    if (active == objects.throws) return 18u;
     if (active == objects.bigel) return 19u;
     if (active == objects.wifi) return 20u;
     if (active == objects.keyboard) return 21u;
@@ -62,7 +62,7 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == objects.paper) { loadScreen(SCREEN_ID_PAPER); return true; }
     if (target == objects.guillotine) { loadScreen(SCREEN_ID_GUILLOTINE); return true; }
     if (target == objects.service2) { loadScreen(SCREEN_ID_SERVICE2); return true; }
-    if (target == objects.throw) { loadScreen(SCREEN_ID_THROW); return true; }
+    if (target == objects.throws) { loadScreen(SCREEN_ID_THROWS); return true; }
     if (target == objects.bigel) { loadScreen(SCREEN_ID_BIGEL); return true; }
     if (target == objects.wifi) { loadScreen(SCREEN_ID_WIFI); return true; }
     if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }

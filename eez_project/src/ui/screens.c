@@ -5837,9 +5837,9 @@ void create_screen_service2() {
 void tick_screen_service2() {
 }
 
-void create_screen_throw() {
+void create_screen_throws() {
     lv_obj_t *obj = lv_obj_create(0);
-    objects.throw = obj;
+    objects.throws = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 800, 480);
     lv_obj_set_style_layout(obj, LV_LAYOUT_FLEX, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5882,9 +5882,9 @@ void create_screen_throw() {
                     {
                         lv_obj_t *parent_obj = obj;
                         {
-                            // Guillotine_Back_1
+                            // Throws_Back
                             lv_obj_t *obj = lv_button_create(parent_obj);
-                            objects.guillotine_back_1 = obj;
+                            objects.throws_back = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_PCT(15), LV_PCT(100));
                             add_style_button_style(obj);
@@ -5905,9 +5905,9 @@ void create_screen_throw() {
                             }
                         }
                         {
-                            // Guillotine_Title_1
+                            // Throws_Title
                             lv_obj_t *obj = lv_obj_create(parent_obj);
-                            objects.guillotine_title_1 = obj;
+                            objects.throws_title = obj;
                             lv_obj_set_pos(obj, 0, 0);
                             lv_obj_set_size(obj, LV_PCT(45), LV_PCT(100));
                             add_style_title_panel(obj);
@@ -5943,9 +5943,9 @@ void create_screen_throw() {
                             {
                                 lv_obj_t *parent_obj = obj;
                                 {
-                                    // bSig1_18
+                                    // Throws_Sig
                                     lv_obj_t *obj = lv_button_create(parent_obj);
-                                    objects.b_sig1_18 = obj;
+                                    objects.throws_sig = obj;
                                     lv_obj_set_pos(obj, LV_PCT(0), LV_PCT(0));
                                     lv_obj_set_size(obj, LV_PCT(20), LV_PCT(50));
                                     add_style_button_style(obj);
@@ -6152,10 +6152,10 @@ void create_screen_throw() {
         }
     }
     
-    tick_screen_throw();
+    tick_screen_throws();
 }
 
-void tick_screen_throw() {
+void tick_screen_throws() {
 }
 
 void create_screen_bigel() {
@@ -9127,7 +9127,7 @@ tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_paper,
     tick_screen_guillotine,
     tick_screen_service2,
-    tick_screen_throw,
+    tick_screen_throws,
     tick_screen_bigel,
     tick_screen_wifi,
     tick_screen_keyboard,
@@ -9259,7 +9259,7 @@ void create_screens() {
     create_screen_paper();
     create_screen_guillotine();
     create_screen_service2();
-    create_screen_throw();
+    create_screen_throws();
     create_screen_bigel();
     create_screen_wifi();
     create_screen_keyboard();

@@ -28,7 +28,7 @@ typedef enum Screen32PageId {
     scr_PAPER = 15,
     scr_GUILLOTINE = 16,
     scr_SERVICE2 = 17,
-    scr_THROW = 18,
+    scr_THROWS = 18,
     scr_BIGEL = 19,
     scr_WIFI = 20,
     scr_KEYBOARD = 21,

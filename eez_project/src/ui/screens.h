@@ -28,7 +28,7 @@ enum ScreensEnum {
     SCREEN_ID_PAPER = 15,
     SCREEN_ID_GUILLOTINE = 16,
     SCREEN_ID_SERVICE2 = 17,
-    SCREEN_ID_THROW = 18,
+    SCREEN_ID_THROWS = 18,
     SCREEN_ID_BIGEL = 19,
     SCREEN_ID_WIFI = 20,
     SCREEN_ID_KEYBOARD = 21,
@@ -58,7 +58,7 @@ typedef struct _objects_t {
     lv_obj_t *paper;
     lv_obj_t *guillotine;
     lv_obj_t *service2;
-    lv_obj_t *throw;
+    lv_obj_t *throws;
     lv_obj_t *bigel;
     lv_obj_t *wifi;
     lv_obj_t *keyboard;
@@ -299,10 +299,10 @@ typedef struct _objects_t {
     lv_obj_t *obj116;
     lv_obj_t *obj117;
     lv_obj_t *obj118;
-    lv_obj_t *guillotine_back_1;
-    lv_obj_t *guillotine_title_1;
+    lv_obj_t *throws_back;
+    lv_obj_t *throws_title;
     lv_obj_t *obj119;
-    lv_obj_t *b_sig1_18;
+    lv_obj_t *throws_sig;
     lv_obj_t *obj120;
     lv_obj_t *obj121;
     lv_obj_t *obj122;
@@ -472,8 +472,8 @@ void tick_screen_guillotine();
 void create_screen_service2();
 void tick_screen_service2();
 
-void create_screen_throw();
-void tick_screen_throw();
+void create_screen_throws();
+void tick_screen_throws();
 
 void create_screen_bigel();
 void tick_screen_bigel();

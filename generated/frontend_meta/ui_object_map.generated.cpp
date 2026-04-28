@@ -66,7 +66,7 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_page(objectMap, 15u, objects.paper) && allOk;
     allOk = bind_page(objectMap, 16u, objects.guillotine) && allOk;
     allOk = bind_page(objectMap, 17u, objects.service2) && allOk;
-    allOk = bind_page(objectMap, 18u, objects.throw) && allOk;
+    allOk = bind_page(objectMap, 18u, objects.throws) && allOk;
     allOk = bind_page(objectMap, 19u, objects.bigel) && allOk;
     allOk = bind_page(objectMap, 20u, objects.wifi) && allOk;
     allOk = bind_page(objectMap, 21u, objects.keyboard) && allOk;
@@ -191,9 +191,9 @@ bool screen32_bind_generated_ui_map(screenlib::adapter::UiObjectMap& objectMap,
     allOk = bind_element(objectMap, 748959496u, 17u, objects.service_table_1, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 620561065u, 17u, objects.service_paper_1, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 937444719u, 17u, objects.service_guillotine_1, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 568578977u, 18u, objects.guillotine_back_1, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 590072430u, 18u, objects.guillotine_title_1, outElements, outCapacity, boundCount) && allOk;
-    allOk = bind_element(objectMap, 812893767u, 18u, objects.b_sig1_18, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 573436505u, 18u, objects.throws_back, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 731366683u, 18u, objects.throws_title, outElements, outCapacity, boundCount) && allOk;
+    allOk = bind_element(objectMap, 756702345u, 18u, objects.throws_sig, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 911733855u, 19u, objects.bigel_back, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 642375509u, 19u, objects.bigel_title, outElements, outCapacity, boundCount) && allOk;
     allOk = bind_element(objectMap, 591595424u, 19u, objects.b_sig1_17, outElements, outCapacity, boundCount) && allOk;
