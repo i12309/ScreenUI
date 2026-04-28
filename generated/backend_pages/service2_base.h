@@ -19,11 +19,8 @@ class Service2Page : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_SERVICE2;
     Service2Page()
-      : cnt_PAGE_10(this, ::cnt_PAGE_10)
-      , cnt_BAR_11(this, ::cnt_BAR_11)
-      , btn_SERVICE2_BACK(this, ::btn_SERVICE2_BACK)
+      : btn_SERVICE2_BACK(this, ::btn_SERVICE2_BACK)
       , pnl_SERVICE2_TITLE(this, ::pnl_SERVICE2_TITLE)
-      , cnt_BUTTON_10(this, ::cnt_BUTTON_10)
       , btn_SERVICE_TABLE_1(this, ::btn_SERVICE_TABLE_1)
       , btn_SERVICE_PAPER_1(this, ::btn_SERVICE_PAPER_1)
       , btn_SERVICE_GUILLOTINE_1(this, ::btn_SERVICE_GUILLOTINE_1)
@@ -31,11 +28,8 @@ public:
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypeContainer cnt_PAGE_10;
-    screenui::generated::TypeContainer cnt_BAR_11;
     screenui::generated::TypeButton btn_SERVICE2_BACK;
     screenui::generated::TypePanel pnl_SERVICE2_TITLE;
-    screenui::generated::TypeContainer cnt_BUTTON_10;
     screenui::generated::TypeButton btn_SERVICE_TABLE_1;
     screenui::generated::TypeButton btn_SERVICE_PAPER_1;
     screenui::generated::TypeButton btn_SERVICE_GUILLOTINE_1;

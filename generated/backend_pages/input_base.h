@@ -19,10 +19,7 @@ class InputPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_INPUT;
     InputPage()
-      : cnt_PAGE_7(this, ::cnt_PAGE_7)
-      , cnt_BAR_8(this, ::cnt_BAR_8)
-      , pnl_INPUT_TITLE_1(this, ::pnl_INPUT_TITLE_1)
-      , cnt_BUTTON_7(this, ::cnt_BUTTON_7)
+      : pnl_INPUT_TITLE_1(this, ::pnl_INPUT_TITLE_1)
       , btn_INPUT_FIELD1(this, ::btn_INPUT_FIELD1)
       , btn_INPUT_FIELD2(this, ::btn_INPUT_FIELD2)
       , btn_INPUT_FIELD4(this, ::btn_INPUT_FIELD4)
@@ -33,10 +30,7 @@ public:
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypeContainer cnt_PAGE_7;
-    screenui::generated::TypeContainer cnt_BAR_8;
     screenui::generated::TypePanel pnl_INPUT_TITLE_1;
-    screenui::generated::TypeContainer cnt_BUTTON_7;
     screenui::generated::TypeButton btn_INPUT_FIELD1;
     screenui::generated::TypeButton btn_INPUT_FIELD2;
     screenui::generated::TypeButton btn_INPUT_FIELD4;

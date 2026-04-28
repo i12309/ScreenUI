@@ -16,20 +16,30 @@ typedef enum Screen32PageId {
     scr_MAIN = 3,
     scr_TASK_RUN = 4,
     scr_TASK_PROCESS = 5,
-    scr_INFO = 6,
-    scr_INPUT = 7,
-    scr_INIT = 8,
-    scr_WAIT = 9,
-    scr_SERVICE = 10,
-    scr_SERVICE2 = 11,
-    scr_KEYBOARD = 12,
-    scr_DEF_PAGE = 13,
-    scr_DEF_PAGE2 = 14,
-    scr_DEF_PAGE3 = 15,
-    scr_DEF_PAGE4 = 16,
+    scr_TASK = 6,
+    scr_PROFILE = 7,
+    scr_LIST = 8,
+    scr_INFO = 9,
+    scr_INPUT = 10,
+    scr_INIT = 11,
+    scr_WAIT = 12,
+    scr_SERVICE = 13,
+    scr_TABLE = 14,
+    scr_PAPER = 15,
+    scr_GUILLOTINE = 16,
+    scr_SERVICE2 = 17,
+    scr_THROW = 18,
+    scr_BIGEL = 19,
+    scr_WIFI = 20,
+    scr_KEYBOARD = 21,
+    scr_STATS = 22,
+    scr_UPDATE = 23,
+    scr_CALIBRATION = 24,
+    scr_SLICE = 25,
+    scr_PAGE = 26,
 } Screen32PageId;
 
-#define SCREEN32_PAGE_DESCRIPTOR_COUNT 16
+#define SCREEN32_PAGE_DESCRIPTOR_COUNT 26
 
 #ifdef __cplusplus
 }

@@ -19,12 +19,9 @@ class InitPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_INIT;
     InitPage()
-      : cnt_PAGE_8(this, ::cnt_PAGE_8)
-      , cnt_BAR_9(this, ::cnt_BAR_9)
-      , pnl_INIT_TITLE(this, ::pnl_INIT_TITLE)
+      : pnl_INIT_TITLE(this, ::pnl_INIT_TITLE)
       , btn_INIT_HTTP(this, ::btn_INIT_HTTP)
       , btn_INIT_OK(this, ::btn_INIT_OK)
-      , cnt_BUTTON_8(this, ::cnt_BUTTON_8)
       , drp_INIT_MACHINE(this, ::drp_INIT_MACHINE)
       , btn_INIT_GROUP(this, ::btn_INIT_GROUP)
       , btn_INIT_NAME(this, ::btn_INIT_NAME)
@@ -36,12 +33,9 @@ public:
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypeContainer cnt_PAGE_8;
-    screenui::generated::TypeContainer cnt_BAR_9;
     screenui::generated::TypePanel pnl_INIT_TITLE;
     screenui::generated::TypeButton btn_INIT_HTTP;
     screenui::generated::TypeButton btn_INIT_OK;
-    screenui::generated::TypeContainer cnt_BUTTON_8;
     screenui::generated::TypeDropdown drp_INIT_MACHINE;
     screenui::generated::TypeButton btn_INIT_GROUP;
     screenui::generated::TypeButton btn_INIT_NAME;

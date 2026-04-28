@@ -19,11 +19,8 @@ class TaskRunPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_TASK_RUN;
     TaskRunPage()
-      : cnt_PAGE_4(this, ::cnt_PAGE_4)
-      , cnt_BAR_5(this, ::cnt_BAR_5)
-      , btn_TASK_RUN_BACK(this, ::btn_TASK_RUN_BACK)
+      : btn_TASK_RUN_BACK(this, ::btn_TASK_RUN_BACK)
       , pnl_TASK_RUN_TITLE(this, ::pnl_TASK_RUN_TITLE)
-      , cnt_BUTTON_4(this, ::cnt_BUTTON_4)
       , btn_TASK_RUN_LIST_TASK(this, ::btn_TASK_RUN_LIST_TASK)
       , btn_TASK_RUN_LIST_PROFILE(this, ::btn_TASK_RUN_LIST_PROFILE)
       , btn_TASK_RUN_LABEL(this, ::btn_TASK_RUN_LABEL)
@@ -35,11 +32,8 @@ public:
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypeContainer cnt_PAGE_4;
-    screenui::generated::TypeContainer cnt_BAR_5;
     screenui::generated::TypeButton btn_TASK_RUN_BACK;
     screenui::generated::TypePanel pnl_TASK_RUN_TITLE;
-    screenui::generated::TypeContainer cnt_BUTTON_4;
     screenui::generated::TypeButton btn_TASK_RUN_LIST_TASK;
     screenui::generated::TypeButton btn_TASK_RUN_LIST_PROFILE;
     screenui::generated::TypeButton btn_TASK_RUN_LABEL;

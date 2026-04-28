@@ -15,27 +15,13 @@
 namespace screenui {
 
 template <typename TPage>
-class TaskProcessPage : public screenlib::IPage {
+class PagePage : public screenlib::IPage {
 public:
-    static constexpr uint32_t kPageId = scr_TASK_PROCESS;
-    TaskProcessPage()
-      : pnl_TITLE_1(this, ::pnl_TITLE_1)
-    {}
+    static constexpr uint32_t kPageId = scr_PAGE;
+    PagePage() = default;
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypePanel pnl_TITLE_1;
-
-private:
-    void onInputText(uint32_t elementId, const char* text) final {
-        switch (elementId) {
-            case ::pnl_TITLE_1:
-                pnl_TITLE_1.text = text;
-                pnl_TITLE_1.fireChanged();
-                break;
-            default: break;
-        }
-    }
 };
 
 }  // namespace screenui

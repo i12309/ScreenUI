@@ -35,20 +35,6 @@ public:
     void fireChanged() { onChange.emit(text); }
 };
 
-class TypeContainer : public screenlib::ElementBase {
-public:
-    TypeContainer(screenlib::IPage* page, uint32_t id)
-      : ElementBase(page, id)
-      , x(page, id)
-      , y(page, id)
-      , bgColor(page, id)
-    {}
-
-    screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_X> x;
-    screenlib::Property<int32_t, ELEMENT_ATTRIBUTE_Y> y;
-    screenlib::Property<uint32_t, ELEMENT_ATTRIBUTE_BACKGROUND_COLOR> bgColor;
-};
-
 class TypeText : public screenlib::ElementBase {
 public:
     TypeText(screenlib::IPage* page, uint32_t id)

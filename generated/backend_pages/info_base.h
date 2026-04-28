@@ -19,12 +19,9 @@ class InfoPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_INFO;
     InfoPage()
-      : cnt_PAGE_6(this, ::cnt_PAGE_6)
-      , cnt_BAR_7(this, ::cnt_BAR_7)
-      , btn_INFO_BACK(this, ::btn_INFO_BACK)
+      : btn_INFO_BACK(this, ::btn_INFO_BACK)
       , pnl_INFO_TITLE(this, ::pnl_INFO_TITLE)
       , btn_INFO_NEXT(this, ::btn_INFO_NEXT)
-      , cnt_BUTTON_6(this, ::cnt_BUTTON_6)
       , btn_INFO_FIELD1(this, ::btn_INFO_FIELD1)
       , btn_INFO_FIELD2(this, ::btn_INFO_FIELD2)
       , btn_INFO_FIELD3(this, ::btn_INFO_FIELD3)
@@ -34,12 +31,9 @@ public:
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypeContainer cnt_PAGE_6;
-    screenui::generated::TypeContainer cnt_BAR_7;
     screenui::generated::TypeButton btn_INFO_BACK;
     screenui::generated::TypePanel pnl_INFO_TITLE;
     screenui::generated::TypeButton btn_INFO_NEXT;
-    screenui::generated::TypeContainer cnt_BUTTON_6;
     screenui::generated::TypeButton btn_INFO_FIELD1;
     screenui::generated::TypeButton btn_INFO_FIELD2;
     screenui::generated::TypeButton btn_INFO_FIELD3;

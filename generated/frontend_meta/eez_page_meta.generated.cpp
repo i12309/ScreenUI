@@ -16,17 +16,27 @@ uint32_t screen32_current_page_id() {
     if (active == objects.main) return 3u;
     if (active == objects.task_run) return 4u;
     if (active == objects.task_process) return 5u;
-    if (active == objects.info) return 6u;
-    if (active == objects.input) return 7u;
-    if (active == objects.init) return 8u;
-    if (active == objects.wait) return 9u;
-    if (active == objects.service) return 10u;
-    if (active == objects.service2) return 11u;
-    if (active == objects.keyboard) return 12u;
-    if (active == objects.def_page) return 13u;
-    if (active == objects.def_page2) return 14u;
-    if (active == objects.def_page3) return 15u;
-    if (active == objects.def_page4) return 16u;
+    if (active == objects.task) return 6u;
+    if (active == objects.profile) return 7u;
+    if (active == objects.list) return 8u;
+    if (active == objects.info) return 9u;
+    if (active == objects.input) return 10u;
+    if (active == objects.init) return 11u;
+    if (active == objects.wait) return 12u;
+    if (active == objects.service) return 13u;
+    if (active == objects.table) return 14u;
+    if (active == objects.paper) return 15u;
+    if (active == objects.guillotine) return 16u;
+    if (active == objects.service2) return 17u;
+    if (active == objects.throw) return 18u;
+    if (active == objects.bigel) return 19u;
+    if (active == objects.wifi) return 20u;
+    if (active == objects.keyboard) return 21u;
+    if (active == objects.stats) return 22u;
+    if (active == objects.update) return 23u;
+    if (active == objects.calibration) return 24u;
+    if (active == objects.slice) return 25u;
+    if (active == objects.page) return 26u;
     return 1u;
 }
 
@@ -40,17 +50,27 @@ bool screen32_load_page_by_target(void* pageTarget) {
     if (target == objects.main) { loadScreen(SCREEN_ID_MAIN); return true; }
     if (target == objects.task_run) { loadScreen(SCREEN_ID_TASK_RUN); return true; }
     if (target == objects.task_process) { loadScreen(SCREEN_ID_TASK_PROCESS); return true; }
+    if (target == objects.task) { loadScreen(SCREEN_ID_TASK); return true; }
+    if (target == objects.profile) { loadScreen(SCREEN_ID_PROFILE); return true; }
+    if (target == objects.list) { loadScreen(SCREEN_ID_LIST); return true; }
     if (target == objects.info) { loadScreen(SCREEN_ID_INFO); return true; }
     if (target == objects.input) { loadScreen(SCREEN_ID_INPUT); return true; }
     if (target == objects.init) { loadScreen(SCREEN_ID_INIT); return true; }
     if (target == objects.wait) { loadScreen(SCREEN_ID_WAIT); return true; }
     if (target == objects.service) { loadScreen(SCREEN_ID_SERVICE); return true; }
+    if (target == objects.table) { loadScreen(SCREEN_ID_TABLE); return true; }
+    if (target == objects.paper) { loadScreen(SCREEN_ID_PAPER); return true; }
+    if (target == objects.guillotine) { loadScreen(SCREEN_ID_GUILLOTINE); return true; }
     if (target == objects.service2) { loadScreen(SCREEN_ID_SERVICE2); return true; }
+    if (target == objects.throw) { loadScreen(SCREEN_ID_THROW); return true; }
+    if (target == objects.bigel) { loadScreen(SCREEN_ID_BIGEL); return true; }
+    if (target == objects.wifi) { loadScreen(SCREEN_ID_WIFI); return true; }
     if (target == objects.keyboard) { loadScreen(SCREEN_ID_KEYBOARD); return true; }
-    if (target == objects.def_page) { loadScreen(SCREEN_ID_DEF_PAGE); return true; }
-    if (target == objects.def_page2) { loadScreen(SCREEN_ID_DEF_PAGE2); return true; }
-    if (target == objects.def_page3) { loadScreen(SCREEN_ID_DEF_PAGE3); return true; }
-    if (target == objects.def_page4) { loadScreen(SCREEN_ID_DEF_PAGE4); return true; }
+    if (target == objects.stats) { loadScreen(SCREEN_ID_STATS); return true; }
+    if (target == objects.update) { loadScreen(SCREEN_ID_UPDATE); return true; }
+    if (target == objects.calibration) { loadScreen(SCREEN_ID_CALIBRATION); return true; }
+    if (target == objects.slice) { loadScreen(SCREEN_ID_SLICE); return true; }
+    if (target == objects.page) { loadScreen(SCREEN_ID_PAGE); return true; }
     return false;
 }
 

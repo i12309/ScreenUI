@@ -19,8 +19,7 @@ class MainPage : public screenlib::IPage {
 public:
     static constexpr uint32_t kPageId = scr_MAIN;
     MainPage()
-      : cnt_MAIN_MENU(this, ::cnt_MAIN_MENU)
-      , btn_MAIN_TASK(this, ::btn_MAIN_TASK)
+      : btn_MAIN_TASK(this, ::btn_MAIN_TASK)
       , btn_MAIN_PROFILE(this, ::btn_MAIN_PROFILE)
       , btn_MAIN_NET(this, ::btn_MAIN_NET)
       , btn_MAIN_SERVICE(this, ::btn_MAIN_SERVICE)
@@ -30,7 +29,6 @@ public:
     uint32_t pageId() const final { return kPageId; }
 
 protected:
-    screenui::generated::TypeContainer cnt_MAIN_MENU;
     screenui::generated::TypeButton btn_MAIN_TASK;
     screenui::generated::TypeButton btn_MAIN_PROFILE;
     screenui::generated::TypeButton btn_MAIN_NET;
